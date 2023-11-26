@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PanenController;
 use App\Http\Controllers\BudidayaController;
 
 /*
@@ -15,7 +16,14 @@ use App\Http\Controllers\BudidayaController;
 */
 
 Route::get('/', function () {
-    return view('layouts.dashboard');
-});
+    return view('layouts.dashboard', [
+        'title' => 'Dashboard'
+    ]);
+})->name('dashboard');
 
-Route::get('/budidaya', [BudidayaController::class, 'index']);
+// Route::get('/budidaya', [BudidayaController::class, 'index']);
+Route::resource('budidaya', BudidayaController::class)->names([
+    'index' => 'budidaya.index',
+]);
+Route::post('budidaya/remove-image', [BudidayaController::class, 'removeImage'])->name('budidaya.removeImage');
+Route::resource('panen', PanenController::class)->name('index', 'panen');
