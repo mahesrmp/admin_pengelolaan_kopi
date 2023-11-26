@@ -35,7 +35,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/" class="nav-link {{ \Route::is('dashboard') ? 'active' : '' }}">
               <i class="">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3L2 12h3v8h5z"/></svg>
               </i>
@@ -46,7 +46,7 @@
           </li>
           
           <li i class="nav-item">
-            <a href="#" class="nav-link active">
+            <a href="/budidaya" class="nav-link {{ \Route::is('budidaya') ? 'active' : '' }}">
               <i class="">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 15h10v4a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-4zm5-6a6 6 0 0 0-6-6H3v2a6 6 0 0 0 6 6h3m0 0a6 6 0 0 1 6-6h3v1a6 6 0 0 1-6 6h-3m0 3V9"/></svg>
               </i>
@@ -57,7 +57,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/panen" class="nav-link {{ \Route::is('panen') ? 'active' : '' }}">
               <i class="">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M6 18a6.06 6.06 0 0 0 5.17-6a7.62 7.62 0 0 1 6.52-7.51l2.59-.37c-.07-.08-.13-.16-.21-.24c-3.26-3.26-9.52-2.28-14 2.18C2.28 9.9 1 15 2.76 18.46z"/><path fill="currentColor" d="M12.73 12a7.63 7.63 0 0 1-6.51 7.52l-2.46.35l.15.17c3.26 3.26 9.52 2.29 14-2.17C21.68 14.11 23 9 21.25 5.59l-3.34.48A6.05 6.05 0 0 0 12.73 12z"/></svg>
               </i>
@@ -68,7 +68,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/pasca" class="nav-link {{ \Route::is('pasca') ? 'active' : '' }}">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 2048 2048"><path fill="currentColor" d="M448 1024q56 0 101 25t82 68t61 96t43 111t25 112t8 100q0 45-8 100t-25 112t-42 111t-62 96t-81 67t-102 26q-35 0-64-17q-29 17-64 17q-56 0-101-25t-82-68t-61-96t-43-111t-25-112t-8-100q0-45 8-100t25-112t42-111t62-96t81-67t102-26q35 0 64 17q29-17 64-17zm-321 512q0 45 7 91t21 90t36 86t51 76q16 19 34 30t44 11v-768q-25 0-43 11t-35 30q-29 35-51 76t-36 85t-21 91t-7 91zm321 384q25 0 43-11t35-30q29-34 50-75t36-86t22-91t7-91q0-45-7-91t-21-90t-36-86t-51-76q-16-19-34-30t-44-11v768zm1600-320q0 35-17 64q17 29 17 64q0 56-25 101t-68 82t-96 61t-111 43t-112 25t-100 8q-45 0-100-8t-112-25t-111-42t-96-62t-67-81t-26-102q0-35 17-64q-17-29-17-64q0-56 25-101t68-82t96-61t111-43t112-25t100-8q45 0 100 8t112 25t111 42t96 62t67 81t26 102zm-512-193q-45 0-91 7t-90 21t-86 36t-76 51q-19 16-30 34t-11 44h768q0-25-11-43t-30-35q-35-29-76-50t-85-36t-91-22t-91-7zm0 514q45 0 91-7t90-21t86-36t76-51q19-16 30-34t11-44h-768q0 25 11 43t30 35q34 29 75 51t86 36t91 21t91 7zm-384-914q-29 17-64 17q-56 0-101-25t-82-68t-61-96t-43-111t-25-112t-8-100q0-45 8-100t25-112t42-111t62-96t81-67t102-26q35 0 64 17q29-17 64-17q56 0 101 25t82 68t61 96t43 111t25 112t8 100q0 45-8 100t-25 112t-42 111t-62 96t-81 67t-102 26q-35 0-64-17zm257-495q0-45-7-91t-21-90t-36-86t-51-76q-16-19-34-30t-44-11v768q25 0 43-11t35-30q29-34 50-75t36-86t22-91t7-91zm-514 0q0 45 7 91t21 90t36 86t51 76q16 19 34 30t44 11V128q-25 0-43 11t-35 30q-29 35-51 76t-36 85t-21 91t-7 91z"/></svg>
               <p>
                 Pasca Panen Kopi
@@ -77,7 +77,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/penjualan" class="nav-link {{ \Route::is('penjualan') ? 'active' : '' }}">
               <i class="">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256"><path fill="currentColor" d="M216 64h-40a48 48 0 0 0-96 0H40a16 16 0 0 0-16 16v120a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16Zm-88-32a32 32 0 0 1 32 32H96a32 32 0 0 1 32-32Zm88 168H40V80h40v16a8 8 0 0 0 16 0V80h64v16a8 8 0 0 0 16 0V80h40Z"/></svg>
               </i>
@@ -88,7 +88,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="/kedai" class="nav-link {{ \Route::is('kedai') ? 'active' : '' }}">
               <i class="">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19 5h-1V4a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a4 4 0 0 0 4 4h6c1.858 0 3.411-1.279 3.858-3H19a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3zm1 6a1 1 0 0 1-1 1h-1V7h1a1 1 0 0 1 1 1v3zm-2 8H3c0 1.654 1.346 3 3 3h11c1.654 0 3-1.346 3-3h-2z"/></svg>
               </i>
