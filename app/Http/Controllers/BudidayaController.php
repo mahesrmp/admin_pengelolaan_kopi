@@ -59,7 +59,7 @@ class BudidayaController extends Controller
 
             if ($budidaya) {
                 foreach ($request->file('gambar') as $gambar) {
-                    $gambarPath = $gambar->storeAs('budidayaimage', $gambar->getClientOriginalName(), 'public');
+                    $gambarPath = $gambar->store('budidayaimage', 'public');
 
                     // Simpan path gambar ke dalam tabel image_budidayas
                     $budidaya->images()->create([
@@ -116,7 +116,7 @@ class BudidayaController extends Controller
                 $newImages = [];
 
                 foreach ($request->file('gambar') as $newImage) {
-                    $newImagePath = $newImage->storeAs('budidayaimage', $newImage->getClientOriginalName(), 'public');
+                    $newImagePath = $newImage->store('budidayaimage', 'public');
                     $newImages[] = ['gambar' => $newImagePath];
                 }
 

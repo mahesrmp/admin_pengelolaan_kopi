@@ -64,7 +64,11 @@
                                 {{-- {!! Form::file('gambar', ['class' => 'form-control']) !!} --}}
                                 <input type="file" id="gambar" name="gambar[]" class="form-control" multiple>
                                 <span class="text-danger">{{ $errors->first('gambar.*') }}</span>
-                            </div>
+
+                                <div id="previewImages"></div>
+
+                                <button type="button" id="addImageBtn" class="btn btn-primary">Tambah Gambar</button>
+                            </div>  
                         </div>
 
                         <div class="card-footer">
@@ -76,4 +80,33 @@
             <div class="col-md-6"></div>
         </div>
     </div>
+    <script>
+        function handleNewInput(input) {
+            input.addEventListener('change', function(e) {
+                const previewImages = document.getElementById('previewImages');
+                const img = document.createElement('img');
+                img.onload = function() {
+                    URL.revokeObjectURL(img.src);
+                };
+                img.src = URL.createObjectURL(e.target.files[0]);
+                img.style.width = '100px';
+                img.style.marginRight = '5px';
+                img.style.marginBottom = '5px';
+                previewImages.appendChild(img);
+            });
+        }
+
+        const addImageBtn = document.getElementById('addImageBtn');
+        const fileInput = document.getElementById('gambar');
+
+        addImageBtn.addEventListener('click', function() {
+            const newInput = fileInput.cloneNode(true);
+            newInput.value = '';
+            fileInput.parentNode.insertBefore(newInput, fileInput.nextSibling);
+            handleNewInput(newInput);
+        });
+
+        // Panggil handleNewInput untuk input pertama saat halaman dimuat
+        handleNewInput(fileInput);
+    </script>
 @endsection
