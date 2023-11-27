@@ -3,29 +3,38 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use App\Models\Panen;
+use App\Models\Pasca;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
-class PanenController extends Controller
+class PascaController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $panens = Panen::all();
-        return view('panen.panen', compact('panens'), [
-            'title' => 'Panen'
+        $pascas = Pasca::all();
+        return view('pasca.pasca_panen', compact('pascas'), [
+            'title' => 'Pasca'
         ]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         $data = [
-            'model'     => new Panen(),
-            'title'     => 'Form Tambah Informasi Panen',
+            'model'     => new Pasca(),
+            'title'     => 'Form Tambah Informasi Pasca pasca$pasca',
         ];
 
-        return view('panen.panen_form', $data);
+        return view('pasca.pasca_form', $data);
     }
 
     /**
@@ -46,7 +55,7 @@ class PanenController extends Controller
                 'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             ]);
 
-            $panen = Panen::create([
+            $pasca = Pasca::create([
                 'tahapan' => $request->tahapan,
                 'deskripsi' => $request->deskripsi,
                 'link' => $request->link,
@@ -54,18 +63,18 @@ class PanenController extends Controller
                 'credit_gambar' => $request->credit_gambar,
             ]);
 
-            if ($panen) {
+            if ($pasca) {
                 foreach ($request->file('gambar') as $gambar) {
-                    $gambarPath = $gambar->store('panenimage', 'public');
+                    $gambarPath = $gambar->store('pascaimage', 'public');
 
-                    $panen->images()->create([
+                    $pasca->images()->create([
                         'gambar' => $gambarPath,
                     ]);
                 }
 
-                return redirect()->route('panen.index')->with('success', 'Informasi Panen berhasil ditambahkan');
+                return redirect()->route('pasca.index')->with('success', 'Informasi Pasca Panen berhasil ditambahkan');
             } else {
-                $errorMessage = $panen->status() . ': ' . $panen->body();
+                $errorMessage = $pasca->status() . ': ' . $pasca->body();
                 throw new Exception('Failed to add product. ' . $errorMessage);
             }
         } catch (Exception $e) {
@@ -73,12 +82,29 @@ class PanenController extends Controller
         }
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Pasca  $pasca
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Pasca $pasca)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Pasca  $pasca
+     * @return \Illuminate\Http\Response
+     */
     public function edit($id)
     {
-        $panen = Panen::findOrFail($id);
-        return view('panen.panen_edit', [
-            'panen' => $panen,
-            'title'     => 'Form Update data Informasi Panen',
+        $pasca = Pasca::findOrFail($id);
+        return view('pasca.pasca_edit', [
+            'pasca' => $pasca,
+            'title'     => 'Form Update data Informasi Pasca',
         ]);
     }
 
@@ -86,7 +112,7 @@ class PanenController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Pasca  $pasca
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -100,31 +126,31 @@ class PanenController extends Controller
         ]);
 
         try {
-            $panen = Panen::findOrFail($id);
-            $panen->tahapan = $request->tahapan;
-            $panen->deskripsi = $request->deskripsi;
-            $panen->link = $request->link;
-            $panen->sumber_artikel = $request->sumber_artikel;
-            $panen->credit_gambar = $request->credit_gambar;
+            $pasca = Pasca::findOrFail($id);
+            $pasca->tahapan = $request->tahapan;
+            $pasca->deskripsi = $request->deskripsi;
+            $pasca->link = $request->link;
+            $pasca->sumber_artikel = $request->sumber_artikel;
+            $pasca->credit_gambar = $request->credit_gambar;
 
             if ($request->hasFile('gambar')) {
                 $newImages = [];
 
                 foreach ($request->file('gambar') as $newImage) {
-                    $newImagePath = $newImage->store('panenimage', 'public');
+                    $newImagePath = $newImage->store('pascaimage', 'public');
                     $newImages[] = ['gambar' => $newImagePath];
                 }
 
-                $this->deleteImages($panen);
+                $this->deleteImages($pasca);
 
-                $panen->images()->delete();
-                $panen->images()->createMany($newImages);
+                $pasca->images()->delete();
+                $pasca->images()->createMany($newImages);
             }
 
-            $panen->save();
+            $pasca->save();
 
-            if ($panen) {
-                return redirect()->route('panen.index')->with('success', 'Data Informasi Panen Berhasil di Ubah');
+            if ($pasca) {
+                return redirect()->route('pasca.index')->with('success', 'Data Informasi Pasca Panen Berhasil di Ubah');
             } else {
                 throw new Exception('Gagal mengupdate data');
             }
@@ -133,14 +159,20 @@ class PanenController extends Controller
         }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Pasca  $pasca
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
         try {
-            $panen = Panen::findOrFail($id);
-            $this->deleteImages($panen);
-            $panen->delete();
-            if ($panen) {
-                return redirect()->route('panen.index')->with('success', 'Data Informasi Panen Berhasil dihapus');
+            $pasca = Pasca::findOrFail($id);
+            $this->deleteImages($pasca);
+            $pasca->delete();
+            if ($pasca) {
+                return redirect()->route('pasca.index')->with('success', 'Data Informasi Pasca Panen Berhasil dihapus');
             } else {
                 throw new Exception('Failed to delete.');
             }
@@ -149,9 +181,9 @@ class PanenController extends Controller
         }
     }
 
-    protected function deleteImages(panen $panen)
+    protected function deleteImages(pasca $pasca)
     {
-        foreach ($panen->images as $image) {
+        foreach ($pasca->images as $image) {
             Storage::disk('public')->delete($image->gambar);
 
             $image->delete();

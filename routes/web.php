@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PanenController;
 use App\Http\Controllers\BudidayaController;
+use App\Http\Controllers\PascaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,9 @@ Route::resource('budidaya', BudidayaController::class)->names([
     'index' => 'budidaya.index',
 ]);
 Route::post('budidaya/remove-image', [BudidayaController::class, 'removeImage'])->name('budidaya.removeImage');
-Route::resource('panen', PanenController::class)->name('index', 'panen');
+Route::resource('panen', PanenController::class)->names([
+    'index' => 'panen.index',
+]);
+Route::resource('pasca', PascaController::class)->names([
+    'index' => 'pasca.index',
+]);

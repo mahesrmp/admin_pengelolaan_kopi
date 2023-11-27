@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use App\Models\ImageBudidaya;
+use App\Models\ImagePasca;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Panen extends Model
+class Pasca extends Model
 {
     use HasFactory;
-    protected $table = 'panens';
+    protected $table = 'pascas';
     protected $primaryKey = 'id';
 
     protected $fillable = [
@@ -22,6 +22,6 @@ class Panen extends Model
 
     public function images()
     {
-        return $this->hasMany(ImagePanen::class, 'panen_id', 'id');
+        return $this->hasMany(ImagePasca::class, 'pasca_id', 'id');
     }
 }

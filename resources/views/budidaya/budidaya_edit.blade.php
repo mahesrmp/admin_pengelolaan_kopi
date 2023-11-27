@@ -37,8 +37,8 @@
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
                                 {{-- {!! Form::textarea('deskripsi', null, ['class' => 'form-control']) !!} --}}
-                                <input type="textarea" id="deskripsi" name="deskripsi" class="form-control"
-                                    value="{{ $budidaya->deskripsi }}">
+                                <textarea id="deskripsi" name="deskripsi" class="form-control"
+                                    value="{{ $budidaya->deskripsi }}">{!! $budidaya->deskripsi !!}</textarea>
                                 <span class="text-danger">{{ $errors->first('deskripsi') }}</span>
                             </div>
 

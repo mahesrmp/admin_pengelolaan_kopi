@@ -20,7 +20,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Form tambah data Produk</h3>
                     </div>
-                    <form action="{{ route('panen.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('pasca.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-body">
                             <div class="form-group">

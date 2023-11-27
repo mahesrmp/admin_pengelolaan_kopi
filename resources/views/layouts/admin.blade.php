@@ -32,6 +32,13 @@
     <!-- Summernote -->
     <link rel="stylesheet" href="{{ asset('template/plugins/summernote/summernote-bs4.min.css') }}">
 
+    <style>
+        .card-text {
+            white-space: pre-line;
+            /* Untuk mempertahankan pemformatan garis baru */
+            /* Atau bisa menggunakan white-space: pre-wrap; untuk mempertahankan pemformatan garis baru dan spasi */
+        }
+    </style>
 
 </head>
 
@@ -64,7 +71,7 @@
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="/">Beranda</a></li>
                                 <li class="breadcrumb-item active">{{ $title }}</li>
                             </ol>
                         </div><!-- /.col -->

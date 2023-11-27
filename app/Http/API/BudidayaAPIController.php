@@ -28,9 +28,20 @@ class BudidayaAPIController extends Controller
         return response()->json($budidayas);
     }
 
+    public function select_tahapan()
+    {
+        $tahapan = DB::table('budidayas')
+            ->select('tahapan')
+            ->get();
+        return response()->json($tahapan);
+    }
+
     public function panen()
     {
-        $panens = Panen::all();
+        $panens = DB::table('panens')
+            ->join('image_panens', 'panens.id', '=', 'image_panens.panen_id')
+            ->select('panens.*', 'image_panens.gambar')
+            ->get();
         return response()->json($panens);
     }
 }
