@@ -107,7 +107,7 @@
                                 <label for="hari_buka_lainnya">Hari Buka Lainnya</label>
                                 <select id="hari_buka_lainnya" name="hari_buka_lainnya" class="form-control"
                                     style="display: inline-block; width: 20%; margin-right: 2%;">
-                                    <option value="">Masukkan Hari Lainnya (Optional)</option>
+                                    <option value="">Masukkan Hari Buka Lainnya (Optional)</option>
                                     <option value="Senin">Senin</option>
                                     <option value="Selasa">Selasa</option>
                                     <option value="Rabu">Rabu</option>
@@ -119,7 +119,7 @@
                                 <label for="hari_tutup_lainnya">Hari Tutup Lainnya</label>
                                 <select id="hari_tutup_lainnya" name="hari_tutup_lainnya" class="form-control"
                                     style="display: inline-block; width: 20%;">
-                                    <option value="">Masukkan Hari Lainnya (Optional)</option>
+                                    <option value="">Masukkan Hari Tutup Lainnya (Optional)</option>
                                     <option value="Senin">Senin</option>
                                     <option value="Selasa">Selasa</option>
                                     <option value="Rabu">Rabu</option>

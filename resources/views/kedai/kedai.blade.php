@@ -56,21 +56,18 @@
                                         <h5 class="card-title"><b>Hari/Jam Beroperasi</b></h5>
                                         <p class="card-text mt-2">{{ $kedai['hari_buka'] }} - {{ $kedai['hari_tutup'] }} /
                                             {{ $kedai['jam_buka'] }} - {{ $kedai['jam_tutup'] }}</p>
-                                    </div>
 
-                                    @if (
-                                        $kedai['hari_buka_lainnya'] &&
-                                            $kedai['hari_tutup_lainnya'] &&
-                                            $kedai['jam_buka_lainnya'] &&
-                                            $kedai['hari_tutup_lainnya'] == null)
-                                        <div class="card-body">
+                                        @if (
+                                            $kedai['hari_buka_lainnya'] &&
+                                                $kedai['hari_tutup_lainnya'] &&
+                                                $kedai['jam_buka_lainnya'] &&
+                                                $kedai['hari_tutup_lainnya'] != null)
                                             <h5 class="card-title">dan Beroperasi juga pada</h5>
-                                            <p class="card-text mt-2">{{ $kedai['hari_buka_lainnya'] }} -
-                                                {{ $kedai['hari_tutup_lainnya'] }} /
-                                                {{ $kedai['jam_buka_lainnya'] }} - {{ $kedai['hari_tutup_lainnya'] }}</p>
-                                        </div>
-                                    @else
-                                    @endif
+                                            <p class="card-text mt-2">{{ $kedai['hari_buka_lainnya'] }} - {{ $kedai['hari_tutup_lainnya'] }} /
+                                                {{ $kedai['jam_buka_lainnya'] }} - {{ $kedai['jam_tutup_lainnya'] }}</p>
+                                        @else
+                                        @endif
+                                    </div>
 
                                     <div class="card-body">
                                         <h5 class="card-title"><b>Nomor Telephone:</b></h5>
