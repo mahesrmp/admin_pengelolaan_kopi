@@ -18,7 +18,7 @@
 
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Form tambah data Produk</h3>
+                        <h3 class="card-title">Form tambah data Panen</h3>
                     </div>
                     {{-- {!! Form::model($model, ['route' => $route, 'method' => $method, 'files' => true, 'enctype' => 'multipart/form-data']) !!} --}}
                     <form action="{{ route('panen.update', $panen['id']) }}" method="POST"

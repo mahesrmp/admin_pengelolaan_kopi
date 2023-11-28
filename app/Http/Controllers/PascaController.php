@@ -31,7 +31,7 @@ class PascaController extends Controller
     {
         $data = [
             'model'     => new Pasca(),
-            'title'     => 'Form Tambah Informasi Pasca pasca$pasca',
+            'title'     => 'Form Tambah Informasi Pasca Panen',
         ];
 
         return view('pasca.pasca_form', $data);

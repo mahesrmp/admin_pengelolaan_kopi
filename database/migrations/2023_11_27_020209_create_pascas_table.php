@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('pascas', function (Blueprint $table) {
             $table->id();
             $table->string('tahapan');
-            $table->string('deskripsi');
+            $table->text('deskripsi');
             $table->string('link');
             $table->string('sumber_artikel');
             $table->string('credit_gambar');

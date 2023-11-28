@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PanenController;
 use App\Http\Controllers\BudidayaController;
+use App\Http\Controllers\KedaiController;
 use App\Http\Controllers\PascaController;
 
 /*
@@ -32,4 +33,7 @@ Route::resource('panen', PanenController::class)->names([
 ]);
 Route::resource('pasca', PascaController::class)->names([
     'index' => 'pasca.index',
+]);
+Route::resource('kedai', KedaiController::class)->names([
+    'index' => 'kedai.index',
 ]);

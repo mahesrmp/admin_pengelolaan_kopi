@@ -18,10 +18,10 @@
 
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Form tambah data Pasca Panen</h3>
+                        <h3 class="card-title">Form tambah data Produk</h3>
                     </div>
                     {{-- {!! Form::model($model, ['route' => $route, 'method' => $method, 'files' => true, 'enctype' => 'multipart/form-data']) !!} --}}
-                    <form action="{{ route('pasca.update', $pasca['id']) }}" method="POST"
+                    <form action="{{ route('panen.update', $panen['id']) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -30,7 +30,7 @@
                                 <label for="tahapan">Tahapan</label>
                                 {{-- {!! Form::text('tahapan', null, ['class' => 'form-control', 'autofocus']) !!} --}}
                                 <input type="text" id="tahapan" name="tahapan" class="form-control"
-                                    value="{{ $pasca->tahapan }}">
+                                    value="{{ $panen->tahapan }}">
                                 <span class="text-danger">{{ $errors->first('tahapan') }}</span>
                             </div>
 
@@ -38,7 +38,7 @@
                                 <label for="deskripsi">Deskripsi</label>
                                 {{-- {!! Form::textarea('deskripsi', null, ['class' => 'form-control']) !!} --}}
                                 <textarea id="deskripsi" name="deskripsi" class="form-control"
-                                    value="{{ $pasca->deskripsi }}">{!! $pasca['deskripsi'] !!}</textarea>
+                                    value="{{ $panen->deskripsi }}">{!! $panen->deskripsi !!}</textarea>
                                 <span class="text-danger">{{ $errors->first('deskripsi') }}</span>
                             </div>
 
@@ -46,7 +46,7 @@
                                 <label for="link">Link</label>
                                 {{-- {!! Form::text('link', null, ['class' => 'form-control']) !!} --}}
                                 <input type="text" id="link" name="link" class="form-control"
-                                    value="{{ $pasca->link }}">
+                                    value="{{ $panen->link }}">
                                 <span class="text-danger">{{ $errors->first('link') }}</span>
                             </div>
 
@@ -54,7 +54,7 @@
                                 <label for="sumber_artikel">Sumber Artikel</label>
                                 {{-- {!! Form::text('sumber_artikel', null, ['class' => 'form-control']) !!} --}}
                                 <input type="text" id="sumber_artikel" name="sumber_artikel" class="form-control"
-                                    value="{{ $pasca->sumber_artikel }}">
+                                    value="{{ $panen->sumber_artikel }}">
                                 <span class="text-danger">{{ $errors->first('sumber_artikel') }}</span>
                             </div>
 
@@ -62,7 +62,7 @@
                                 <label for="credit_gambar">Credit Gambar</label>
                                 {{-- {!! Form::text('credit_gambar', null, ['class' => 'form-control']) !!} --}}
                                 <input type="text" id="credit_gambar" name="credit_gambar" class="form-control"
-                                    value="{{ $pasca->credit_gambar }}">
+                                    value="{{ $panen->credit_gambar }}">
                                 <span class="text-danger">{{ $errors->first('credit_gambar') }}</span>
                             </div>
 
