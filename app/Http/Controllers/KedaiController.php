@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Kedai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class KedaiController extends Controller
 {
@@ -56,7 +57,6 @@ class KedaiController extends Controller
                 'no_telp' => 'required',
                 'credit_gambar' => 'required',
                 'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-
             ]);
 
             $data = [
@@ -125,9 +125,13 @@ class KedaiController extends Controller
      * @param  \App\Models\Kedai  $kedai
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kedai $kedai)
+    public function edit($id)
     {
-        //
+        $kedai = Kedai::findOrFail($id);
+        return view('kedai.kedai_edit', [
+            'kedai' => $kedai,
+            'title'     => 'Form Update data Informasi Kedai',
+        ]);
     }
 
     /**
@@ -137,9 +141,62 @@ class KedaiController extends Controller
      * @param  \App\Models\Kedai  $kedai
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Kedai $kedai)
+    public function update(Request $request, $id)
     {
-        //
+
+        try {
+            $request->validate([
+                'nama_kedai' => 'required',
+                'alamat' => 'required',
+                'deskripsi' => 'required',
+                'jam_buka' => 'required',
+                'jam_tutup' => 'required',
+                'hari_buka' => 'required',
+                'hari_tutup' => 'required',
+                'no_telp' => 'required',
+                'credit_gambar' => 'required',
+            ]);
+
+            $kedai = Kedai::findOrFail($id);
+            $kedai->nama_kedai = $request->nama_kedai;
+            $kedai->alamat = $request->alamat;
+            $kedai->deskripsi = $request->deskripsi;
+            $kedai->jam_buka = $request->jam_buka;
+            $kedai->jam_tutup = $request->jam_tutup;
+            $kedai->hari_buka = $request->hari_buka;
+            $kedai->hari_tutup = $request->hari_tutup;
+            $kedai->no_telp = $request->no_telp;
+            $kedai->credit_gambar = $request->credit_gambar;
+
+            $kedai->hari_buka_lainnya = $request->filled('hari_buka_lainnya') ? $request->hari_buka_lainnya : null;
+            $kedai->hari_tutup_lainnya = $request->filled('hari_tutup_lainnya') ? $request->hari_tutup_lainnya : null;
+            $kedai->jam_buka_lainnya = $request->filled('jam_buka_lainnya') ? $request->jam_buka_lainnya : null;
+            $kedai->jam_tutup_lainnya = $request->filled('jam_tutup_lainnya') ? $request->jam_tutup_lainnya : null;
+
+            if ($request->hasFile('gambar')) {
+                $newImages = [];
+
+                foreach ($request->file('gambar') as $newImage) {
+                    $newImagePath = $newImage->store('kedaiimage', 'public');
+                    $newImages[] = ['gambar' => $newImagePath];
+                }
+
+                $this->deleteImages($kedai);
+
+                $kedai->images()->delete();
+                $kedai->images()->createMany($newImages);
+            }
+
+            $kedai->save();
+
+            if ($kedai) {
+                return redirect()->route('kedai.index')->with('success', 'Data Informasi Kedai Berhasil di Ubah');
+            } else {
+                throw new Exception('Gagal mengupdate data');
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     /**
@@ -148,8 +205,28 @@ class KedaiController extends Controller
      * @param  \App\Models\Kedai  $kedai
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kedai $kedai)
+    public function destroy($id)
     {
-        //
+        try {
+            $kedai = Kedai::findOrFail($id);
+            $this->deleteImages($kedai);
+            $kedai->delete();
+            if ($kedai) {
+                return redirect()->route('kedai.index')->with('success', 'Data Informasi Kedai Kopi Berhasil dihapus');
+            } else {
+                throw new Exception('Failed to delete.');
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    protected function deleteImages(Kedai $kedai)
+    {
+        foreach ($kedai->images as $image) {
+            Storage::disk('public')->delete($image->gambar);
+
+            $image->delete();
+        }
     }
 }
