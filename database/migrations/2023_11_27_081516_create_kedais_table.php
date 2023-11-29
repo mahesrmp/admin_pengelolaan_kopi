@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('nama_kedai');
             $table->string('alamat');
-            $table->text('deskripsi');
             $table->time('jam_buka');
             $table->time('jam_tutup');
             $table->enum('hari_buka', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu']);

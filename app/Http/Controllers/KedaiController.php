@@ -49,7 +49,6 @@ class KedaiController extends Controller
             $request->validate([
                 'nama_kedai' => 'required',
                 'alamat' => 'required',
-                'deskripsi' => 'required',
                 'jam_buka' => 'required',
                 'jam_tutup' => 'required',
                 'hari_buka' => 'required',
@@ -62,7 +61,6 @@ class KedaiController extends Controller
             $data = [
                 'nama_kedai' => $request->nama_kedai,
                 'alamat' => $request->alamat,
-                'deskripsi' => $request->deskripsi,
                 'jam_buka' => $request->jam_buka,
                 'jam_tutup' => $request->jam_tutup,
                 'hari_buka' => $request->hari_buka,
@@ -148,7 +146,6 @@ class KedaiController extends Controller
             $request->validate([
                 'nama_kedai' => 'required',
                 'alamat' => 'required',
-                'deskripsi' => 'required',
                 'jam_buka' => 'required',
                 'jam_tutup' => 'required',
                 'hari_buka' => 'required',
@@ -160,7 +157,6 @@ class KedaiController extends Controller
             $kedai = Kedai::findOrFail($id);
             $kedai->nama_kedai = $request->nama_kedai;
             $kedai->alamat = $request->alamat;
-            $kedai->deskripsi = $request->deskripsi;
             $kedai->jam_buka = $request->jam_buka;
             $kedai->jam_tutup = $request->jam_tutup;
             $kedai->hari_buka = $request->hari_buka;

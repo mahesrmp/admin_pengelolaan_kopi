@@ -5,18 +5,6 @@
         <!-- Left col -->
         <section class="col-lg-12 connectedSortable">
             <!-- Custom tabs (Charts with tabs)-->
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            @if (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-            @endif
-
             <div class="card">
                 <div class="card-header">
                     <a href="{{ route('budidaya.create') }}">
@@ -82,8 +70,8 @@
                                             <div class="carousel-inner">
                                                 @foreach ($budidaya['images'] as $key => $image)
                                                     <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                                        <img src="{{ $image['gambar'] }}" style="width: 100%; height: 500px;"
-                                                            alt="...">
+                                                        <img src="{{ $image['gambar'] }}"
+                                                            style="width: 100%; height: 500px;" alt="...">
                                                     </div>
                                                 @endforeach
                                             </div>
@@ -191,5 +179,26 @@
                 }
             });
         }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Tambahkan script SweetAlert2 di sini
+        @if (session('success'))
+            Swal.fire({
+                title: 'Success!',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                title: 'Error!',
+                text: '{{ session('error') }}',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        @endif
     </script>
 @endsection
