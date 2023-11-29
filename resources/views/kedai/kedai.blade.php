@@ -5,17 +5,6 @@
         <!-- Left col -->
         <section class="col-lg-12 connectedSortable">
             <!-- Custom tabs (Charts with tabs)-->
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            @if (session('error'))
-                <div class="alert alert-danger">
-                    {{ session('error') }}
-                </div>
-            @endif
             <div class="card">
                 <div class="card-header">
 
@@ -48,11 +37,6 @@
                                     </div>
 
                                     <div class="card-body">
-                                        <h5 class="card-title"><b>Deskripsi:</b></h5>
-                                        <p class="card-text mt-2">{!! $kedai['deskripsi'] !!}</p>
-                                    </div>
-
-                                    <div class="card-body">
                                         <h5 class="card-title"><b>Hari/Jam Beroperasi</b></h5>
                                         <p class="card-text mt-2">{{ $kedai['hari_buka'] }} - {{ $kedai['hari_tutup'] }} /
                                             {{ $kedai['jam_buka'] }} - {{ $kedai['jam_tutup'] }}</p>
@@ -63,7 +47,8 @@
                                                 $kedai['jam_buka_lainnya'] &&
                                                 $kedai['hari_tutup_lainnya'] != null)
                                             <h5 class="card-title">dan Beroperasi juga pada</h5>
-                                            <p class="card-text mt-2">{{ $kedai['hari_buka_lainnya'] }} - {{ $kedai['hari_tutup_lainnya'] }} /
+                                            <p class="card-text mt-2">{{ $kedai['hari_buka_lainnya'] }} -
+                                                {{ $kedai['hari_tutup_lainnya'] }} /
                                                 {{ $kedai['jam_buka_lainnya'] }} - {{ $kedai['jam_tutup_lainnya'] }}</p>
                                         @else
                                         @endif
@@ -163,5 +148,26 @@
                 }
             });
         }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Tambahkan script SweetAlert2 di sini
+        @if (session('success'))
+            Swal.fire({
+                title: 'Success!',
+                text: '{{ session('success') }}',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                title: 'Error!',
+                text: '{{ session('error') }}',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        @endif
     </script>
 @endsection

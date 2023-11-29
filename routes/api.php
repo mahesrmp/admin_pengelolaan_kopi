@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\API\AuthController;
 use Illuminate\Http\Request;
 use App\Http\API\PengajuanController;
 use Illuminate\Support\Facades\Route;
@@ -26,5 +27,7 @@ Route::get('/panen', [BudidayaAPIController::class, 'panen']);
 
 Route::prefix('pengajuan')->group(function () {
     Route::post('tambah', [PengajuanController::class, 'tambahData']);
-    // Tambahkan rute lain sesuai kebutuhan
 });
+
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);

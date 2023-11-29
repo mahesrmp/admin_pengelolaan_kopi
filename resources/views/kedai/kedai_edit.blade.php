@@ -40,12 +40,6 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="deskripsi">Deskripsi</label>
-                                <textarea id="deskripsi" name="deskripsi" class="form-control" value="{{ $kedai->deskripsi }}">{!! $kedai['deskripsi'] !!}</textarea>
-                                <span class="text-danger">{{ $errors->first('deskripsi') }}</span>
-                            </div>
-
-                            <div class="form-group">
                                 <label for="hari_buka">Hari Buka</label>
                                 <select id="hari_buka" name="hari_buka" class="form-control"
                                     style="display: inline-block; width: 20%; margin-right: 2%;">

@@ -15,7 +15,6 @@ class Kedai extends Model
     protected $fillable = [
         'nama_kedai',
         'alamat',
-        'deskripsi',
         'jam_buka',
         'jam_tutup',
         'hari_buka',

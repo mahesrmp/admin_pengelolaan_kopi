@@ -67,7 +67,7 @@
 
                                 <div id="previewImages"></div>
 
-                                <button type="button" id="addImageBtn" class="btn btn-primary">Tambah Gambar</button>
+                                {{-- <button type="button" id="addImageBtn" class="btn btn-primary">Tambah Gambar</button> --}}
                             </div>  
                         </div>
 

@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PanenController;
-use App\Http\Controllers\BudidayaController;
 use App\Http\Controllers\KedaiController;
+use App\Http\Controllers\PanenController;
 use App\Http\Controllers\PascaController;
+use App\Http\Controllers\BudidayaController;
+use App\Http\Controllers\KomunitasController;
+use App\Http\Controllers\PengajuanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +39,7 @@ Route::resource('pasca', PascaController::class)->names([
 Route::resource('kedai', KedaiController::class)->names([
     'index' => 'kedai.index',
 ]);
+Route::resource('komunitas', KomunitasController::class)->names([
+    'index' => 'komunitas.index', 
+]);
+Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan.index');
