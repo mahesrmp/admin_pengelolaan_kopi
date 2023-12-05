@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\API\BudidayaAPIController;
 use App\Http\Controllers\KedaiController;
 use App\Http\Controllers\PanenController;
 use App\Http\Controllers\PascaController;
@@ -40,6 +41,8 @@ Route::resource('kedai', KedaiController::class)->names([
     'index' => 'kedai.index',
 ]);
 Route::resource('komunitas', KomunitasController::class)->names([
-    'index' => 'komunitas.index', 
+    'index' => 'komunitas.index',
 ]);
 Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan.index');
+
+Route::get('/api/budidaya', [BudidayaAPIController::class, 'getBudidayaData']);

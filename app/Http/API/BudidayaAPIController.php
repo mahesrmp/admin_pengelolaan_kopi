@@ -28,6 +28,12 @@ class BudidayaAPIController extends Controller
         return response()->json($budidayas);
     }
 
+    public function getBudidayaData()
+    {
+        $budidayaData = Budidaya::with('images')->get();
+        return response()->json($budidayaData);
+    }
+
     public function select_tahapan()
     {
         $tahapan = DB::table('budidayas')

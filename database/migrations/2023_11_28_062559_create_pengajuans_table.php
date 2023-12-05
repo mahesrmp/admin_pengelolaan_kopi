@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('pengajuans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('petani_id')->constrained('users');
+            $table->bigInteger('petani_id')->unsigned();
             $table->string('foto_ktp');
             $table->string('foto_selfie');
             $table->text('deskripsi_pengalaman');

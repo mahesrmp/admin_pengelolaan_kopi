@@ -39,7 +39,7 @@ class UsersTableSeeder extends Seeder
         // ]);
 
         \App\Models\User::factory()->create([
-            'name' => 'gilang',
+            'username' => 'gilang',
             'email' => 'gilang@gmail.com',
             'password' => Hash::make('gilanglang1'),
 
