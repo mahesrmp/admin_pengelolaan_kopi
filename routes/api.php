@@ -25,9 +25,8 @@ Route::get('/budidaya', [BudidayaAPIController::class, 'index']);
 Route::get('/budidaya/tahapan', [BudidayaAPIController::class, 'select_tahapan']);
 Route::get('/panen', [BudidayaAPIController::class, 'panen']);
 
-Route::prefix('pengajuan')->group(function () {
-    Route::post('tambah', [PengajuanController::class, 'tambahData']);
-});
+
+Route::post('/pengajuantambah', [PengajuanController::class, 'tambahData']);
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);

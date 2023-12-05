@@ -27,7 +27,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
+            'username' => 'required',
             'email' => 'required|email',
             'password' => 'required',
             'confirm_password' => 'required|same:password'
@@ -45,8 +45,8 @@ class AuthController extends Controller
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
 
-        $success['token'] = $user->createToken('auth_token')->plainTextToken;
-        $success['name'] = $user->name;
+        // $success['token'] = $user->createToken('auth_token')->plainTextToken;
+        $success['username'] = $user->username;
 
         return response()->json([
             'success' => true,
@@ -57,11 +57,12 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             $auth = Auth::user();
-            $success['token'] = $auth->createToken('auth_token')->plainTextToken;
-            $success['name'] = $auth->name;
+            // $success['token'] = $auth->createToken('auth_token')->plainTextToken;
+            $success['username'] = $auth->username;
             $success['email'] = $auth->email;
+            $success['id'] = $auth->id;
 
             return response()->json([
                 'success' => true,
@@ -71,7 +72,7 @@ class AuthController extends Controller
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Cek email dan password lagi',
+                'message' => 'Cek username dan password lagi',
                 'data' => null
             ]);
         }

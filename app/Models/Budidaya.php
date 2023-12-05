@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\ImageBudidaya;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -23,6 +24,10 @@ class Budidaya extends Model
 
     public function images()
     {
-        return $this->hasMany(ImageBudidaya::class, 'budidaya_id', 'id');
+        return $this->hasMany(ImageBudidaya::class)->select([
+            'id', 
+            'budidaya_id', 
+            'gambar',
+            DB::raw("CONCAT('" . asset('storage/') . "','/', gambar) as url")]);
     }
 }

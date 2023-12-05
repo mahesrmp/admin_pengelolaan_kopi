@@ -7,6 +7,7 @@ use GuzzleHttp\Client;
 use App\Models\Budidaya;
 use Illuminate\Http\Request;
 use App\Models\ImageBudidaya;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -59,12 +60,21 @@ class BudidayaController extends Controller
 
             if ($budidaya) {
                 foreach ($request->file('gambar') as $gambar) {
+                    // Simpan gambar langsung ke dalam direktori public/budidayaimage
                     $gambarPath = $gambar->store('budidayaimage', 'public');
+
+                    Log::info('Path Gambar: ' . $gambarPath);
 
                     // Simpan path gambar ke dalam tabel image_budidayas
                     $budidaya->images()->create([
                         'gambar' => $gambarPath,
                     ]);
+
+                    // // Ambil URL gambar untuk respons
+                    // $imageUrl = asset('storage/budidayaimage/' . basename($gambarPath));
+
+                    // // Sertakan URL gambar dalam respons
+                    // $image->update(['url' => $imageUrl]);
                 }
 
                 return redirect()->route('budidaya.index')->with('success', 'Informasi Budidaya berhasil ditambahkan');
@@ -72,7 +82,6 @@ class BudidayaController extends Controller
                 $errorMessage = $budidaya->status() . ': ' . $budidaya->body();
                 throw new Exception('Failed to add product. ' . $errorMessage);
             }
-
         } catch (Exception $e) {
             return redirect()->back()->with('error', $e->getMessage())->withInput();
         }

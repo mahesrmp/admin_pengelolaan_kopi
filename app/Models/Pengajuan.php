@@ -17,5 +17,6 @@ class Pengajuan extends Model
         'deskripsi_pengalaman',
         'foto_sertifikat',
         'status',
+        'petani_id',
     ];
 }
