@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\ImageKedai;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -29,6 +30,10 @@ class Kedai extends Model
 
     public function images()
     {
-        return $this->hasMany(ImageKedai::class, 'kedai_id', 'id');
+        return $this->hasMany(ImageKedai::class)->select([
+            'id', 
+            'kedai_id', 
+            'gambar',
+            DB::raw("CONCAT('" . asset('storage/') . "','/', gambar) as url")]);
     }
 }

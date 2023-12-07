@@ -27,6 +27,18 @@
                         @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
+                                <label for="kategori">Kategori</label>
+                                <select id="kategori" name="kategori" class="form-control">
+                                    <option value="Fermentasi Kering"
+                                        {{ $pasca->kategori == 'Fermentasi Kering' ? 'selected' : '' }}>Fermentasi Kering
+                                    </option>
+                                    <option value="Fermentasi Mekanis" {{ $pasca->kategori == 'Fermentasi Mekanis' ? 'selected' : '' }}>
+                                        Fermentasi Mekanis
+                                    </option>
+                                </select>
+                                <span class="text-danger">{{ $errors->first('kategori') }}</span>
+                            </div>
+                            <div class="form-group">
                                 <label for="tahapan">Tahapan</label>
                                 {{-- {!! Form::text('tahapan', null, ['class' => 'form-control', 'autofocus']) !!} --}}
                                 <input type="text" id="tahapan" name="tahapan" class="form-control"

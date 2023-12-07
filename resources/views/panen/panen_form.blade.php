@@ -24,10 +24,18 @@
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
+                                <label for="kategori">Kategori</label>
+                                <select id="kategori" name="kategori" class="form-control">
+                                    <option value="Ciri Buah Kopi">Ciri Buah Kopi</option>
+                                    <option value="Pemetikan">Pemetikan</option>
+                                </select>
+                                <span class="text-danger">{{ $errors->first('kategori') }}</span>
+                            </div>
+                            {{-- <div class="form-group">
                                 <label for="tahapan">Tahapan</label>
                                 <input type="text" id="tahapan" name="tahapan" class="form-control" autofocus>
                                 <span class="text-danger">{{ $errors->first('tahapan') }}</span>
-                            </div>
+                            </div> --}}
 
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
@@ -61,7 +69,7 @@
 
                                 <div id="previewImages"></div>
 
-                                <button type="button" id="addImageBtn" class="btn btn-primary">Tambah Gambar</button>
+                                {{-- <button type="button" id="addImageBtn" class="btn btn-primary">Tambah Gambar</button> --}}
                             </div>
                         </div>
 

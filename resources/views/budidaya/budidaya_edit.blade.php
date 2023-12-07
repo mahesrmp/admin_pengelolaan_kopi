@@ -27,6 +27,32 @@
                         @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
+                                <label for="kategori">Kategori</label>
+                                <select id="kategori" name="kategori" class="form-control">
+                                    <option value="Syarat Tumbuh"
+                                        {{ $budidaya->kategori == 'Syarat Tumbuh' ? 'selected' : '' }}>Syarat Tumbuh
+                                    </option>
+                                    <option value="Pola Tanam" {{ $budidaya->kategori == 'Pola Tanam' ? 'selected' : '' }}>
+                                        Pola Tanam</option>
+                                    <option value="Pohon Pelindung"
+                                        {{ $budidaya->kategori == 'Pohon Pelindung' ? 'selected' : '' }}>Pohon Pelindung
+                                    </option>
+                                    <option value="Pembibitan" {{ $budidaya->kategori == 'Pembibitan' ? 'selected' : '' }}>
+                                        Pembibitan</option>
+                                    <option value="Pemupukan" {{ $budidaya->kategori == 'Pemupukan' ? 'selected' : '' }}>
+                                        Pemupukan</option>
+                                    <option value="Pemangkasan"
+                                        {{ $budidaya->kategori == 'Pemangkasan' ? 'selected' : '' }}>Pemangkasan</option>
+                                    <option value="Hama dan Penyakit"
+                                        {{ $budidaya->kategori == 'Hama dan Penyakit' ? 'selected' : '' }}>Hama dan Penyakit
+                                    </option>
+                                    <option value="Sanitasi Kebun"
+                                        {{ $budidaya->kategori == 'Sanitasi Kebun' ? 'selected' : '' }}>Sanitasi Kebun
+                                    </option>
+                                </select>
+                                <span class="text-danger">{{ $errors->first('kategori') }}</span>
+                            </div>
+                            <div class="form-group">
                                 <label for="tahapan">Tahapan</label>
                                 {{-- {!! Form::text('tahapan', null, ['class' => 'form-control', 'autofocus']) !!} --}}
                                 <input type="text" id="tahapan" name="tahapan" class="form-control"
@@ -37,8 +63,7 @@
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
                                 {{-- {!! Form::textarea('deskripsi', null, ['class' => 'form-control']) !!} --}}
-                                <textarea id="deskripsi" name="deskripsi" class="form-control"
-                                    value="{{ $budidaya->deskripsi }}">{!! $budidaya->deskripsi !!}</textarea>
+                                <textarea id="deskripsi" name="deskripsi" class="form-control" value="{{ $budidaya->deskripsi }}">{!! $budidaya->deskripsi !!}</textarea>
                                 <span class="text-danger">{{ $errors->first('deskripsi') }}</span>
                             </div>
 

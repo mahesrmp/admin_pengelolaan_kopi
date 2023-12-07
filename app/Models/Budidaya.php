@@ -19,7 +19,8 @@ class Budidaya extends Model
         'deskripsi',
         'link',
         'sumber_artikel',
-        'credit_gambar'
+        'credit_gambar',
+        'kategori'
     ];
 
     public function images()

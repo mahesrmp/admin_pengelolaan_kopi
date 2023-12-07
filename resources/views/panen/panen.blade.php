@@ -26,7 +26,7 @@
                             <div class="col-sm-6">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ $panen['tahapan'] }}</h5>
+                                        <h5 class="card-title">{{ $panen['kategori'] }}</h5>
                                     </div>
 
                                     <div class="card-body">
@@ -58,16 +58,16 @@
                                                 @endphp
                                                 @for ($i = 0; $i < $gambarCount; $i++)
                                                     <button type="button"
-                                                        data-bs-target="#carouselExampleIndicators{{ $panen['id'] }}"
+                                                        data-bs-target="#carouselExampleIndicators{{ $panen->id }}"
                                                         data-bs-slide-to="{{ $i }}"
                                                         class="{{ $i === 0 ? 'active' : '' }}"
                                                         aria-label="Slide {{ $i + 1 }}"></button>
                                                 @endfor
                                             </div>
                                             <div class="carousel-inner">
-                                                @foreach ($panen['images'] as $key => $image)
+                                                @foreach ($panen->images as $key => $image)
                                                     <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                                        <img src="{{ $image['gambar'] }}"
+                                                        <img src="{{ asset('storage/' . $image->gambar) }}"
                                                             style="width: 100%; height: 500px;" alt="...">
                                                     </div>
                                                 @endforeach

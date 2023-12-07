@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Kedai;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class KedaiController extends Controller
@@ -89,11 +90,21 @@ class KedaiController extends Controller
 
             if ($kedai) {
                 foreach ($request->file('gambar') as $gambar) {
+                    // Simpan gambar langsung ke dalam direktori public/budidayaimage
                     $gambarPath = $gambar->store('kedaiimage', 'public');
 
+                    Log::info('Path Gambar: ' . $gambarPath);
+
+                    // Simpan path gambar ke dalam tabel image_budidayas
                     $kedai->images()->create([
                         'gambar' => $gambarPath,
                     ]);
+
+                    // // Ambil URL gambar untuk respons
+                    // $imageUrl = asset('storage/budidayaimage/' . basename($gambarPath));
+
+                    // // Sertakan URL gambar dalam respons
+                    // $image->update(['url' => $imageUrl]);
                 }
 
                 return redirect()->route('kedai.index')->with('success', 'Informasi Kedai Kopi berhasil ditambahkan');

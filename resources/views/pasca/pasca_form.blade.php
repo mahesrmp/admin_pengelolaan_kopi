@@ -24,6 +24,14 @@
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
+                                <label for="kategori">Kategori</label>
+                                <select id="kategori" name="kategori" class="form-control">
+                                    <option value="Fermentasi Kering">Fermentasi Kering</option>
+                                    <option value="Fermentasi Mekanis">Fermentasi Mekanis</option>
+                                </select>
+                                <span class="text-danger">{{ $errors->first('kategori') }}</span>
+                            </div>
+                            <div class="form-group">
                                 <label for="tahapan">Tahapan</label>
                                 <input type="text" id="tahapan" name="tahapan" class="form-control" autofocus>
                                 <span class="text-danger">{{ $errors->first('tahapan') }}</span>
@@ -31,7 +39,7 @@
 
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
-                                <textarea id="deskripsi" name="deskripsi" class="form-control"></textarea>
+                                <textarea id="deskripsi" name="deskripsi" class="form-control auto-resize-textarea"></textarea>
                                 <span class="text-danger">{{ $errors->first('deskripsi') }}</span>
                             </div>
 
@@ -74,4 +82,23 @@
             <div class="col-md-6"></div>
         </div>
     </div>
+    <script>
+        document.addEventListener("input", function(e) {
+            if (e.target && e.target.classList.contains("auto-resize-textarea")) {
+                autoResizeTextarea(e.target);
+            }
+        });
+
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = "auto";
+            textarea.style.height = (textarea.scrollHeight) + "px";
+        }
+
+        // Trigger auto-resize saat halaman dimuat
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.auto-resize-textarea').forEach(function(textarea) {
+                autoResizeTextarea(textarea);
+            });
+        });
+    </script>
 @endsection

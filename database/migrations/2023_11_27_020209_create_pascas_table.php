@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('link');
             $table->string('sumber_artikel');
             $table->string('credit_gambar');
+            $table->enum('kategori', ['Fermentasi Kering', 'Fermentasi Mekanis']);
             $table->timestamps();
         });
     }

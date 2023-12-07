@@ -44,5 +44,3 @@ Route::resource('komunitas', KomunitasController::class)->names([
     'index' => 'komunitas.index',
 ]);
 Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan.index');
-
-Route::get('/api/budidaya', [BudidayaAPIController::class, 'getBudidayaData']);
