@@ -21,11 +21,22 @@
                         <h3 class="card-title">Form tambah data Panen</h3>
                     </div>
                     {{-- {!! Form::model($model, ['route' => $route, 'method' => $method, 'files' => true, 'enctype' => 'multipart/form-data']) !!} --}}
-                    <form action="{{ route('panen.update', $panen['id']) }}" method="POST"
-                        enctype="multipart/form-data">
+                    <form action="{{ route('panen.update', $panen['id']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
+                            <div class="form-group">
+                                <label for="kategori">Kategori</label>
+                                <select id="kategori" name="kategori" class="form-control">
+                                    <option value="Ciri Buah Kopi"
+                                        {{ $panen->kategori == 'Ciri Buah Kopi' ? 'selected' : '' }}>Ciri Buah Kopi
+                                    </option>
+                                    <option value="Pemetikan" {{ $panen->kategori == 'Pemetikan' ? 'selected' : '' }}>
+                                        Pemetikan
+                                    </option>
+                                </select>
+                                <span class="text-danger">{{ $errors->first('kategori') }}</span>
+                            </div>
                             <div class="form-group">
                                 <label for="tahapan">Tahapan</label>
                                 {{-- {!! Form::text('tahapan', null, ['class' => 'form-control', 'autofocus']) !!} --}}
@@ -37,8 +48,7 @@
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
                                 {{-- {!! Form::textarea('deskripsi', null, ['class' => 'form-control']) !!} --}}
-                                <textarea id="deskripsi" name="deskripsi" class="form-control"
-                                    value="{{ $panen->deskripsi }}">{!! $panen->deskripsi !!}</textarea>
+                                <textarea id="deskripsi" name="deskripsi" class="form-control" value="{{ $panen->deskripsi }}">{!! $panen->deskripsi !!}</textarea>
                                 <span class="text-danger">{{ $errors->first('deskripsi') }}</span>
                             </div>
 

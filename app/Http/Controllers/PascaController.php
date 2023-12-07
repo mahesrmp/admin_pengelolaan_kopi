@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Exception;
 use App\Models\Pasca;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class PascaController extends Controller
@@ -52,8 +53,11 @@ class PascaController extends Controller
                 'link' => 'required',
                 'sumber_artikel' => 'required',
                 'credit_gambar' => 'required',
-                'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+                'kategori' => 'required|in:Fermentasi Kering,Fermentasi Mekanis',
+                'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
             ]);
+
+            $kategori = $request->input('kategori');
 
             $pasca = Pasca::create([
                 'tahapan' => $request->tahapan,
@@ -61,15 +65,26 @@ class PascaController extends Controller
                 'link' => $request->link,
                 'sumber_artikel' => $request->sumber_artikel,
                 'credit_gambar' => $request->credit_gambar,
+                'kategori' => $kategori,
             ]);
 
             if ($pasca) {
                 foreach ($request->file('gambar') as $gambar) {
+                    // Simpan gambar langsung ke dalam direktori public/budidayaimage
                     $gambarPath = $gambar->store('pascaimage', 'public');
 
+                    Log::info('Path Gambar: ' . $gambarPath);
+
+                    // Simpan path gambar ke dalam tabel image_budidayas
                     $pasca->images()->create([
                         'gambar' => $gambarPath,
                     ]);
+
+                    // // Ambil URL gambar untuk respons
+                    // $imageUrl = asset('storage/budidayaimage/' . basename($gambarPath));
+
+                    // // Sertakan URL gambar dalam respons
+                    // $image->update(['url' => $imageUrl]);
                 }
 
                 return redirect()->route('pasca.index')->with('success', 'Informasi Pasca Panen berhasil ditambahkan');
@@ -122,8 +137,11 @@ class PascaController extends Controller
             'deskripsi' => 'required',
             'link' => 'required',
             'sumber_artikel' => 'required',
-            'credit_gambar' => 'required'
+            'credit_gambar' => 'required',
+            'kategori' => 'required|in:Fermentasi Kering,Fermentasi Mekanis'
         ]);
+
+        $kategori = $request->input('kategori');
 
         try {
             $pasca = Pasca::findOrFail($id);
@@ -132,6 +150,7 @@ class PascaController extends Controller
             $pasca->link = $request->link;
             $pasca->sumber_artikel = $request->sumber_artikel;
             $pasca->credit_gambar = $request->credit_gambar;
+            $pasca->kategori = $kategori;
 
             if ($request->hasFile('gambar')) {
                 $newImages = [];

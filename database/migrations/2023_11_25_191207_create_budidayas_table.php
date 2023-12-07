@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('link');
             $table->string('sumber_artikel');
             $table->string('credit_gambar');
+            $table->enum('kategori', ['Syarat Tumbuh', 'Pola Tanam', 'Pohon Pelindung', 'Pembibitan', 'Pemupukan', 'Pemangkasan', 'Hama dan Penyakit', 'Sanitasi Kebun']);
             $table->timestamps();
         });
     }

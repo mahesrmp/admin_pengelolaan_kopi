@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('panens', function (Blueprint $table) {
             $table->id();
-            $table->string('tahapan');
+            // $table->string('tahapan');
             $table->text('deskripsi');
             $table->string('link');
             $table->string('sumber_artikel');
             $table->string('credit_gambar');
+            $table->enum('kategori', ['Ciri Buah Kopi', 'Pemetikan']);
             $table->timestamps();
         });
     }

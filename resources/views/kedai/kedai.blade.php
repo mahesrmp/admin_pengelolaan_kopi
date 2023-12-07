@@ -77,7 +77,7 @@
                                             <div class="carousel-inner">
                                                 @foreach ($kedai['images'] as $key => $image)
                                                     <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                                        <img src="{{ $image['gambar'] }}"
+                                                        <img src="{{ asset('storage/' . $image->gambar) }}"
                                                             style="width: 100%; height: 500px;" alt="...">
                                                     </div>
                                                 @endforeach

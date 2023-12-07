@@ -16,7 +16,8 @@ class BudidayaController extends Controller
 {
     public function index()
     {
-        $budidayas = Budidaya::all();
+        $budidayas = Budidaya::with('images')->get();
+        // dd($budidayas);
         return view('budidaya.budidaya', compact('budidayas'), [
             'title' => 'Budidaya'
         ]);
@@ -47,8 +48,11 @@ class BudidayaController extends Controller
                 'link' => 'required',
                 'sumber_artikel' => 'required',
                 'credit_gambar' => 'required',
+                'kategori' => 'required|in:Syarat Tumbuh,Pola Tanam,Pohon Pelindung,Pembibitan,Pemupukan,Pemangkasan,Hama dan Penyakit,Sanitasi Kebun',
                 'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
             ]);
+
+            $kategori = $request->input('kategori');
 
             $budidaya = Budidaya::create([
                 'tahapan' => $request->tahapan,
@@ -56,6 +60,7 @@ class BudidayaController extends Controller
                 'link' => $request->link,
                 'sumber_artikel' => $request->sumber_artikel,
                 'credit_gambar' => $request->credit_gambar,
+                'kategori' => $kategori,
             ]);
 
             if ($budidaya) {
@@ -110,8 +115,11 @@ class BudidayaController extends Controller
             'deskripsi' => 'required',
             'link' => 'required',
             'sumber_artikel' => 'required',
-            'credit_gambar' => 'required'
+            'credit_gambar' => 'required',
+            'kategori' => 'required|in:Syarat Tumbuh,Pola Tanam,Pohon Pelindung,Pembibitan,Pemupukan,Pemangkasan,Hama dan Penyakit,Sanitasi Kebun'
         ]);
+
+        $kategori = $request->input('kategori');
 
         try {
             $budidaya = Budidaya::findOrFail($id);
@@ -120,6 +128,7 @@ class BudidayaController extends Controller
             $budidaya->link = $request->link;
             $budidaya->sumber_artikel = $request->sumber_artikel;
             $budidaya->credit_gambar = $request->credit_gambar;
+            $budidaya->kategori = $kategori;
 
             if ($request->hasFile('gambar')) {
                 $newImages = [];

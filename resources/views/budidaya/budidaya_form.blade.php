@@ -25,6 +25,20 @@
                         @csrf
                         <div class="card-body">
                             <div class="form-group">
+                                <label for="kategori">Kategori</label>
+                                <select id="kategori" name="kategori" class="form-control">
+                                    <option value="Syarat Tumbuh">Syarat Tumbuh</option>
+                                    <option value="Pola Tanam">Pola Tanam</option>
+                                    <option value="Pohon Pelindung">Pohon Pelindung</option>
+                                    <option value="Pembibitan">Pembibitan</option>
+                                    <option value="Pemupukan">Pemupukan</option>
+                                    <option value="Pemangkasan">Pemangkasan</option>
+                                    <option value="Hama dan Penyakit">Hama dan Penyakit</option>
+                                    <option value="Sanitasi Kebun">Sanitasi Kebun</option>
+                                </select>
+                                <span class="text-danger">{{ $errors->first('kategori') }}</span>
+                            </div>
+                            <div class="form-group">
                                 <label for="tahapan">Tahapan</label>
                                 {{-- {!! Form::text('tahapan', null, ['class' => 'form-control', 'autofocus']) !!} --}}
                                 <input type="text" id="tahapan" name="tahapan" class="form-control" autofocus>
@@ -33,10 +47,10 @@
 
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
-                                {{-- {!! Form::textarea('deskripsi', null, ['class' => 'form-control']) !!} --}}
-                                <textarea id="deskripsi" name="deskripsi" class="form-control"></textarea>
+                                <textarea id="deskripsi" name="deskripsi" class="form-control auto-resize-textarea"></textarea>
                                 <span class="text-danger">{{ $errors->first('deskripsi') }}</span>
                             </div>
+
 
                             <div class="form-group">
                                 <label for="link">Link</label>
@@ -68,7 +82,7 @@
                                 <div id="previewImages"></div>
 
                                 {{-- <button type="button" id="addImageBtn" class="btn btn-primary">Tambah Gambar</button> --}}
-                            </div>  
+                            </div>
                         </div>
 
                         <div class="card-footer">
@@ -108,5 +122,24 @@
 
         // Panggil handleNewInput untuk input pertama saat halaman dimuat
         handleNewInput(fileInput);
+    </script>
+    <script>
+        document.addEventListener("input", function(e) {
+            if (e.target && e.target.classList.contains("auto-resize-textarea")) {
+                autoResizeTextarea(e.target);
+            }
+        });
+
+        function autoResizeTextarea(textarea) {
+            textarea.style.height = "auto";
+            textarea.style.height = (textarea.scrollHeight) + "px";
+        }
+
+        // Trigger auto-resize saat halaman dimuat
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.auto-resize-textarea').forEach(function(textarea) {
+                autoResizeTextarea(textarea);
+            });
+        });
     </script>
 @endsection

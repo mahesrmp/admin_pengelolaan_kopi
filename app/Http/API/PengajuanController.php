@@ -19,7 +19,7 @@ class PengajuanController extends Controller
                 'foto_selfie' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'foto_sertifikat' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'petani_id' => 'required',
-            ]);
+            ]); 
 
             // Proses penyimpanan gambar jika ada
             $fotoKtpPath = $request->file('foto_ktp') ? $request->file('foto_ktp')->store('pengajuanimage', 'public') : null;
