@@ -14,7 +14,11 @@ class PengajuanController extends Controller
      */
     public function index()
     {
-        $pengajuans = Pengajuan::all();
+        $pengajuans = Pengajuan::join('users', 'pengajuans.petani_id', '=', 'users.id')
+            ->where('pengajuans.status', '0')
+            ->select('pengajuans.*', 'users.username') // Change 'nama' with the actual column name in the users table that stores the name
+            ->get();
+        // dd($pengajuans);
         return view('komunitas.pengajuan', compact('pengajuans'), [
             'title' => 'Data Pengajuan'
         ]);
@@ -84,5 +88,20 @@ class PengajuanController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function accept($id)
+    {
+        // Lakukan aksi menerima pengajuan berdasarkan $id
+        // Misalnya, set status pengajuan menjadi diterima
+        Pengajuan::where('id', $id)->update(['status' => '1']);
+
+        return redirect()->route('pengajuan.index')->with('success', 'Pengajuan berhasil diterima');
+    }
+
+    public function reject($id)
+    {
+        Pengajuan::where('id', $id)->update(['status' => '2']);
+        return redirect()->route('pengajuan.index')->with('success', 'Pengajuan berhasil ditolak');
     }
 }

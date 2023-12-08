@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('foto_selfie');
             $table->text('deskripsi_pengalaman');
             $table->string('foto_sertifikat');
-            $table->enum('status', [0, 1])->default(0);
+            $table->enum('status', [0, 1, 2])->default(0);
             $table->timestamps();
         });
     }

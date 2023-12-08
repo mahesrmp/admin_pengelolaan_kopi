@@ -44,3 +44,7 @@ Route::resource('komunitas', KomunitasController::class)->names([
     'index' => 'komunitas.index',
 ]);
 Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan.index');
+
+Route::post('/pengajuan/accept/{id}', [PengajuanController::class, 'accept'])->name('pengajuan.accept');
+Route::post('/pengajuan/reject/{id}', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
+
