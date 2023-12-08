@@ -1,6 +1,27 @@
 @extends('layouts.admin')
 
 @section('content')
+    <style>
+        .reject-button {
+            background-color: #dc3545;
+            /* Warna merah, bisa disesuaikan */
+            color: #fff;
+            /* Warna teks putih, bisa disesuaikan */
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .accept-button {
+            background-color: green;
+            /* Warna merah, bisa disesuaikan */
+            color: #fff;
+            /* Warna teks putih, bisa disesuaikan */
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -29,42 +50,60 @@
                                             <tr class="text-center">
                                                 <th class="text-center">No</th>
                                                 <th class="text-center">Nama</th>
-                                                <th class="text-center">Nomor HandPhone</th>
-                                                <th class="text-center">Email</th>
-                                                <th class="text-center">Role User</th>
+                                                <th class="text-center">Deskripsi Pengalaman</th>
+                                                <th class="text-center">Foto Profil</th>
+                                                <th class="text-center">Foto KTP</th>
+                                                <th class="text-center">Foto Sertifikat</th>
                                                 <th class="text-center">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- @forelse ($models as $item)
+                                            @forelse ($pengajuans as $item)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->nohp }}</td>
-                                                    <td>{{ $item->email }}</td>
-                                                    <td>{{ $item->role }}</td>
-                                                    <td class="text-center">
-                                                        {!! Form::open([
-                                                            'route' => ['user.destroy', $item->id],
-                                                            'method' => 'DELETE',
-                                                        ]) !!}
-                                                        <a href="{{ route('user.edit', $item->id) }}"
-                                                            class="btn btn-success btn-sm text-center"><i
-                                                                class="fas fa-edit"></i></a>
-                                                        <a class="btn btn-primary btn-sm text-center" href="#">
-                                                            <i class="fas fa-eye">
-                                                            </i></a>
-
-                                                        {{ Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm text-center btndelete', 'id' => 'delete']) }}
-                                                        {!! Form::close() !!}
+                                                    <td>{{ $item->username }}</td>
+                                                    <td>{{ $item->deskripsi_pengalaman }}</td>
+                                                    <td><img style="width: 200px"
+                                                            src="{{ asset('storage/' . $item->foto_selfie) }}"
+                                                            alt="Foto Profil">
                                                     </td>
+                                                    <td><img style="width: 200px"
+                                                            src="{{ asset('storage/' . $item->foto_ktp) }}" alt="Foto KTP">
+                                                    </td>
+                                                    <td><img style="width: 200px"
+                                                            src="{{ asset('storage/' . $item->foto_sertifikat) }}"
+                                                            alt="Foto Sertifikat">
+                                                    </td>
+
+
+                                                    <td class="text-center" style="margin-bottom: 10px;">
+                                                        <form action="{{ route('pengajuan.accept', ['id' => $item->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="accept-button">
+                                                                <i class="fas fa-check"></i> Terima
+                                                            </button>
+                                                        </form>
+                                                    </td>
+
+                                                    <td class="text-center">
+                                                        <form action="{{ route('pengajuan.reject', ['id' => $item->id]) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="reject-button">
+                                                                <i class="fas fa-times"></i> Tolak
+                                                            </button>
+                                                        </form>
+                                                    </td>
+
+
 
                                                 </tr>
                                             @empty
                                                 <tr>
                                                     <td colspan="4">Data User Tidak ada</td>
                                                 </tr>
-                                            @endforelse --}}
+                                            @endforelse
                                         </tbody>
                                     </table>
                                     {{-- {!! $models->links() !!} --}}
