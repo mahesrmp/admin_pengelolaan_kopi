@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -27,10 +28,16 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required',
-            'email' => 'required|email',
+            'nama_lengkap' => 'required',
+            'username' => 'required|unique:users',
+            // 'email' => 'required|email|unique:users',
             'password' => 'required',
-            'confirm_password' => 'required|same:password'
+            'confirm_password' => 'required|same:password',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan,Lainnya',
+            'provinsi' => 'required',
+            'kabupaten' => 'required',
+            'no_telp' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -38,30 +45,31 @@ class AuthController extends Controller
                 'success' => false,
                 'message' => 'Ada kesalahan',
                 'data' => $validator->errors()
-            ]);
+            ], 400);
         }
 
         $input = $request->all();
-        $input['password'] = bcrypt($input['password']);
+        $input['password'] = Hash::make($input['password']);
+        $input['confirm_password'] = Hash::make($input['confirm_password']);
         $user = User::create($input);
 
-        // $success['token'] = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token')->plainTextToken;
+        $success['token'] = $token;
         $success['username'] = $user->username;
 
         return response()->json([
             'success' => true,
             'message' => 'Sukses register',
             'data' => $success
-        ]);
+        ], 201);
     }
 
     public function login(Request $request)
     {
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             $auth = Auth::user();
-            // $success['token'] = $auth->createToken('auth_token')->plainTextToken;
+            $success['token'] = $auth->createToken('auth_token')->plainTextToken;
             $success['username'] = $auth->username;
-            $success['email'] = $auth->email;
             $success['id'] = $auth->id;
 
             return response()->json([

@@ -22,6 +22,14 @@ class BudidayaController extends Controller
             'title' => 'Budidaya'
         ]);
     }
+    public function penjualan_index()
+    {
+        // $penjualans = Budidaya::with('images')->get();
+        // dd($budidayas);
+        return view('penjualan.penjualan', [
+            'title' => 'Penjualan'
+        ]);
+    }
 
     public function create()
     {

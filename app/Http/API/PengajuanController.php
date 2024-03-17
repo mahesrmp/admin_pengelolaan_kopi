@@ -5,6 +5,7 @@ namespace App\Http\API;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class PengajuanController extends Controller
@@ -109,7 +110,8 @@ class PengajuanController extends Controller
         return response()->json($transformedData);
     }
 
-    public function getPengajuanStatusData($id){
+    public function getPengajuanStatusData($id)
+    {
         $pengajuanStatusData = Pengajuan::select('status', 'id', 'petani_id')->where('petani_id', $id)->get();
         return response()->json($pengajuanStatusData);
     }

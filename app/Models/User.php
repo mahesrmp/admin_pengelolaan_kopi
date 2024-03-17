@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Carbon;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -18,9 +19,16 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'nama_lengkap',
         'username',
-        'email',
+        // 'email',
         'password',
+        'confirm_password',
+        'tanggal_lahir',
+        'jenis_kelamin',
+        'provinsi',
+        'kabupaten',
+        'no_telp',
     ];
 
     /**
@@ -30,6 +38,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'confirm_password',
         'remember_token',
     ];
 
