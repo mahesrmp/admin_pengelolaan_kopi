@@ -44,10 +44,14 @@ Route::get('/pasca/fermentasi_mekanis', [BudidayaAPIController::class, 'getFerme
 //KEDAI
 Route::get('/kedai', [BudidayaAPIController::class, 'getKedaiData']);
 
-
+//PENGAJUAN
 Route::get('/pengajuan', [PengajuanController::class, 'getPengajuanData']);
 Route::get('/pengajuan_status/{id}', [PengajuanController::class, 'getPengajuanStatusData']);
 Route::post('/pengajuantambah', [PengajuanController::class, 'tambahData']);
+
+//KOMUNITAS
+Route::get('/komunitas', [BudidayaAPIController::class, 'getKomunitasData']);
+
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);

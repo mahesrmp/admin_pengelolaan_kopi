@@ -19,7 +19,9 @@ return new class extends Migration
             $table->string('foto_ktp');
             $table->string('foto_selfie');
             $table->text('deskripsi_pengalaman');
-            $table->string('foto_sertifikat');
+            $table->string('foto_sertifikat')->nullable();
+            $table->string('no_telp')->nullable();
+            $table->string('kabupaten')->nullable();
             $table->enum('status', [0, 1, 2])->default(0);
             $table->timestamps();
         });

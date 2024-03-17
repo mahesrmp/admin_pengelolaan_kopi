@@ -43,6 +43,7 @@ Route::resource('kedai', KedaiController::class)->names([
 Route::resource('komunitas', KomunitasController::class)->names([
     'index' => 'komunitas.index',
 ]);
+Route::get('penjualan', [BudidayaController::class, 'penjualan_index'])->name('penjualan.index');
 Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan.index');
 
 Route::post('/pengajuan/accept/{id}', [PengajuanController::class, 'accept'])->name('pengajuan.accept');
