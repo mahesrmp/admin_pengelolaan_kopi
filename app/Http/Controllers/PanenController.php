@@ -176,4 +176,15 @@ class PanenController extends Controller
             $image->delete();
         }
     }
+
+    public function show($id)
+    {
+        // Mengambil data panen berdasarkan ID
+        $panen = Panen::findOrFail($id);
+
+        // Menampilkan halaman detail dengan data panen
+        return view('panen.detail', compact('panen'),  [
+            'title' => 'Detail Tahapan Panen'
+        ]);
+    }
 }

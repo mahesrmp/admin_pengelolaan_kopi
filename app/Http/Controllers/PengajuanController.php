@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengajuan;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PengajuanController extends Controller
@@ -103,5 +104,14 @@ class PengajuanController extends Controller
     {
         Pengajuan::where('id', $id)->update(['status' => '2']);
         return redirect()->route('pengajuan.index')->with('success', 'Pengajuan berhasil ditolak');
+    }
+
+    public function get_data_user()
+    {
+        $getDataUser = User::all();
+        // dd($getDataUser);
+        return view('users.index', compact('getDataUser'), [
+            'title' => 'Informasi Data Users'
+        ]);
     }
 }

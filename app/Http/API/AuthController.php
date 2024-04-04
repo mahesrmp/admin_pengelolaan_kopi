@@ -61,7 +61,7 @@ class AuthController extends Controller
             'success' => true,
             'message' => 'Sukses register',
             'data' => $success
-        ], 201);
+        ], 200);
     }
 
     public function login(Request $request)

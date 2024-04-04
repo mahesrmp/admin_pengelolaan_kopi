@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\API\PengajuanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\API\BudidayaAPIController;
+use App\Http\API\PermintaanPembelianController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,3 +56,7 @@ Route::get('/komunitas', [BudidayaAPIController::class, 'getKomunitasData']);
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+
+//Permintaan Pembelian
+Route::get('permintaan_pembelian', [PermintaanPembelianController::class, 'index']);
+Route::post('permintaan_pembelian', [PermintaanPembelianController::class, 'store']);
