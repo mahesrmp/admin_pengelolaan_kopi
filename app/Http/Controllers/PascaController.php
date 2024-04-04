@@ -103,10 +103,6 @@ class PascaController extends Controller
      * @param  \App\Models\Pasca  $pasca
      * @return \Illuminate\Http\Response
      */
-    public function show(Pasca $pasca)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -207,5 +203,14 @@ class PascaController extends Controller
 
             $image->delete();
         }
+    }
+
+    public function show($id)
+    {
+        $pasca = Pasca::findOrFail($id); // Mengambil data pasca berdasarkan ID
+
+        return view('pasca.detail', compact('pasca'), [
+            'title' => 'Informasi Data Pasca Panen'
+        ]); // Menampilkan halaman detail dengan data pasca
     }
 }

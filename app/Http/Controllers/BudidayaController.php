@@ -217,4 +217,14 @@ class BudidayaController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+    public function show($id)
+    {
+        // Mengambil data budidaya berdasarkan ID
+        $budidaya = Budidaya::findOrFail($id);
+
+        // Menampilkan halaman detail dengan data budidaya
+        return view('budidaya.detail', compact('budidaya'), [
+            'title' => 'Detail Tahapan Budidaya'
+        ]);
+    }
 }

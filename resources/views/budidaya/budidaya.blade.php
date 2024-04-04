@@ -28,127 +28,11 @@
                                 <div class="col-sm-6">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h5 class="card-title">
-                                                <strong
-                                                    class="font-size-lg font-weight-bold">{{ $budidaya['tahapan'] }}</strong>
+                                            <h5 class="card-title budidaya-tahapan">
+                                                <a href="{{ route('budidaya.show', $budidaya['id']) }}">
+                                                    {{ $budidaya['tahapan'] }}
+                                                </a>
                                             </h5>
-                                        </div>
-
-                                        <div class="card-body">
-                                            <h5 class="card-title">Deskripsi:</h5>
-                                            <p class="card-text mt-2">{{ $budidaya['deskripsi'] }}</p>
-                                        </div>
-
-                                        <div class="card-body">
-                                            <h5 class="card-title">Sumber Artikel:</h5>
-                                            <p class="card-text mt-2">{{ $budidaya['sumber_artikel'] }}</p>
-                                        </div>
-
-                                        <div class="card-body">
-                                            <h5 class="card-title">Link Video:</h5>
-                                            <p class="card-text mt-2">
-                                                <a href="{{ $budidaya['link'] }}">{{ $budidaya['link'] }}</a>
-                                            </p>
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">Gambar</h5>
-                                            <div id="carouselExampleIndicators{{ $budidaya->id }}" class="carousel slide"
-                                                data-bs-ride="carousel">
-                                                <div class="carousel-indicators">
-                                                    @php
-                                                        $gambarCount = count($budidaya->images); // Menghitung jumlah gambar dari relasi images
-                                                    @endphp
-                                                    @for ($i = 0; $i < $gambarCount; $i++)
-                                                        <button type="button"
-                                                            data-bs-target="#carouselExampleIndicators{{ $budidaya->id }}"
-                                                            data-bs-slide-to="{{ $i }}"
-                                                            class="{{ $i === 0 ? 'active' : '' }}"
-                                                            aria-label="Slide {{ $i + 1 }}"></button>
-                                                    @endfor
-                                                </div>
-                                                <div class="carousel-inner">
-                                                    @foreach ($budidaya->images as $key => $image)
-                                                        <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                                            <img src="{{ asset('storage/' . $image->gambar) }}"
-                                                                style="width: 100%; height: 500px;" alt="...">
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-                                                <button class="carousel-control-prev" type="button"
-                                                    data-bs-target="#carouselExampleIndicators{{ $budidaya->id }}"
-                                                    data-bs-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Previous</span>
-                                                </button>
-                                                <button class="carousel-control-next" type="button"
-                                                    data-bs-target="#carouselExampleIndicators{{ $budidaya->id }}"
-                                                    data-bs-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="visually-hidden">Next</span>
-                                                </button>
-                                            </div>
-                                        </div>
-
-
-                                        {{-- <div class="card-body">
-                                                        <h5 class="card-title">Gambar</h5>
-                                                        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                                                            <div class="carousel-indicators">
-                                                                @php
-                                                                    $gambarCount = count($budidayas); // Menghitung jumlah gambar dari data yang diterima
-                                                                @endphp
-                                                                @for ($i = 0; $i < $gambarCount; $i++)
-                                                                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ $i }}"
-                                                                        class="{{ $i === 0 ? 'active' : '' }}" aria-label="Slide {{ $i + 1 }}"></button>
-                                                                @endfor
-                                                            </div>
-                                                            <div class="carousel-inner">
-                                                                @foreach ($budidayas as $key => $budidaya)
-                                                                    <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                                                        @if (isset($budidaya['gambar']))
-                                                                            <img src="{{ $budidaya['gambar'] }}" class="d-block w-100" alt="...">
-                                                                        @else
-                                                                            <!-- Tampilkan gambar default jika gambar tidak ada -->
-                                                                            <img src="{{ asset('template/dist/img/default.jpg') }}" class="d-block w-100" alt="Default">
-                                                                        @endif
-                                                                    </div>
-                                                                @endforeach
-                                                            </div>
-                                                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                                                                data-bs-slide="prev">
-                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                                <span class="visually-hidden">Previous</span>
-                                                            </button>
-                                                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                                                                data-bs-slide="next">
-                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                                <span class="visually-hidden">Next</span>
-                                                            </button>
-                                                        </div>
-                                                    </div> --}}
-
-                                        <div class="card-body">
-                                            <h5 class="card-title">Credit Gambar</h5>
-                                            <p class="card-text mt-2">{{ $budidaya['credit_gambar'] }}</p>
-                                        </div>
-                                        <div class="card-footer d-flex justify-content-end">
-                                            <div class="text-right">
-                                                <form id="delete-form-{{ $budidaya['id'] }}"
-                                                    action="{{ route('budidaya.destroy', $budidaya['id']) }}"
-                                                    method="POST" class="d-inline delete-about-form">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="button"
-                                                        onclick="confirmDelete({{ $budidaya['id'] }}, event)"
-                                                        class="btn btn-danger btn-sm delete-about">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-
-                                                </form>
-                                                <a href="{{ route('budidaya.edit', $budidaya['id']) }}"
-                                                    class="btn btn-success btn-sm text-center"><i
-                                                        class="fas fa-edit"></i></a>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -161,27 +45,6 @@
         </section>
         <!-- /.Left col -->
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function confirmDelete(id, event) {
-            event.preventDefault(); // Mencegah perilaku formulir default
-
-            Swal.fire({
-                title: 'Apakah Anda yakin?',
-                text: 'Data akan dihapus permanen!',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, hapus!',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('delete-form-' + id).submit();
-                }
-            });
-        }
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Tambahkan script SweetAlert2 di sini

@@ -8,6 +8,7 @@ use App\Http\Controllers\PascaController;
 use App\Http\Controllers\BudidayaController;
 use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\PengajuanController;
+use App\Models\Panen;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +50,7 @@ Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan
 Route::post('/pengajuan/accept/{id}', [PengajuanController::class, 'accept'])->name('pengajuan.accept');
 Route::post('/pengajuan/reject/{id}', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
 
+Route::get('data_user', [PengajuanController::class, 'get_data_user'])->name('getDataUser');
+Route::get('/budidaya/{id}', [[BudidayaController::class, 'show']])->name('budidaya.show');
+Route::get('/panen/{id}', [[PanenController::class, 'show']])->name('panen.show');
+Route::get('/pascas/{id}', [[PascaController::class, 'show']])->name('pasca.show');
