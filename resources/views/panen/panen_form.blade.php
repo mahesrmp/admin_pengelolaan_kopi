@@ -25,10 +25,7 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <select id="kategori" name="kategori" class="form-control">
-                                    <option value="Ciri Buah Kopi">Ciri Buah Kopi</option>
-                                    <option value="Pemetikan">Pemetikan</option>
-                                </select>
+                                <input type="text" id="kategori" name="kategori" class="form-control" autofocus>
                                 <span class="text-danger">{{ $errors->first('kategori') }}</span>
                             </div>
                             {{-- <div class="form-group">
@@ -49,11 +46,6 @@
                                 <span class="text-danger">{{ $errors->first('link') }}</span>
                             </div>
 
-                            <div class="form-group">
-                                <label for="sumber_artikel">Sumber Artikel</label>
-                                <input type="text" id="sumber_artikel" name="sumber_artikel" class="form-control">
-                                <span class="text-danger">{{ $errors->first('sumber_artikel') }}</span>
-                            </div>
 
                             <div class="form-group">
                                 <label for="credit_gambar">Credit Gambar</label>
@@ -82,4 +74,11 @@
             <div class="col-md-6"></div>
         </div>
     </div>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#deskripsi'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

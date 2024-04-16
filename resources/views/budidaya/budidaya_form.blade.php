@@ -26,44 +26,28 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <select id="kategori" name="kategori" class="form-control">
-                                    <option value="Syarat Tumbuh">Syarat Tumbuh</option>
-                                    <option value="Pola Tanam">Pola Tanam</option>
-                                    <option value="Pohon Pelindung">Pohon Pelindung</option>
-                                    <option value="Pembibitan">Pembibitan</option>
-                                    <option value="Pemupukan">Pemupukan</option>
-                                    <option value="Pemangkasan">Pemangkasan</option>
-                                    <option value="Hama dan Penyakit">Hama dan Penyakit</option>
-                                    <option value="Sanitasi Kebun">Sanitasi Kebun</option>
-                                </select>
+                                <input type="text" id="kategori" name="kategori" class="form-control" autofocus>
                                 <span class="text-danger">{{ $errors->first('kategori') }}</span>
                             </div>
                             <div class="form-group">
                                 <label for="tahapan">Tahapan</label>
                                 {{-- {!! Form::text('tahapan', null, ['class' => 'form-control', 'autofocus']) !!} --}}
-                                <input type="text" id="tahapan" name="tahapan" class="form-control" autofocus>
+                                <input type="text" id="tahapan" name="tahapan" class="form-control">
                                 <span class="text-danger">{{ $errors->first('tahapan') }}</span>
                             </div>
 
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
+                                <!-- Menggunakan strip_tags() untuk menghilangkan tag HTML -->
                                 <textarea id="deskripsi" name="deskripsi" class="form-control auto-resize-textarea"></textarea>
                                 <span class="text-danger">{{ $errors->first('deskripsi') }}</span>
                             </div>
-
 
                             <div class="form-group">
                                 <label for="link">Link</label>
                                 {{-- {!! Form::text('link', null, ['class' => 'form-control']) !!} --}}
                                 <input type="text" id="link" name="link" class="form-control">
                                 <span class="text-danger">{{ $errors->first('link') }}</span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="sumber_artikel">Sumber Artikel</label>
-                                {{-- {!! Form::text('sumber_artikel', null, ['class' => 'form-control']) !!} --}}
-                                <input type="text" id="sumber_artikel" name="sumber_artikel" class="form-control">
-                                <span class="text-danger">{{ $errors->first('sumber_artikel') }}</span>
                             </div>
 
                             <div class="form-group">
@@ -142,4 +126,12 @@
             });
         });
     </script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#deskripsi' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+    
 @endsection

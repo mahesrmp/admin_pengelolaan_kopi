@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('tahapan');
             $table->text('deskripsi');
             $table->string('link');
-            $table->string('sumber_artikel');
-            $table->string('credit_gambar');
-            $table->enum('kategori', ['Fermentasi Kering', 'Fermentasi Mekanis']);
+            // $table->string('sumber_artikel');
+            $table->string('credit_gambar')->nullable();
+            $table->string('kategori');
             $table->timestamps();
         });
     }

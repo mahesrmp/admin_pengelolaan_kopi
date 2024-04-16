@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('panens', function (Blueprint $table) {
+        Schema::create('artikel_komentars', function (Blueprint $table) {
             $table->id();
-            // $table->string('tahapan');
-            $table->text('deskripsi');
-            $table->string('link');
-            // $table->string('sumber_artikel');
-            $table->string('credit_gambar')->nullable();
-            $table->string('kategori');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('artikel_id');
+            $table->string('komentar');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('artikel_id')->references('id')->on('artikels')->onDelete('cascade');
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('panens');
+        Schema::dropIfExists('artikel_komentars');
     }
 };

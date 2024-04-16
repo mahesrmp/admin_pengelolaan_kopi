@@ -10,7 +10,7 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                     <h5 class="card-title">Tahapan: {{ $budidaya['tahapan'] }}</h5>
-                    <p class="card-text">Deskripsi: {{ $budidaya['deskripsi'] }}</p>
+                    <p class="card-text">Deskripsi: {!! $budidaya['deskripsi'] !!}</p>
                     <p class="card-text">Sumber Artikel: {{ $budidaya['sumber_artikel'] }}</p>
                     <p class="card-text">Link Video: <a href="{{ $budidaya['link'] }}">{{ $budidaya['link'] }}</a></p>
                     <div class="card-body">
@@ -31,7 +31,7 @@
                                 @foreach ($budidaya->images as $key => $image)
                                     <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
                                         <img src="{{ asset('storage/' . $image->gambar) }}"
-                                            style="width: 100%; height: 500px;" alt="...">
+                                            style="width: 500px; height: 500px;" alt="...">
                                     </div>
                                 @endforeach
                             </div>
@@ -58,4 +58,3 @@
     </div>
     <!-- /.row -->
 @endsection
-

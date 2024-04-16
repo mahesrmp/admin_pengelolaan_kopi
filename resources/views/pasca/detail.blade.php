@@ -2,30 +2,17 @@
 
 @section('content')
     <div class="row">
-        <!-- Left col -->
-        <section class="col-lg-12 connectedSortable">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">{{ $pasca->kategori }}</h3>
+                    <h3 class="card-title">Detail Pasca Panen</h3>
                 </div>
+                <!-- /.card-header -->
                 <div class="card-body">
-                    <div class="card-body">
-                        <h5 class="card-title">Deskripsi:</h5>
-                        <p class="card-text mt-2">{{ $pasca->deskripsi }}</p>
-                    </div>
-
-                    <div class="card-body">
-                        <h5 class="card-title">Sumber Artikel:</h5>
-                        <p class="card-text mt-2">{{ $pasca->sumber_artikel }}</p>
-                    </div>
-
-                    <div class="card-body">
-                        <h5 class="card-title">Link Video:</h5>
-                        <p class="card-text mt-2">
-                            <a href="{{ $pasca->link }}">{{ $pasca->link }}</a>
-                        </p>
-                    </div>
-
+                    <h5 class="card-title">Tahapan: {{ $pasca['tahapan'] }}</h5>
+                    <p class="card-text">Deskripsi: {!! $pasca['deskripsi'] !!}</p>
+                    <p class="card-text">Sumber Artikel: {{ $pasca['sumber_artikel'] }}</p>
+                    <p class="card-text">Link Video: <a href="{{ $pasca['link'] }}">{{ $pasca['link'] }}</a></p>
                     <div class="card-body">
                         <h5 class="card-title">Gambar</h5>
                         <div id="carouselExampleIndicators{{ $pasca->id }}" class="carousel slide"
@@ -44,7 +31,7 @@
                                 @foreach ($pasca->images as $key => $image)
                                     <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
                                         <img src="{{ asset('storage/' . $image->gambar) }}"
-                                            style="width: 100%; height: 500px;" alt="...">
+                                            style="width: 500px; height: 500px;" alt="...">
                                     </div>
                                 @endforeach
                             </div>
@@ -60,14 +47,14 @@
                             </button>
                         </div>
                     </div>
-
-                    <div class="card-body">
-                        <h5 class="card-title">Credit Gambar</h5>
-                        <p class="card-text mt-2">{{ $pasca->credit_gambar }}</p>
-                    </div>
+                    <p class="card-text">Credit Gambar: {{ $pasca['credit_gambar'] }}</p>
+                    <!-- Tambahan informasi atau fitur sesuai kebutuhan -->
                 </div>
-            </div><!-- /.card-header -->
-        </section>
-        <!-- /.Left col -->
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col-lg-12 -->
     </div>
+    <!-- /.row -->
 @endsection

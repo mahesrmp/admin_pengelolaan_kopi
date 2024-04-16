@@ -105,7 +105,7 @@
                 </a>
             </li> --}}
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a href="/kedai" class="nav-link {{ \Route::is('kedai.index') ? 'active' : '' }}">
                     <i class="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -148,7 +148,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> --}}
             <li i class="nav-item">
                 <a href="/data_user" class="nav-link {{ \Route::is('getDataUser') ? 'active' : '' }}">
                     <i class="">

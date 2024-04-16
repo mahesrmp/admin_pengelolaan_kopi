@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use DOMDocument;
 use GuzzleHttp\Client;
 use App\Models\Budidaya;
 use Illuminate\Http\Request;
@@ -54,9 +55,8 @@ class BudidayaController extends Controller
                 'tahapan' => 'required',
                 'deskripsi' => 'required',
                 'link' => 'required',
-                'sumber_artikel' => 'required',
                 'credit_gambar' => 'required',
-                'kategori' => 'required|in:Syarat Tumbuh,Pola Tanam,Pohon Pelindung,Pembibitan,Pemupukan,Pemangkasan,Hama dan Penyakit,Sanitasi Kebun',
+                'kategori' => 'required',
                 'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
             ]);
 
@@ -64,32 +64,21 @@ class BudidayaController extends Controller
 
             $budidaya = Budidaya::create([
                 'tahapan' => $request->tahapan,
+                // Simpan deskripsi sebagai array
                 'deskripsi' => $request->deskripsi,
                 'link' => $request->link,
-                'sumber_artikel' => $request->sumber_artikel,
                 'credit_gambar' => $request->credit_gambar,
                 'kategori' => $kategori,
             ]);
 
+            // Simpan gambar
             if ($budidaya) {
                 foreach ($request->file('gambar') as $gambar) {
-                    // Simpan gambar langsung ke dalam direktori public/budidayaimage
                     $gambarPath = $gambar->store('budidayaimage', 'public');
-
-                    Log::info('Path Gambar: ' . $gambarPath);
-
-                    // Simpan path gambar ke dalam tabel image_budidayas
                     $budidaya->images()->create([
                         'gambar' => $gambarPath,
                     ]);
-
-                    // // Ambil URL gambar untuk respons
-                    // $imageUrl = asset('storage/budidayaimage/' . basename($gambarPath));
-
-                    // // Sertakan URL gambar dalam respons
-                    // $image->update(['url' => $imageUrl]);
                 }
-
                 return redirect()->route('budidaya.index')->with('success', 'Informasi Budidaya berhasil ditambahkan');
             } else {
                 $errorMessage = $budidaya->status() . ': ' . $budidaya->body();
@@ -99,6 +88,7 @@ class BudidayaController extends Controller
             return redirect()->back()->with('error', $e->getMessage())->withInput();
         }
     }
+
 
     public function edit($id)
     {
@@ -121,10 +111,11 @@ class BudidayaController extends Controller
         $request->validate([
             'tahapan' => 'required',
             'deskripsi' => 'required',
+            // 'jenis' => 'required',
             'link' => 'required',
-            'sumber_artikel' => 'required',
+            // 'sumber_artikel' => 'required',
             'credit_gambar' => 'required',
-            'kategori' => 'required|in:Syarat Tumbuh,Pola Tanam,Pohon Pelindung,Pembibitan,Pemupukan,Pemangkasan,Hama dan Penyakit,Sanitasi Kebun'
+            'kategori' => 'required'
         ]);
 
         $kategori = $request->input('kategori');
@@ -133,8 +124,9 @@ class BudidayaController extends Controller
             $budidaya = Budidaya::findOrFail($id);
             $budidaya->tahapan = $request->tahapan;
             $budidaya->deskripsi = $request->deskripsi;
+            // $budidaya->jenis = $request->jenis;
             $budidaya->link = $request->link;
-            $budidaya->sumber_artikel = $request->sumber_artikel;
+            // $budidaya->sumber_artikel = $request->sumber_artikel;
             $budidaya->credit_gambar = $request->credit_gambar;
             $budidaya->kategori = $kategori;
 

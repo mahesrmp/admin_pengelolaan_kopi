@@ -21,21 +21,14 @@
                         <h3 class="card-title">Form tambah data Pasca Panen</h3>
                     </div>
                     {{-- {!! Form::model($model, ['route' => $route, 'method' => $method, 'files' => true, 'enctype' => 'multipart/form-data']) !!} --}}
-                    <form action="{{ route('pasca.update', $pasca['id']) }}" method="POST"
-                        enctype="multipart/form-data">
+                    <form action="{{ route('pasca.update', $pasca['id']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <select id="kategori" name="kategori" class="form-control">
-                                    <option value="Fermentasi Kering"
-                                        {{ $pasca->kategori == 'Fermentasi Kering' ? 'selected' : '' }}>Fermentasi Kering
-                                    </option>
-                                    <option value="Fermentasi Mekanis" {{ $pasca->kategori == 'Fermentasi Mekanis' ? 'selected' : '' }}>
-                                        Fermentasi Mekanis
-                                    </option>
-                                </select>
+                                <input type="text" id="kategori" name="kategori" class="form-control"
+                                    value="{{ $pasca->kategori }}">
                                 <span class="text-danger">{{ $errors->first('kategori') }}</span>
                             </div>
                             <div class="form-group">
@@ -49,8 +42,7 @@
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
                                 {{-- {!! Form::textarea('deskripsi', null, ['class' => 'form-control']) !!} --}}
-                                <textarea id="deskripsi" name="deskripsi" class="form-control"
-                                    value="{{ $pasca->deskripsi }}">{!! $pasca['deskripsi'] !!}</textarea>
+                                <textarea id="deskripsi" name="deskripsi" class="form-control" value="{{ $pasca->deskripsi }}">{!! $pasca->deskripsi !!}</textarea>
                                 <span class="text-danger">{{ $errors->first('deskripsi') }}</span>
                             </div>
 
@@ -60,14 +52,6 @@
                                 <input type="text" id="link" name="link" class="form-control"
                                     value="{{ $pasca->link }}">
                                 <span class="text-danger">{{ $errors->first('link') }}</span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="sumber_artikel">Sumber Artikel</label>
-                                {{-- {!! Form::text('sumber_artikel', null, ['class' => 'form-control']) !!} --}}
-                                <input type="text" id="sumber_artikel" name="sumber_artikel" class="form-control"
-                                    value="{{ $pasca->sumber_artikel }}">
-                                <span class="text-danger">{{ $errors->first('sumber_artikel') }}</span>
                             </div>
 
                             <div class="form-group">

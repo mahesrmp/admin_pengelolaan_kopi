@@ -27,24 +27,10 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <select id="kategori" name="kategori" class="form-control">
-                                    <option value="Ciri Buah Kopi"
-                                        {{ $panen->kategori == 'Ciri Buah Kopi' ? 'selected' : '' }}>Ciri Buah Kopi
-                                    </option>
-                                    <option value="Pemetikan" {{ $panen->kategori == 'Pemetikan' ? 'selected' : '' }}>
-                                        Pemetikan
-                                    </option>
-                                </select>
+                                <input type="text" id="kategori" name="kategori" class="form-control"
+                                    value="{{ $panen->kategori }}">
                                 <span class="text-danger">{{ $errors->first('kategori') }}</span>
                             </div>
-                            <div class="form-group">
-                                <label for="tahapan">Tahapan</label>
-                                {{-- {!! Form::text('tahapan', null, ['class' => 'form-control', 'autofocus']) !!} --}}
-                                <input type="text" id="tahapan" name="tahapan" class="form-control"
-                                    value="{{ $panen->tahapan }}">
-                                <span class="text-danger">{{ $errors->first('tahapan') }}</span>
-                            </div>
-
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
                                 {{-- {!! Form::textarea('deskripsi', null, ['class' => 'form-control']) !!} --}}
@@ -60,13 +46,7 @@
                                 <span class="text-danger">{{ $errors->first('link') }}</span>
                             </div>
 
-                            <div class="form-group">
-                                <label for="sumber_artikel">Sumber Artikel</label>
-                                {{-- {!! Form::text('sumber_artikel', null, ['class' => 'form-control']) !!} --}}
-                                <input type="text" id="sumber_artikel" name="sumber_artikel" class="form-control"
-                                    value="{{ $panen->sumber_artikel }}">
-                                <span class="text-danger">{{ $errors->first('sumber_artikel') }}</span>
-                            </div>
+
 
                             <div class="form-group">
                                 <label for="credit_gambar">Credit Gambar</label>
@@ -102,4 +82,11 @@
             <div class="col-md-6"></div>
         </div>
     </div>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#deskripsi'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

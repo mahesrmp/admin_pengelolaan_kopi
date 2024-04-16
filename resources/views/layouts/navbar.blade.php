@@ -38,19 +38,19 @@
         </div>
     </li> --}}
     <!-- Notifications Dropdown Menu -->
-    @php
+    {{-- @php
         $pengajuans = \DB::table('pengajuans')
             ->join('users', 'pengajuans.petani_id', '=', 'users.id')
             ->select('users.username')
             ->where('status', '0')
             // ->where('petani_id', Auth::user()->id)
             ->get();
-    @endphp
+    @endphp --}}
     {{-- <div class="icon-header-item cl2 hov-cl2 trans-04 p-r-11 p-l-20 icon-header-noti js-show-cart"
         data-notify="{{ count($pengajuans)  }}">
         <i class="zmdi zmdi-notifications"></i>
     </div> --}}
-    <li class="nav-item dropdown">
+    {{-- <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="far fa-bell"></i>
             <span class="badge badge-warning navbar-badge">{{ count($pengajuans) }}</span>
@@ -59,15 +59,10 @@
             <span class="dropdown-item dropdown-header">{{ count($pengajuans) }} Notifications</span>
             <div class="dropdown-divider"></div>
             <a href="{{ route('pengajuan.index') }}" class="dropdown-item">
-                {{-- <i class="fas fa-envelope mr-2"></i> --}}
                 {{ 'Terdapat ' . count($pengajuans) . ' pengajuan dari petani' }}
-                {{-- <span class="float-right text-muted text-sm">3 mins</span> --}}
             </a>
-            {{--             
-            <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a> --}}
         </div>
-    </li>
+    </li> --}}
     {{-- <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
             <i class="fas fa-expand-arrows-alt"></i>

@@ -29,8 +29,27 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title">
-                                                <a href="{{ route('pasca.show', $pasca->id) }}">{{ $pasca['tahapan'] }}</a>
+                                                <a href="{{ route('pasca.show', $pasca['id']) }}">
+                                                    {{ $pasca['tahapan'] }}
+                                                </a>
                                             </h5>
+                                            <div class="float-right">
+                                                <a href="{{ route('pasca.edit', $pasca['id']) }}"
+                                                    class="btn btn-success btn-sm text-center"><i
+                                                        class="fas fa-edit"></i></a>
+                                                <form id="delete-form-{{ $pasca['id'] }}"
+                                                    action="{{ route('pasca.destroy', $pasca['id']) }}" method="POST"
+                                                    class="d-inline delete-about-form">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button"
+                                                        onclick="confirmDelete({{ $pasca['id'] }}, event)"
+                                                        class="btn btn-danger btn-sm delete-about">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -43,4 +62,23 @@
         </section>
         <!-- /.Left col -->
     </div>
+    <script>
+        function confirmDelete(id, event) {
+            event.preventDefault(); // Mencegah perilaku formulir default
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: 'Data akan dihapus permanen!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+    </script>
 @endsection
