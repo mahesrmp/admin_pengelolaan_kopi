@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\API\ArtikelController;
 use App\Http\API\AuthController;
 use Illuminate\Http\Request;
 use App\Http\API\PengajuanController;
@@ -60,3 +61,6 @@ Route::post('login', [AuthController::class, 'login']);
 //Permintaan Pembelian
 Route::get('permintaan_pembelian', [PermintaanPembelianController::class, 'index']);
 Route::post('permintaan_pembelian', [PermintaanPembelianController::class, 'store']);
+
+Route::get('artikel', [ArtikelController::class, 'index']);
+Route::post('artikel', [ArtikelController::class, 'store']);
