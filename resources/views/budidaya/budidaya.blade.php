@@ -33,6 +33,24 @@
                                                     {{ $budidaya['tahapan'] }}
                                                 </a>
                                             </h5>
+                                            <!-- Pindahkan tombol edit dan delete ke ujung kanan atas -->
+                                            <div class="float-right">
+                                                <a href="{{ route('budidaya.edit', $budidaya['id']) }}"
+                                                    class="btn btn-success btn-sm text-center"><i
+                                                        class="fas fa-edit"></i></a>
+                                                <form id="delete-form-{{ $budidaya['id'] }}"
+                                                    action="{{ route('budidaya.destroy', $budidaya['id']) }}" method="POST"
+                                                    class="d-inline delete-about-form">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="button"
+                                                        onclick="confirmDelete({{ $budidaya['id'] }}, event)"
+                                                        class="btn btn-danger btn-sm delete-about">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -45,7 +63,6 @@
         </section>
         <!-- /.Left col -->
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // Tambahkan script SweetAlert2 di sini
         @if (session('success'))
@@ -65,5 +82,24 @@
                 confirmButtonText: 'OK'
             });
         @endif
+    </script>
+    <script>
+        function confirmDelete(id, event) {
+            event.preventDefault(); // Mencegah perilaku formulir default
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: 'Data akan dihapus permanen!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
     </script>
 @endsection

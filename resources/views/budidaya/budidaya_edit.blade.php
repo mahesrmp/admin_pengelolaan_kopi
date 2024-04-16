@@ -1,4 +1,4 @@
-@extends('layouts.dashboard')
+@extends('layouts.admin')
 
 @section('content')
     <div class="container-fluid">
@@ -28,29 +28,16 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <select id="kategori" name="kategori" class="form-control">
-                                    <option value="Syarat Tumbuh"
-                                        {{ $budidaya->kategori == 'Syarat Tumbuh' ? 'selected' : '' }}>Syarat Tumbuh
-                                    </option>
-                                    <option value="Pola Tanam" {{ $budidaya->kategori == 'Pola Tanam' ? 'selected' : '' }}>
-                                        Pola Tanam</option>
-                                    <option value="Pohon Pelindung"
-                                        {{ $budidaya->kategori == 'Pohon Pelindung' ? 'selected' : '' }}>Pohon Pelindung
-                                    </option>
-                                    <option value="Pembibitan" {{ $budidaya->kategori == 'Pembibitan' ? 'selected' : '' }}>
-                                        Pembibitan</option>
-                                    <option value="Pemupukan" {{ $budidaya->kategori == 'Pemupukan' ? 'selected' : '' }}>
-                                        Pemupukan</option>
-                                    <option value="Pemangkasan"
-                                        {{ $budidaya->kategori == 'Pemangkasan' ? 'selected' : '' }}>Pemangkasan</option>
-                                    <option value="Hama dan Penyakit"
-                                        {{ $budidaya->kategori == 'Hama dan Penyakit' ? 'selected' : '' }}>Hama dan Penyakit
-                                    </option>
-                                    <option value="Sanitasi Kebun"
-                                        {{ $budidaya->kategori == 'Sanitasi Kebun' ? 'selected' : '' }}>Sanitasi Kebun
-                                    </option>
-                                </select>
+                                <input type="text" id="kategori" name="kategori" class="form-control"
+                                    value="{{ $budidaya->kategori }}">
                                 <span class="text-danger">{{ $errors->first('kategori') }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="tahapan">Tahapan</label>
+                                {{-- {!! Form::text('tahapan', null, ['class' => 'form-control', 'autofocus']) !!} --}}
+                                <input type="text" id="tahapan" name="tahapan" class="form-control"
+                                    value="{{ $budidaya->tahapan }}">
+                                <span class="text-danger">{{ $errors->first('tahapan') }}</span>
                             </div>
                             <div class="form-group">
                                 <label for="tahapan">Tahapan</label>
@@ -63,7 +50,7 @@
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
                                 {{-- {!! Form::textarea('deskripsi', null, ['class' => 'form-control']) !!} --}}
-                                <textarea id="deskripsi" name="deskripsi" class="form-control" value="{{ $budidaya->deskripsi }}">{!! $budidaya->deskripsi !!}</textarea>
+                                <textarea id="deskripsi" name="deskripsi" class="form-control" value="{{ $budidaya->deskripsi }}">{{ $budidaya->deskripsi }}</textarea>
                                 <span class="text-danger">{{ $errors->first('deskripsi') }}</span>
                             </div>
 
@@ -73,14 +60,6 @@
                                 <input type="text" id="link" name="link" class="form-control"
                                     value="{{ $budidaya->link }}">
                                 <span class="text-danger">{{ $errors->first('link') }}</span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="sumber_artikel">Sumber Artikel</label>
-                                {{-- {!! Form::text('sumber_artikel', null, ['class' => 'form-control']) !!} --}}
-                                <input type="text" id="sumber_artikel" name="sumber_artikel" class="form-control"
-                                    value="{{ $budidaya->sumber_artikel }}">
-                                <span class="text-danger">{{ $errors->first('sumber_artikel') }}</span>
                             </div>
 
                             <div class="form-group">
@@ -117,4 +96,13 @@
             <div class="col-md-6"></div>
         </div>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#deskripsi'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

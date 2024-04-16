@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="{{ asset('template/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- Summernote -->
     <link rel="stylesheet" href="{{ asset('template/plugins/summernote/summernote-bs4.min.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
         .card-text {
@@ -39,6 +40,8 @@
             /* Atau bisa menggunakan white-space: pre-wrap; untuk mempertahankan pemformatan garis baru dan spasi */
         }
     </style>
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.3.0/classic/ckeditor.js"></script>
 
 </head>
 
@@ -149,6 +152,7 @@
             @endif
         });
     </script>
+    @yield('scripts')
 </body>
 
 </html>

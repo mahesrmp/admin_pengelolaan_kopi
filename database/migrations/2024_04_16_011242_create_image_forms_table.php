@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('image_komunitas', function (Blueprint $table) {
+        Schema::create('image_forms', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('form_id');
+            $table->string('gambar');
             $table->timestamps();
+
+            $table->foreign('form_id')->references('id')->on('forms')->onDelete('cascade');
         });
     }
 
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('image_komunitas');
+        Schema::dropIfExists('image_forms');
     }
 };

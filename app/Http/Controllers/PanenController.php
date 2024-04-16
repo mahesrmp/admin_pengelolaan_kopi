@@ -42,7 +42,7 @@ class PanenController extends Controller
                 // 'tahapan' => 'required',
                 'deskripsi' => 'required',
                 'link' => 'required',
-                'sumber_artikel' => 'required',
+                // 'sumber_artikel' => 'required',
                 'credit_gambar' => 'required',
                 'kategori' => 'required|in:Ciri Buah Kopi,Pemetikan',
                 'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
@@ -54,7 +54,7 @@ class PanenController extends Controller
                 // 'tahapan' => $request->tahapan,
                 'deskripsi' => $request->deskripsi,
                 'link' => $request->link,
-                'sumber_artikel' => $request->sumber_artikel,
+                // 'sumber_artikel' => $request->sumber_artikel,
                 'credit_gambar' => $request->credit_gambar,
                 'kategori' => $kategori
             ]);
@@ -110,7 +110,7 @@ class PanenController extends Controller
             // 'tahapan' => 'required',
             'deskripsi' => 'required',
             'link' => 'required',
-            'sumber_artikel' => 'required',
+            // 'sumber_artikel' => 'required',
             'credit_gambar' => 'required',
             'kategori' => 'required|in:Ciri Buah Kopi,Pemetikan'
         ]);
@@ -122,7 +122,7 @@ class PanenController extends Controller
             // $panen->tahapan = $request->tahapan;
             $panen->deskripsi = $request->deskripsi;
             $panen->link = $request->link;
-            $panen->sumber_artikel = $request->sumber_artikel;
+            // $panen->sumber_artikel = $request->sumber_artikel;
             $panen->credit_gambar = $request->credit_gambar;
             $panen->kategori = $kategori;
 

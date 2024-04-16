@@ -13,15 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('panens', function (Blueprint $table) {
+        Schema::create('artikel_likes', function (Blueprint $table) {
             $table->id();
-            // $table->string('tahapan');
-            $table->text('deskripsi');
-            $table->string('link');
-            // $table->string('sumber_artikel');
-            $table->string('credit_gambar')->nullable();
-            $table->string('kategori');
+            $table->unsignedBigInteger('artikel_id');
+            $table->enum('like',[0, 1, 2]);
             $table->timestamps();
+
+            $table->foreign('artikel_id')->references('id')->on('artikels')->onDelete('cascade');
         });
     }
 
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('panens');
+        Schema::dropIfExists('artikel_likes');
     }
 };

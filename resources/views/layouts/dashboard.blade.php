@@ -28,7 +28,9 @@
     <link rel="stylesheet" href="{{ asset('template/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- Summernote -->
     <link rel="stylesheet" href="{{ asset('template/plugins/summernote/summernote-bs4.min.css') }}">
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.3.0/classic/ckeditor.js"></script>
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
 
@@ -126,4 +128,5 @@
     <script src="{{ asset('template/dist/js/pages/dashboard.js') }}"></script>
 
 </body>
+
 </html>

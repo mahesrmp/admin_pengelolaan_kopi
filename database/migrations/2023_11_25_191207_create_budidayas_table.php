@@ -16,11 +16,12 @@ return new class extends Migration
         Schema::create('budidayas', function (Blueprint $table) {
             $table->id();
             $table->string('tahapan');
+            // $table->enum('jenis', ['-','arabika', 'robusta'])->default('-');
             $table->text('deskripsi');
             $table->string('link');
-            $table->string('sumber_artikel');
-            $table->string('credit_gambar');
-            $table->enum('kategori', ['Syarat Tumbuh', 'Pola Tanam', 'Pohon Pelindung', 'Pembibitan', 'Pemupukan', 'Pemangkasan', 'Hama dan Penyakit', 'Sanitasi Kebun']);
+            // $table->string('sumber_artikel');
+            $table->string('credit_gambar')->nullable();
+            $table->string('kategori');
             $table->timestamps();
         });
     }

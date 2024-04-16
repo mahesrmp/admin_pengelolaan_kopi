@@ -13,15 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('panens', function (Blueprint $table) {
+        Schema::create('forms', function (Blueprint $table) {
             $table->id();
-            // $table->string('tahapan');
+            $table->string('title');
             $table->text('deskripsi');
-            $table->string('link');
-            // $table->string('sumber_artikel');
-            $table->string('credit_gambar')->nullable();
-            $table->string('kategori');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('panens');
+        Schema::dropIfExists('forms');
     }
 };

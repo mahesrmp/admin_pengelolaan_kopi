@@ -32,6 +32,7 @@ Route::resource('budidaya', BudidayaController::class)->names([
     'index' => 'budidaya.index',
 ]);
 Route::post('budidaya/remove-image', [BudidayaController::class, 'removeImage'])->name('budidaya.removeImage');
+
 Route::resource('panen', PanenController::class)->names([
     'index' => 'panen.index',
 ]);
@@ -51,6 +52,6 @@ Route::post('/pengajuan/accept/{id}', [PengajuanController::class, 'accept'])->n
 Route::post('/pengajuan/reject/{id}', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
 
 Route::get('data_user', [PengajuanController::class, 'get_data_user'])->name('getDataUser');
-Route::get('/budidaya/{id}', [[BudidayaController::class, 'show']])->name('budidaya.show');
-Route::get('/panen/{id}', [[PanenController::class, 'show']])->name('panen.show');
-Route::get('/pascas/{id}', [[PascaController::class, 'show']])->name('pasca.show');
+Route::get('/budidaya/{id}', [BudidayaController::class, 'show'])->name('budidaya.show');
+Route::get('/panen/{id}', [PanenController::class, 'show'])->name('panen.show');
+Route::get('/pascas/{id}', [PascaController::class, 'show'])->name('pasca.show');

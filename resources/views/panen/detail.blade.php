@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <div class="card-body">
                         <h5 class="card-title">Deskripsi:</h5>
-                        <p class="card-text mt-2">{{ $panen->deskripsi }}</p>
+                        <p class="card-text mt-2">{!! $panen->deskripsi !!}</p>
                     </div>
 
                     <div class="card-body">
@@ -44,7 +44,7 @@
                                 @foreach ($panen->images as $key => $image)
                                     <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
                                         <img src="{{ asset('storage/' . $image->gambar) }}"
-                                            style="width: 100%; height: 500px;" alt="...">
+                                            style="width: 500px; height: 500px;" alt="...">
                                     </div>
                                 @endforeach
                             </div>

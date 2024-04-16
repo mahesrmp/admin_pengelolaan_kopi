@@ -25,20 +25,18 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <select id="kategori" name="kategori" class="form-control">
-                                    <option value="Fermentasi Kering">Fermentasi Kering</option>
-                                    <option value="Fermentasi Mekanis">Fermentasi Mekanis</option>
-                                </select>
+                                <input type="text" id="kategori" name="kategori" class="form-control" autofocus>
                                 <span class="text-danger">{{ $errors->first('kategori') }}</span>
                             </div>
                             <div class="form-group">
                                 <label for="tahapan">Tahapan</label>
-                                <input type="text" id="tahapan" name="tahapan" class="form-control" autofocus>
+                                <input type="text" id="tahapan" name="tahapan" class="form-control">
                                 <span class="text-danger">{{ $errors->first('tahapan') }}</span>
                             </div>
 
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
+                                <!-- Menggunakan strip_tags() untuk menghilangkan tag HTML -->
                                 <textarea id="deskripsi" name="deskripsi" class="form-control auto-resize-textarea"></textarea>
                                 <span class="text-danger">{{ $errors->first('deskripsi') }}</span>
                             </div>
@@ -47,12 +45,6 @@
                                 <label for="link">Link</label>
                                 <input type="text" id="link" name="link" class="form-control">
                                 <span class="text-danger">{{ $errors->first('link') }}</span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="sumber_artikel">Sumber Artikel</label>
-                                <input type="text" id="sumber_artikel" name="sumber_artikel" class="form-control">
-                                <span class="text-danger">{{ $errors->first('sumber_artikel') }}</span>
                             </div>
 
                             <div class="form-group">
@@ -100,5 +92,12 @@
                 autoResizeTextarea(textarea);
             });
         });
+    </script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#deskripsi'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
 @endsection
