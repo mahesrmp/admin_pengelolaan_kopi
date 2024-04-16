@@ -33,11 +33,11 @@ class AuthController extends Controller
             // 'email' => 'required|email|unique:users',
             'password' => 'required',
             'confirm_password' => 'required|same:password',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan,Lainnya',
-            'provinsi' => 'required',
-            'kabupaten' => 'required',
-            'no_telp' => 'required',
+            // 'tanggal_lahir' => 'required|date',
+            // 'jenis_kelamin' => 'required|in:Laki-laki,Perempuan,Lainnya',
+            // 'provinsi' => 'required',
+            // 'kabupaten' => 'required',
+            // 'no_telp' => 'required',
         ]);
 
         if ($validator->fails()) {
