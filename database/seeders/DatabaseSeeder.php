@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -15,12 +16,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory()->create([
-            'nama_lengkap' => 'gilang sukses',
-            'username' => 'gilang',
-            'password' => Hash::make('gilanglang1'),
-            'confirm_password' => Hash::make('gilanglang1'),
-
+        DB::table('users')->insert([
+            'nama_lengkap' => 'Admin',
+            'username' => 'admin',
+            'role' => 'admin',
+            'password' => Hash::make('admin'),
+            // 'confirm_password' => Hash::make('admin'),
         ]);
     }
 }

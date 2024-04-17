@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nama_lengkap');
             $table->string('username')->unique();
             $table->string('password');
-            $table->string('confirm_password');
+            // $table->string('confirm_password');
             $table->date('tanggal_lahir')->nullable();
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan', 'Lainnya'])->nullable();
             $table->enum('role', ['admin', 'fasilitator', 'petani'])->nullable();

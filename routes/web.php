@@ -1,14 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\API\BudidayaAPIController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KedaiController;
 use App\Http\Controllers\PanenController;
 use App\Http\Controllers\PascaController;
 use App\Http\Controllers\BudidayaController;
 use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\PengajuanController;
-use App\Models\Panen;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,37 +20,44 @@ use App\Models\Panen;
 |
 */
 
-Route::get('/', function () {
-    return view('layouts.dashboard', [
-        'title' => 'Dashboard'
+Route::get('/', [AuthController::class, 'login'])->name('login');
+
+Route::post('/login', [AuthController::class, 'proseslogin']);
+Route::post('/logout', [AuthController::class, 'logout']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+    // Route::get('/dashboard', function () {
+    //     return view('layouts.dashboard', [
+    //         'title' => 'Dashboard'
+    //     ]);
+    // })->name('dashboard');
+
+    // Route::get('/budidaya', [BudidayaController::class, 'index']);
+    Route::resource('budidaya', BudidayaController::class)->names([
+        'index' => 'budidaya.index',
     ]);
-})->name('dashboard');
+    Route::post('budidaya/remove-image', [BudidayaController::class, 'removeImage'])->name('budidaya.removeImage');
 
-// Route::get('/budidaya', [BudidayaController::class, 'index']);
-Route::resource('budidaya', BudidayaController::class)->names([
-    'index' => 'budidaya.index',
-]);
-Route::post('budidaya/remove-image', [BudidayaController::class, 'removeImage'])->name('budidaya.removeImage');
+    Route::resource('panen', PanenController::class)->names([
+        'index' => 'panen.index',
+    ]);
+    Route::resource('pasca', PascaController::class)->names([
+        'index' => 'pasca.index',
+    ]);
+    Route::resource('kedai', KedaiController::class)->names([
+        'index' => 'kedai.index',
+    ]);
+    Route::resource('komunitas', KomunitasController::class)->names([
+        'index' => 'komunitas.index',
+    ]);
+    Route::get('penjualan', [BudidayaController::class, 'penjualan_index'])->name('penjualan.index');
+    Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan.index');
 
-Route::resource('panen', PanenController::class)->names([
-    'index' => 'panen.index',
-]);
-Route::resource('pasca', PascaController::class)->names([
-    'index' => 'pasca.index',
-]);
-Route::resource('kedai', KedaiController::class)->names([
-    'index' => 'kedai.index',
-]);
-Route::resource('komunitas', KomunitasController::class)->names([
-    'index' => 'komunitas.index',
-]);
-Route::get('penjualan', [BudidayaController::class, 'penjualan_index'])->name('penjualan.index');
-Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan.index');
+    Route::post('/pengajuan/accept/{id}', [PengajuanController::class, 'accept'])->name('pengajuan.accept');
+    Route::post('/pengajuan/reject/{id}', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
 
-Route::post('/pengajuan/accept/{id}', [PengajuanController::class, 'accept'])->name('pengajuan.accept');
-Route::post('/pengajuan/reject/{id}', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
-
-Route::get('data_user', [PengajuanController::class, 'get_data_user'])->name('getDataUser');
-Route::get('/budidaya/{id}', [BudidayaController::class, 'show'])->name('budidaya.show');
-Route::get('/panen/{id}', [PanenController::class, 'show'])->name('panen.show');
-Route::get('/pascas/{id}', [PascaController::class, 'show'])->name('pasca.show');
+    Route::get('data_user', [PengajuanController::class, 'get_data_user'])->name('getDataUser');
+    Route::get('/budidaya/{id}', [BudidayaController::class, 'show'])->name('budidaya.show');
+    Route::get('/panen/{id}', [PanenController::class, 'show'])->name('panen.show');
+    Route::get('/pascas/{id}', [PascaController::class, 'show'])->name('pasca.show');
+});

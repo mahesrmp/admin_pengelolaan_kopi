@@ -24,20 +24,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //BUDIDAYA
-Route::get('/budidaya/syarat_tumbuh', [BudidayaAPIController::class, 'getSyaratTumbuhData']);
-Route::get('/budidaya/pola_tanam', [BudidayaAPIController::class, 'getPolaTanamData']);
-Route::get('/budidaya/pohon_pelindung', [BudidayaAPIController::class, 'getPohonPelindungData']);
+// Route::get('/budidaya', [BudidayaAPIController::class, 'index']);
+Route::get('/budidaya/pemilihan_lahan', [BudidayaAPIController::class, 'getPemilihanLahanData']);
+Route::get('/budidaya/kesesuaian_lahan', [BudidayaAPIController::class, 'getKesesuaianLahanData']);
+Route::get('/budidaya/persiapan_lahan', [BudidayaAPIController::class, 'getPersiapanLahanData']);
+Route::get('/budidaya/penanaman_penaung', [BudidayaAPIController::class, 'getPenanamanPenaungData']);
+Route::get('/budidaya/bahan_tanam_unggul+', [BudidayaAPIController::class, 'getBahanTanamUnggulData']);
 Route::get('/budidaya/pembibitan', [BudidayaAPIController::class, 'getPembibitanData']);
+Route::get('/budidaya/penanaman', [BudidayaAPIController::class, 'getPenanamanData']);
 Route::get('/budidaya/pemupukan', [BudidayaAPIController::class, 'getPemupukanData']);
 Route::get('/budidaya/pemangkasan', [BudidayaAPIController::class, 'getPemangkasanData']);
-Route::get('/budidaya/hama_penyakit', [BudidayaAPIController::class, 'getHamaPenyakitData']);
-Route::get('/budidaya/sanitasi_kebun', [BudidayaAPIController::class, 'getSanitasiKebunData']);
+Route::get('/budidaya/pengelolaan_penaung', [BudidayaAPIController::class, 'getPengelolaanPenaungData']);
+Route::get('/budidaya/pengendalian_hama', [BudidayaAPIController::class, 'getPengendalianHamaData']);
 Route::get('/budidaya/tahapan', [BudidayaAPIController::class, 'select_tahapan']);
 
 //PANEN
 Route::get('/panen', [BudidayaAPIController::class, 'panen']);
 Route::get('/panen/ciri_buah_kopi', [BudidayaAPIController::class, 'getCiriBuahKopiData']);
 Route::get('/panen/pemetikan', [BudidayaAPIController::class, 'getPemetikanData']);
+Route::get('/panen/sortasi_buah', [BudidayaAPIController::class, 'getSortasiBuahData']);
 
 //PASCA PANEN
 Route::get('/pasca/fermentasi_kering', [BudidayaAPIController::class, 'getFermentasiKeringData']);
