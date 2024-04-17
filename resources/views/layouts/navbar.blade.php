@@ -74,5 +74,9 @@
             <i class="fas fa-th-large"></i>
         </a>
     </li> --}}
+    <form action="/logout" method="POST">
+        @csrf
+        <button class="dropdown-item">Logout</button>
+    </form>
 </ul>
 <!-- /.navbar -->

@@ -23,7 +23,7 @@ class User extends Authenticatable
         'username',
         // 'email',
         'password',
-        'confirm_password',
+        // 'confirm_password',
         'tanggal_lahir',
         'jenis_kelamin',
         'provinsi',
