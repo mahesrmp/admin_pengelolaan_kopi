@@ -50,12 +50,12 @@
 
 
                                                     <td class="text-center">
-                                                        <form action="{{ route('pengajuan.accept', ['id' => $item->id]) }}"
+                                                        {{-- <form action="{{ route('pengajuan.accept', ['id' => $item->id]) }}"
                                                             method="POST">
                                                             @csrf
                                                             <button type="submit">Terima Pengajuan</button>
-                                                        </form>
-                                                        {!! Form::open([
+                                                        </form> --}}
+                                                        {{-- {!! Form::open([
                                                             'route' => ['user.destroy', $item->id],
                                                             'method' => 'DELETE',
                                                         ]) !!}
@@ -67,7 +67,25 @@
                                                             </i></a>
 
                                                         {{ Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm text-center btndelete', 'id' => 'delete']) }}
-                                                        {!! Form::close() !!}
+                                                        {!! Form::close() !!} --}}
+
+                                                        @if ($item->status == null)
+                                                            <form action="{{ route('user.deactivate', $item->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="submit" class="btn btn-danger">Nonaktifkan
+                                                                    Akun</button>
+                                                            </form>
+                                                        @else
+                                                            <form action="{{ route('user.activate', $item->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <button type="submit" class="btn btn-success">Aktifkan
+                                                                    Akun</button>
+                                                            </form>
+                                                        @endif
                                                     </td>
 
                                                 </tr>

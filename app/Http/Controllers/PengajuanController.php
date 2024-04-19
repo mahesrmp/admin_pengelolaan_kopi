@@ -114,4 +114,24 @@ class PengajuanController extends Controller
             'title' => 'Informasi Data Users'
         ]);
     }
+
+    public function deactivate($id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->status = 1;
+        $user->save();
+
+        return redirect()->route('getDataUser')->with('success', 'Akun pengguna berhasil dinonaktifkan.');
+    }
+
+    public function activate($id)
+    {
+        $user = User::findOrFail($id);
+
+        $user->status = null;
+        $user->save();
+
+        return redirect()->route('getDataUser')->with('success', 'Akun pengguna berhasil diaktifkan kembali.');
+    }
 }
