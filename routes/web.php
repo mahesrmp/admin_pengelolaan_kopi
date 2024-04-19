@@ -57,6 +57,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/pengajuan/reject/{id}', [PengajuanController::class, 'reject'])->name('pengajuan.reject');
 
     Route::get('data_user', [PengajuanController::class, 'get_data_user'])->name('getDataUser');
+    Route::put('/user/{id}/deactivate', [PengajuanController::class, 'deactivate'])->name('user.deactivate');
+    Route::delete('/user/{id}', [PengajuanController::class, 'delete'])->name('user.destroy');
+    Route::put('/user/{id}/activate', [PengajuanController::class, 'activate'])->name('user.activate');
+    Route::get('/user/{id}/edit', [PengajuanController::class, 'edit'])->name('user.edit');
     Route::get('/budidaya/{id}', [BudidayaController::class, 'show'])->name('budidaya.show');
     Route::get('/panen/{id}', [PanenController::class, 'show'])->name('panen.show');
     Route::get('/pascas/{id}', [PascaController::class, 'show'])->name('pasca.show');
