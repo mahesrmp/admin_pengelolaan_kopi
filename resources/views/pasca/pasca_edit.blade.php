@@ -88,4 +88,11 @@
             <div class="col-md-6"></div>
         </div>
     </div>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#deskripsi'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
 @endsection

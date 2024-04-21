@@ -21,6 +21,10 @@ class Artikel extends Model
 
     public function images()
     {
-        return $this->hasMany(ImageArtikel::class);
+        return $this->hasMany(ImageArtikel::class)->select([
+            'id', 
+            'artikel_id', 
+            'gambar',
+            DB::raw("CONCAT('" . asset('storage/') . "','/', gambar) as url")]);
     }
 }

@@ -2,9 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\KedaiController;
 use App\Http\Controllers\PanenController;
 use App\Http\Controllers\PascaController;
+use App\Http\Controllers\MinumanController;
 use App\Http\Controllers\BudidayaController;
 use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\PengajuanController;
@@ -44,8 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('pasca', PascaController::class)->names([
         'index' => 'pasca.index',
     ]);
-    Route::resource('kedai', KedaiController::class)->names([
-        'index' => 'kedai.index',
+    Route::resource('minuman', MinumanController::class)->names([
+        'index' => 'minuman.index',
     ]);
     Route::resource('komunitas', KomunitasController::class)->names([
         'index' => 'komunitas.index',

@@ -2,9 +2,11 @@
 
 namespace App\Http\API;
 
+use App\Models\User;
 use App\Models\Kedai;
 use App\Models\Panen;
 use App\Models\Pasca;
+use App\Models\Minuman;
 use App\Models\Budidaya;
 use App\Models\Komunitas;
 use App\Models\Pengajuan;
@@ -12,8 +14,8 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -147,10 +149,10 @@ class BudidayaAPIController extends Controller
         return response()->json($pascaData);
     }
 
-    public function getKedaiData()
+    public function getMinumanData()
     {
-        $kedaiData = Kedai::with('images')->get();
-        return response()->json($kedaiData);
+        $minumanData = Minuman::with('images')->get();
+        return response()->json($minumanData);
     }
 
     public function getKomunitasData()
@@ -166,5 +168,28 @@ class BudidayaAPIController extends Controller
         });
 
         return response()->json($komunitas);
+    }
+
+    public function getProvinsi(){
+        try {
+            $response = Http::get('https://kanglerian.github.io/api-wilayah-indonesia/api/provinces.json');
+            $provinces = $response->json();
+            
+            return response()->json($provinces);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch provinces data.'], 500);
+        }
+    }
+
+    public function getKabupaten($provinceId)
+    {
+        try {
+            $response = Http::get("https://kanglerian.github.io/api-wilayah-indonesia/api/regencies/{$provinceId}.json");
+            $regencies = $response->json();
+            
+            return response()->json($regencies);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to fetch regencies data.'], 500);
+        }
     }
 }
