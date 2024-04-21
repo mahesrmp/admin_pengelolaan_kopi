@@ -2,22 +2,22 @@
 
 namespace App\Models;
 
-use App\Models\Kedai;
+use App\Models\Minuman;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class ImageKedai extends Model
+class ImageMinuman extends Model
 {
     use HasFactory;
-    protected $table = 'image_kedais';
+    protected $table = 'image_minumans';
     protected $primaryKey = 'id';
 
     protected $fillable = [
         'gambar'
     ];
 
-    public function kedai()
+    public function minuman()
     {
-        return $this->belongsTo(Kedai::class);
+        return $this->belongsTo(Minuman::class);
     }
 }

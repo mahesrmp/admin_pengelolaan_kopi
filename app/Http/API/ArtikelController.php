@@ -17,10 +17,7 @@ class ArtikelController extends Controller
      */
     public function index()
     {
-        $artikels = DB::table('artikels')
-            ->join('image_artikels', 'artikels.id', '=', 'image_artikels.artikel_id')
-            ->select('artikels.judul_artikel', 'artikels.isi_artikel', 'artikels.user_id', 'image_artikels.gambar')
-            ->get();
+        $artikels = Artikel::with('images')->get();
         return response()->json($artikels);
     }
 

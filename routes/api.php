@@ -7,6 +7,7 @@ use App\Http\API\PengajuanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\API\BudidayaAPIController;
 use App\Http\API\PermintaanPembelianController;
+use App\Http\Controllers\BudidayaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,7 +50,7 @@ Route::get('/pasca/fermentasi_kering', [BudidayaAPIController::class, 'getFermen
 Route::get('/pasca/fermentasi_mekanis', [BudidayaAPIController::class, 'getFermentasiMekanisData']);
 
 //KEDAI
-Route::get('/kedai', [BudidayaAPIController::class, 'getKedaiData']);
+Route::get('/minuman', [BudidayaAPIController::class, 'getMinumanData']);
 
 //PENGAJUAN
 Route::get('/pengajuan', [PengajuanController::class, 'getPengajuanData']);
@@ -69,3 +70,6 @@ Route::post('permintaan_pembelian', [PermintaanPembelianController::class, 'stor
 
 Route::get('artikel', [ArtikelController::class, 'index']);
 Route::post('artikel', [ArtikelController::class, 'store']);
+
+Route::get('/provinsi', [BudidayaAPIController::class, 'getProvinsi']);
+Route::get('/provinces/{provinceId}/regencies', [BudidayaAPIController::class, 'getKabupaten']);

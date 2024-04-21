@@ -91,64 +91,18 @@
                 </a>
             </li>
 
-            {{-- <li class="nav-item">
-                <a href="/penjualan" class="nav-link {{ \Route::is('penjualan.index') ? 'active' : '' }}">
-                    <i class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256">
-                            <path fill="currentColor"
-                                d="M216 64h-40a48 48 0 0 0-96 0H40a16 16 0 0 0-16 16v120a16 16 0 0 0 16 16h176a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16Zm-88-32a32 32 0 0 1 32 32H96a32 32 0 0 1 32-32Zm88 168H40V80h40v16a8 8 0 0 0 16 0V80h64v16a8 8 0 0 0 16 0V80h40Z" />
-                        </svg>
-                    </i>
+            <li class="nav-item">
+                <a href="/minuman" class="nav-link {{ \Route::is('minuman.index') ? 'active' : '' }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 640 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                        <path fill="white"
+                            d="M96 64c0-17.7 14.3-32 32-32H448h64c70.7 0 128 57.3 128 128s-57.3 128-128 128H480c0 53-43 96-96 96H192c-53 0-96-43-96-96V64zM480 224h32c35.3 0 64-28.7 64-64s-28.7-64-64-64H480V224zM32 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
+                    </svg>
                     <p>
-                        Penjualan
-                    </p>
-                </a>
-            </li> --}}
-
-            {{-- <li class="nav-item">
-                <a href="/kedai" class="nav-link {{ \Route::is('kedai.index') ? 'active' : '' }}">
-                    <i class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="M19 5h-1V4a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a4 4 0 0 0 4 4h6c1.858 0 3.411-1.279 3.858-3H19a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3zm1 6a1 1 0 0 1-1 1h-1V7h1a1 1 0 0 1 1 1v3zm-2 8H3c0 1.654 1.346 3 3 3h11c1.654 0 3-1.346 3-3h-2z" />
-                        </svg>
-                    </i>
-                    <p>
-                        Kedai Kopi
+                        Minuman
                     </p>
                 </a>
             </li>
-
-            <li class="nav-item">
-                <a href="#" class="nav-link">
-                    <i class="">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                            <g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd">
-                                <path d="M4 8.25a1 1 0 1 0 0-2a1 1 0 0 0 0 2m0 2a3 3 0 1 0 0-6a3 3 0 0 0 0 6" />
-                                <path
-                                    d="M4.05 11a1.5 1.5 0 0 0-1.5 1.5V14a1 1 0 0 1-2 0v-1.5a3.5 3.5 0 0 1 7 0V14a1 1 0 1 1-2 0v-1.5a1.5 1.5 0 0 0-1.5-1.5M16 8.25a1 1 0 1 1 0-2a1 1 0 0 1 0 2m0 2a3 3 0 1 1 0-6a3 3 0 0 1 0 6" />
-                                <path
-                                    d="M15.95 11a1.5 1.5 0 0 1 1.5 1.5V14a1 1 0 1 0 2 0v-1.5a3.5 3.5 0 0 0-7 0V14a1 1 0 1 0 2 0v-1.5a1.5 1.5 0 0 1 1.5-1.5" />
-                                <path
-                                    d="M10.05 13.75a2.5 2.5 0 0 0-2.5 2.5v1.5a1 1 0 0 1-2 0v-1.5a4.5 4.5 0 0 1 9 0v1.5a1 1 0 1 1-2 0v-1.5a2.5 2.5 0 0 0-2.5-2.5" />
-                                <path d="M10 11a1 1 0 1 0 0-2a1 1 0 0 0 0 2m0 2a3 3 0 1 0 0-6a3 3 0 0 0 0 6" />
-                            </g>
-                        </svg>
-                    </i>
-                    <p>
-                        Komunitas
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('pengajuan.index') }}">
-                            <p>Kelola Pengajuan</p>
-                        </a>
-                    </li>
-                </ul>
-            </li> --}}
             <li i class="nav-item">
                 <a href="/data_user" class="nav-link {{ \Route::is('getDataUser') ? 'active' : '' }}">
                     <i class="">

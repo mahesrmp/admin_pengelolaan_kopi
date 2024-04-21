@@ -39,13 +39,6 @@
                                     value="{{ $budidaya->tahapan }}">
                                 <span class="text-danger">{{ $errors->first('tahapan') }}</span>
                             </div>
-                            <div class="form-group">
-                                <label for="tahapan">Tahapan</label>
-                                {{-- {!! Form::text('tahapan', null, ['class' => 'form-control', 'autofocus']) !!} --}}
-                                <input type="text" id="tahapan" name="tahapan" class="form-control"
-                                    value="{{ $budidaya->tahapan }}">
-                                <span class="text-danger">{{ $errors->first('tahapan') }}</span>
-                            </div>
 
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
