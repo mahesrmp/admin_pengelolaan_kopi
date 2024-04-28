@@ -92,7 +92,17 @@ class ArtikelController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $artikel = Artikel::with('images')->find($id);
+
+            if (!$artikel) {
+                return response()->json(['message' => 'Artikel not found', 'status' => 'error'], 404);
+            }
+
+            return response()->json(['data' => $artikel, 'status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to fetch artikel', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -115,7 +125,54 @@ class ArtikelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            $request->validate([
+                'judul_artikel' => 'required|string',
+                'isi_artikel' => 'required|string',
+                'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'user_id' => 'required',
+            ]);
+
+            $artikel = Artikel::find($id);
+
+            if (!$artikel) {
+                return response()->json(['message' => 'Artikel not found', 'status' => 'error'], 404);
+            }
+
+            $artikel->judul_artikel = $request->judul_artikel;
+            $artikel->isi_artikel = $request->isi_artikel;
+            $artikel->user_id = $request->user_id;
+
+            $gambarPath = null;
+            if ($request->hasFile('gambar')) {
+                $uploadedFile = $request->file('gambar');
+                if ($uploadedFile->isValid()) {
+                    $gambarPath = $uploadedFile->store('artikelimage', 'public');
+
+                    if ($artikel->images()->exists()) {
+                        // Assuming an article can have only one image
+                        $artikel->images()->first()->delete();
+                    }
+                } else {
+                    return response()->json(['message' => 'Gagal mengunggah Gambar', 'status' => 'error', 'error' => 'Invalid file'], 400);
+                }
+            } else {
+                if ($artikel->images()->exists()) {
+                    $gambarPath = $artikel->images()->first()->gambar;
+                }
+            }
+
+            if ($gambarPath) {
+                $artikel->images()->create(['gambar' => $gambarPath]);
+            }
+
+            // Save updated artikel
+            $artikel->save();
+
+            return response()->json(['message' => 'Artikel berhasil diperbarui', 'status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to update artikel', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -126,6 +183,22 @@ class ArtikelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $artikel = Artikel::find($id);
+
+            if (!$artikel) {
+                return response()->json(['message' => 'Artikel not found', 'status' => 'error'], 404);
+            }
+
+            // Delete associated images
+            $artikel->images()->delete();
+
+            // Delete the artikel itself
+            $artikel->delete();
+
+            return response()->json(['message' => 'Artikel berhasil dihapus', 'status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to delete artikel', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
     }
 }
