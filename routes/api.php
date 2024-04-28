@@ -69,7 +69,10 @@ Route::get('permintaan_pembelian', [PermintaanPembelianController::class, 'index
 Route::post('permintaan_pembelian', [PermintaanPembelianController::class, 'store']);
 
 Route::get('artikel', [ArtikelController::class, 'index']);
+Route::get('artikel/{id}', [ArtikelController::class, 'show']);
 Route::post('artikel', [ArtikelController::class, 'store']);
+Route::put('artikel/{id}', [ArtikelController::class, 'update']);
+Route::delete('artikel/{id}', [ArtikelController::class, 'destroy']);
 
 Route::get('/provinsi', [BudidayaAPIController::class, 'getProvinsi']);
 Route::get('/provinces/{provinceId}/regencies', [BudidayaAPIController::class, 'getKabupaten']);
