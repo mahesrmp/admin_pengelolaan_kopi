@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pengajuans', function (Blueprint $table) {
+        Schema::create('forums', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('deskripsi');
             $table->unsignedBigInteger('user_id');
-            $table->string('foto_ktp');
-            $table->string('foto_selfie');
-            $table->text('deskripsi_pengalaman');
-            $table->string('foto_sertifikat')->nullable();
-            $table->string('no_telp')->nullable();
-            $table->string('kabupaten')->nullable();
-            $table->enum('status', [0, 1, 2])->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -36,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pengajuans');
+        Schema::dropIfExists('forms');
     }
 };

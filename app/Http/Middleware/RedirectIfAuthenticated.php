@@ -17,14 +17,19 @@ class RedirectIfAuthenticated
      * @param  string|null  ...$guards
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, ...$guards)
+    public function handle(Request $request, Closure $next, ...$roles) //$guards
     {
-        $guards = empty($guards) ? [null] : $guards;
-
-        foreach ($guards as $guard) {
-            if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+        if (Auth::check()) {
+            $user = Auth::user();
+            if (in_array($user->role, $roles)) {
+                switch ($user->role) {
+                    case 'admin':
+                        return redirect('/admin/dashboard');
+                    case 'fasilitator':
+                        return redirect('/fasilitator/dashboard');
+                }
             }
+            return redirect('/');
         }
 
         return $next($request);

@@ -39,10 +39,8 @@ class PanenController extends Controller
     {
         try {
             $request->validate([
-                // 'tahapan' => 'required',
                 'deskripsi' => 'required',
                 'link' => 'required',
-                // 'sumber_artikel' => 'required',
                 'credit_gambar' => 'required',
                 'kategori' => 'required|in:Ciri Buah Kopi,Pemetikan',
                 'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
@@ -51,31 +49,21 @@ class PanenController extends Controller
             $kategori = $request->input('kategori');
 
             $panen = Panen::create([
-                // 'tahapan' => $request->tahapan,
                 'deskripsi' => $request->deskripsi,
                 'link' => $request->link,
-                // 'sumber_artikel' => $request->sumber_artikel,
                 'credit_gambar' => $request->credit_gambar,
                 'kategori' => $kategori
             ]);
 
             if ($panen) {
                 foreach ($request->file('gambar') as $gambar) {
-                    // Simpan gambar langsung ke dalam direktori public/budidayaimage
                     $gambarPath = $gambar->store('panenimage', 'public');
 
                     Log::info('Path Gambar: ' . $gambarPath);
 
-                    // Simpan path gambar ke dalam tabel image_budidayas
                     $panen->images()->create([
                         'gambar' => $gambarPath,
                     ]);
-
-                    // // Ambil URL gambar untuk respons
-                    // $imageUrl = asset('storage/budidayaimage/' . basename($gambarPath));
-
-                    // // Sertakan URL gambar dalam respons
-                    // $image->update(['url' => $imageUrl]);
                 }
 
                 return redirect()->route('panen.index')->with('success', 'Informasi Panen berhasil ditambahkan');
@@ -107,10 +95,8 @@ class PanenController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            // 'tahapan' => 'required',
             'deskripsi' => 'required',
             'link' => 'required',
-            // 'sumber_artikel' => 'required',
             'credit_gambar' => 'required',
             'kategori' => 'required|in:Ciri Buah Kopi,Pemetikan'
         ]);
@@ -119,10 +105,8 @@ class PanenController extends Controller
 
         try {
             $panen = Panen::findOrFail($id);
-            // $panen->tahapan = $request->tahapan;
             $panen->deskripsi = $request->deskripsi;
             $panen->link = $request->link;
-            // $panen->sumber_artikel = $request->sumber_artikel;
             $panen->credit_gambar = $request->credit_gambar;
             $panen->kategori = $kategori;
 
@@ -179,10 +163,8 @@ class PanenController extends Controller
 
     public function show($id)
     {
-        // Mengambil data panen berdasarkan ID
         $panen = Panen::findOrFail($id);
 
-        // Menampilkan halaman detail dengan data panen
         return view('panen.detail', compact('panen'),  [
             'title' => 'Detail Tahapan Panen'
         ]);

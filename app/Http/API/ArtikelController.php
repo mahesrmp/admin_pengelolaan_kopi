@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\KomentarArtikel;
+use Exception;
+use Illuminate\Support\Facades\Redis;
 
 class ArtikelController extends Controller
 {
@@ -199,6 +202,104 @@ class ArtikelController extends Controller
             return response()->json(['message' => 'Artikel berhasil dihapus', 'status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to delete artikel', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function comment_artikel(Request $request, $id){
+        try{
+            $artikelId = Artikel::find($id);
+
+            if(!$artikelId){
+                return response()->json(['message' => 'Artikel not found', 'status' => 'error'], 404);
+            }
+
+            $request->validate([
+                'komentar' => 'required|string',
+                'artikel_id' => 'required',
+                'user_id' => 'required',
+            ]);
+
+            $artikelKomen = KomentarArtikel::create([
+                'komentar' => $request->komentar,
+                'artikel_id' => $artikelId,
+                'user_id' => $request->user_id,
+            ]);
+
+            if($artikelKomen){
+                return response()->json([
+                    'message' => 'Artikel berhasil ditambahkan',
+                    'status' => 'success',
+                ], 200);
+            }else{
+                return response()->json(['message' => 'Gagal menambahkan data', 'status' => 'error', 'error' => 'Failed to save data to the database'], 500);
+            }
+
+        }catch(\Exception $e){
+            return response()->json(['message' => 'Failed to comment artikel', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function like_artikel(Request $request, $id){
+        try{
+            $artikelId = Artikel::find($id);
+
+            if(!$artikelId){
+                return response()->json(['message' => 'Artikel not found', 'status' => 'error'], 404);
+            }
+
+            $request->validate([
+                'like' => 'required',
+                'artikel_id' => 'required',
+            ]);
+
+            $artikelKomen = KomentarArtikel::create([
+                'like' => 1,
+                'artikel_id' => $artikelId,
+            ]);
+
+            if($artikelKomen){
+                return response()->json([
+                    'message' => 'Like berhasil ditambahkan',
+                    'status' => 'success',
+                ], 200);
+            }else{
+                return response()->json(['message' => 'Gagal menambahkan data', 'status' => 'error', 'error' => 'Failed to save data to the database'], 500);
+            }
+
+        }catch(\Exception $e){
+            return response()->json(['message' => 'Gagal memberikan like ke artikel', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
+    }
+    
+    public function dislike_artikel(Request $request, $id){
+        try{
+            $artikelId = Artikel::find($id);
+
+            if(!$artikelId){
+                return response()->json(['message' => 'Artikel not found', 'status' => 'error'], 404);
+            }
+
+            $request->validate([
+                'like' => 'required',
+                'artikel_id' => 'required',
+            ]);
+
+            $artikelKomen = KomentarArtikel::create([
+                'like' => 2,
+                'artikel_id' => $artikelId,
+            ]);
+
+            if($artikelKomen){
+                return response()->json([
+                    'message' => 'Like berhasil ditambahkan',
+                    'status' => 'success',
+                ], 200);
+            }else{
+                return response()->json(['message' => 'Gagal menambahkan data', 'status' => 'error', 'error' => 'Failed to save data to the database'], 500);
+            }
+
+        }catch(\Exception $e){
+            return response()->json(['message' => 'Gagal memberikan like ke artikel', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
     }
 }
