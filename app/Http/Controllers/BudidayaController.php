@@ -18,15 +18,12 @@ class BudidayaController extends Controller
     public function index()
     {
         $budidayas = Budidaya::with('images')->get();
-        // dd($budidayas);
         return view('budidaya.budidaya', compact('budidayas'), [
             'title' => 'Budidaya'
         ]);
     }
     public function penjualan_index()
     {
-        // $penjualans = Budidaya::with('images')->get();
-        // dd($budidayas);
         return view('penjualan.penjualan', [
             'title' => 'Penjualan'
         ]);
@@ -64,14 +61,12 @@ class BudidayaController extends Controller
 
             $budidaya = Budidaya::create([
                 'tahapan' => $request->tahapan,
-                // Simpan deskripsi sebagai array
                 'deskripsi' => $request->deskripsi,
                 'link' => $request->link,
                 'credit_gambar' => $request->credit_gambar,
                 'kategori' => $kategori,
             ]);
 
-            // Simpan gambar
             if ($budidaya) {
                 foreach ($request->file('gambar') as $gambar) {
                     $gambarPath = $gambar->store('budidayaimage', 'public');
@@ -111,9 +106,7 @@ class BudidayaController extends Controller
         $request->validate([
             'tahapan' => 'required',
             'deskripsi' => 'required',
-            // 'jenis' => 'required',
             'link' => 'required',
-            // 'sumber_artikel' => 'required',
             'credit_gambar' => 'required',
             'kategori' => 'required'
         ]);
@@ -124,9 +117,7 @@ class BudidayaController extends Controller
             $budidaya = Budidaya::findOrFail($id);
             $budidaya->tahapan = $request->tahapan;
             $budidaya->deskripsi = $request->deskripsi;
-            // $budidaya->jenis = $request->jenis;
             $budidaya->link = $request->link;
-            // $budidaya->sumber_artikel = $request->sumber_artikel;
             $budidaya->credit_gambar = $request->credit_gambar;
             $budidaya->kategori = $kategori;
 
@@ -184,24 +175,19 @@ class BudidayaController extends Controller
     public function removeImage(Request $request)
     {
         try {
-            // Validasi request
             $request->validate([
                 'id' => 'required|exists:image_budidayas,id',
             ]);
 
-            // Ambil ID gambar dari request
             $imageId = $request->input('image_id');
 
-            // Hapus gambar dari database
             $image = ImageBudidaya::find($imageId);
             if (!$image) {
                 throw new \Exception('Gambar tidak ditemukan.');
             }
 
-            // Hapus gambar dari penyimpanan (storage)
             Storage::disk('public')->delete($image->path);
 
-            // Hapus record gambar dari database
             $image->delete();
 
             return response()->json(['success' => true]);
@@ -211,10 +197,8 @@ class BudidayaController extends Controller
     }
     public function show($id)
     {
-        // Mengambil data budidaya berdasarkan ID
         $budidaya = Budidaya::findOrFail($id);
 
-        // Menampilkan halaman detail dengan data budidaya
         return view('budidaya.detail', compact('budidaya'), [
             'title' => 'Detail Tahapan Budidaya'
         ]);

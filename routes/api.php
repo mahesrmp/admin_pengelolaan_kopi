@@ -73,6 +73,9 @@ Route::get('artikel/{id}', [ArtikelController::class, 'show']);
 Route::post('artikel', [ArtikelController::class, 'store']);
 Route::put('artikel/{id}', [ArtikelController::class, 'update']);
 Route::delete('artikel/{id}', [ArtikelController::class, 'destroy']);
+Route::post('artikel_comment/{id}', [ArtikelController::class, 'comment_artikel']);
+Route::post('artikel_like/{id}', [ArtikelController::class, 'like_artikel']);
+Route::post('artikel_dislike/{id}', [ArtikelController::class, 'dislike_artikel']);
 
 Route::get('/provinsi', [BudidayaAPIController::class, 'getProvinsi']);
 Route::get('/provinces/{provinceId}/regencies', [BudidayaAPIController::class, 'getKabupaten']);

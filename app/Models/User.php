@@ -23,6 +23,7 @@ class User extends Authenticatable
         'username',
         // 'email',
         'password',
+        'role',
         // 'confirm_password',
         'tanggal_lahir',
         'jenis_kelamin',

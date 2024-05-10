@@ -27,7 +27,11 @@ class AuthController extends Controller
         if ($user && auth()->attempt(array('username' => $input['username'], 'password' => $input['password']))) {
             auth()->login($user);
 
-            return redirect('/dashboard');
+            if ($user->role == "admin") {
+                return redirect('/admin/dashboard');
+            } else if ($user->role == "fasilitator") {
+                return redirect('/fasilitator/dashboard');
+            }
         }
 
         return back()->with('warning', 'Login Failed!!')->onlyInput('email');
@@ -46,7 +50,7 @@ class AuthController extends Controller
 
     public function dashboard()
     {
-        return view('layouts.dashboard', [
+        return view('admin.layouts.dashboard', [
             'title' => 'Dashboard'
         ]);
     }

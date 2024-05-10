@@ -15,7 +15,7 @@ class PengajuanController extends Controller
      */
     public function index()
     {
-        $pengajuans = Pengajuan::join('users', 'pengajuans.petani_id', '=', 'users.id')
+        $pengajuans = Pengajuan::join('users', 'pengajuans.user_id', '=', 'users.id')
             ->where('pengajuans.status', '0')
             ->select('pengajuans.*', 'users.username') // Change 'nama' with the actual column name in the users table that stores the name
             ->get();

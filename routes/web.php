@@ -8,6 +8,8 @@ use App\Http\Controllers\MinumanController;
 use App\Http\Controllers\BudidayaController;
 use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\PengajuanController;
+use App\Http\Controllers\FasilitatorController;
+use App\Http\Middleware\RedirectIfAuthenticated;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +22,15 @@ use App\Http\Controllers\PengajuanController;
 |
 */
 
-Route::get('/', [AuthController::class, 'login'])->name('login');
 
+Route::middleware([RedirectIfAuthenticated::class . ':admin,fasilitator'])->group(function () {
+});
+Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'proseslogin']);
 Route::post('/logout', [AuthController::class, 'logout']);
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AuthController::class, 'dashboard']);
     // Route::get('/dashboard', function () {
     //     return view('layouts.dashboard', [
     //         'title' => 'Dashboard'
@@ -64,4 +69,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/budidaya/{id}', [BudidayaController::class, 'show'])->name('budidaya.show');
     Route::get('/panen/{id}', [PanenController::class, 'show'])->name('panen.show');
     Route::get('/pascas/{id}', [PascaController::class, 'show'])->name('pasca.show');
+});
+Route::middleware(['auth', 'role:fasilitator'])->group(function () {
+    Route::get('/fasilitator/dashboard', [FasilitatorController::class, 'dashboard']);
 });
