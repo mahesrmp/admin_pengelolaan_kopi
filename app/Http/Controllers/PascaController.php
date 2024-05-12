@@ -18,7 +18,7 @@ class PascaController extends Controller
     public function index()
     {
         $pascas = Pasca::all();
-        return view('pasca.pasca_panen', compact('pascas'), [
+        return view('admin.pasca.pasca_panen', compact('pascas'), [
             'title' => 'Pasca'
         ]);
     }
@@ -35,7 +35,7 @@ class PascaController extends Controller
             'title'     => 'Form Tambah Informasi Pasca Panen',
         ];
 
-        return view('pasca.pasca_form', $data);
+        return view('admin.pasca.pasca_form', $data);
     }
 
     /**
@@ -103,7 +103,7 @@ class PascaController extends Controller
     public function edit($id)
     {
         $pasca = Pasca::findOrFail($id);
-        return view('pasca.pasca_edit', [
+        return view('admin.pasca.pasca_edit', [
             'pasca' => $pasca,
             'title'     => 'Form Update data Informasi Pasca',
         ]);
@@ -197,7 +197,7 @@ class PascaController extends Controller
     {
         $pasca = Pasca::findOrFail($id);
 
-        return view('pasca.detail', compact('pasca'), [
+        return view('admin.pasca.detail', compact('pasca'), [
             'title' => 'Informasi Data Pasca Panen'
         ]);
     }
