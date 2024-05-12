@@ -51,4 +51,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+        /**
+     * Get the key for cache "minutes" value.
+     *
+     * @return string
+     */
+    public function getKeyName()
+    {
+        return 'username';
+    }
 }

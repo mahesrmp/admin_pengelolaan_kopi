@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\API\PengajuanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\API\BudidayaAPIController;
+use App\Http\API\ForumController;
 use App\Http\API\PermintaanPembelianController;
 use App\Http\Controllers\BudidayaController;
 
@@ -76,6 +77,16 @@ Route::delete('artikel/{id}', [ArtikelController::class, 'destroy']);
 Route::post('artikel_comment/{id}', [ArtikelController::class, 'comment_artikel']);
 Route::post('artikel_like/{id}', [ArtikelController::class, 'like_artikel']);
 Route::post('artikel_dislike/{id}', [ArtikelController::class, 'dislike_artikel']);
+Route::get('artikelByUser/{user_id}', [ArtikelController::class, 'articlesByUser']);
+
+Route::get('forum', [ForumController::class, 'index']);
+Route::get('forum/{id}', [ForumController::class, 'show']);
+Route::post('forum', [ForumController::class, 'store']);
+Route::put('forum/{id}', [ForumController::class, 'update']);
+Route::delete('forum/{id}', [ForumController::class, 'destroy']);
+Route::post('forum_comment/{id}', [ForumController::class, 'comment_forum']);
+Route::post('forum_like/{id}', [ForumController::class, 'like_forum']);
+Route::post('forum_dislike/{id}', [ForumController::class, 'dislike_forum']);
 
 Route::get('/provinsi', [BudidayaAPIController::class, 'getProvinsi']);
 Route::get('/provinces/{provinceId}/regencies', [BudidayaAPIController::class, 'getKabupaten']);

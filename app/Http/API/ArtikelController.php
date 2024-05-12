@@ -4,12 +4,9 @@ namespace App\Http\API;
 
 use App\Models\Artikel;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\TryCatch;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Models\KomentarArtikel;
-use Exception;
-use Illuminate\Support\Facades\Redis;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class ArtikelController extends Controller
 {
@@ -146,27 +143,21 @@ class ArtikelController extends Controller
             $artikel->isi_artikel = $request->isi_artikel;
             $artikel->user_id = $request->user_id;
 
-            $gambarPath = null;
             if ($request->hasFile('gambar')) {
                 $uploadedFile = $request->file('gambar');
                 if ($uploadedFile->isValid()) {
                     $gambarPath = $uploadedFile->store('artikelimage', 'public');
 
                     if ($artikel->images()->exists()) {
-                        // Assuming an article can have only one image
+                        // Menghapus gambar sebelumnya jika ada
                         $artikel->images()->first()->delete();
                     }
+
+                    // Menambahkan gambar baru
+                    $artikel->images()->create(['gambar' => $gambarPath]);
                 } else {
                     return response()->json(['message' => 'Gagal mengunggah Gambar', 'status' => 'error', 'error' => 'Invalid file'], 400);
                 }
-            } else {
-                if ($artikel->images()->exists()) {
-                    $gambarPath = $artikel->images()->first()->gambar;
-                }
-            }
-
-            if ($gambarPath) {
-                $artikel->images()->create(['gambar' => $gambarPath]);
             }
 
             // Save updated artikel
@@ -205,101 +196,19 @@ class ArtikelController extends Controller
         }
     }
 
-    public function comment_artikel(Request $request, $id){
-        try{
-            $artikelId = Artikel::find($id);
+    public function articlesByUser($user_id)
+    {
+        try {
+            // Get authenticated user
+            $artikels = Artikel::with('images')->where('user_id', $user_id)->get();
 
-            if(!$artikelId){
-                return response()->json(['message' => 'Artikel not found', 'status' => 'error'], 404);
+            if (!$artikels) {
+                return response()->json(['message' => 'User not found', 'status' => 'error'], 404);
             }
 
-            $request->validate([
-                'komentar' => 'required|string',
-                'artikel_id' => 'required',
-                'user_id' => 'required',
-            ]);
-
-            $artikelKomen = KomentarArtikel::create([
-                'komentar' => $request->komentar,
-                'artikel_id' => $artikelId,
-                'user_id' => $request->user_id,
-            ]);
-
-            if($artikelKomen){
-                return response()->json([
-                    'message' => 'Artikel berhasil ditambahkan',
-                    'status' => 'success',
-                ], 200);
-            }else{
-                return response()->json(['message' => 'Gagal menambahkan data', 'status' => 'error', 'error' => 'Failed to save data to the database'], 500);
-            }
-
-        }catch(\Exception $e){
-            return response()->json(['message' => 'Failed to comment artikel', 'status' => 'error', 'error' => $e->getMessage()], 500);
-        }
-    }
-
-    public function like_artikel(Request $request, $id){
-        try{
-            $artikelId = Artikel::find($id);
-
-            if(!$artikelId){
-                return response()->json(['message' => 'Artikel not found', 'status' => 'error'], 404);
-            }
-
-            $request->validate([
-                'like' => 'required',
-                'artikel_id' => 'required',
-            ]);
-
-            $artikelKomen = KomentarArtikel::create([
-                'like' => 1,
-                'artikel_id' => $artikelId,
-            ]);
-
-            if($artikelKomen){
-                return response()->json([
-                    'message' => 'Like berhasil ditambahkan',
-                    'status' => 'success',
-                ], 200);
-            }else{
-                return response()->json(['message' => 'Gagal menambahkan data', 'status' => 'error', 'error' => 'Failed to save data to the database'], 500);
-            }
-
-        }catch(\Exception $e){
-            return response()->json(['message' => 'Gagal memberikan like ke artikel', 'status' => 'error', 'error' => $e->getMessage()], 500);
-        }
-    }
-    
-    public function dislike_artikel(Request $request, $id){
-        try{
-            $artikelId = Artikel::find($id);
-
-            if(!$artikelId){
-                return response()->json(['message' => 'Artikel not found', 'status' => 'error'], 404);
-            }
-
-            $request->validate([
-                'like' => 'required',
-                'artikel_id' => 'required',
-            ]);
-
-            $artikelKomen = KomentarArtikel::create([
-                'like' => 2,
-                'artikel_id' => $artikelId,
-            ]);
-
-            if($artikelKomen){
-                return response()->json([
-                    'message' => 'Like berhasil ditambahkan',
-                    'status' => 'success',
-                ], 200);
-            }else{
-                return response()->json(['message' => 'Gagal menambahkan data', 'status' => 'error', 'error' => 'Failed to save data to the database'], 500);
-            }
-
-        }catch(\Exception $e){
-            return response()->json(['message' => 'Gagal memberikan like ke artikel', 'status' => 'error', 'error' => $e->getMessage()], 500);
+            return response()->json($artikels, 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to fetch articles by user', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
     }
 }

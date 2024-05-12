@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class KomentarArtikel extends Model
+class KomentarForum extends Model
 {
     use HasFactory;
-    protected $table = 'artikel_komentars';
+    protected $table = 'forum_komentars';
     protected $primaryKey = 'id';
 
     protected $fillable = [
         'komentar',
-        'artikel_id',
+        'forum_id',
         'user_id',
     ];
 }
