@@ -18,7 +18,7 @@ class MinumanController extends Controller
     public function index()
     {
         $minumans = Minuman::all();
-        return view('minuman.minuman', compact('minumans'), [
+        return view('admin.minuman.minuman', compact('minumans'), [
             'title' => 'Minuman'
         ]);
     }
@@ -30,7 +30,7 @@ class MinumanController extends Controller
      */
     public function create()
     {
-        return view('minuman.minuman_form', [
+        return view('admin.minuman.minuman_form', [
             'title' => 'Tambah Data Minuman'
         ]);
     }
@@ -92,7 +92,7 @@ class MinumanController extends Controller
         $minuman = Minuman::findOrFail($id);
 
         // Menampilkan halaman detail dengan data minuman$minuman
-        return view('minuman.detail', compact('minuman'),  [
+        return view('admin.minuman.detail', compact('minuman'),  [
             'title' => 'Detail Data Minuman'
         ]);
     }
@@ -106,7 +106,7 @@ class MinumanController extends Controller
     public function edit($id)
     {
         $minuman = Minuman::findOrFail($id);
-        return view('minuman.minuman_edit', compact('minuman'), [
+        return view('admin.minuman.minuman_edit', compact('minuman'), [
             'title' => 'Minuman'
         ]);
     }

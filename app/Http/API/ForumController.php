@@ -3,10 +3,11 @@
 namespace App\Http\API;
 
 use App\Models\Forum;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\KomentarForum;
 use App\Models\LikeForum;
+use Illuminate\Http\Request;
+use App\Models\KomentarForum;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class ForumController extends Controller
 {
@@ -97,21 +98,21 @@ class ForumController extends Controller
             $forum->deskripsi = $request->deskripsi;
             $forum->user_id = $request->user_id;
 
+            // Cek apakah ada file gambar yang diunggah
             if ($request->hasFile('gambar')) {
                 $uploadedFile = $request->file('gambar');
                 if ($uploadedFile->isValid()) {
-                    $gambarPath = $uploadedFile->store('forumimage', 'public');
-
+                    // Hapus gambar lama jika ada
                     if ($forum->images()->exists()) {
-                        // Assuming an article can have only one image
                         $forum->images()->first()->delete();
                     }
 
-                    // Menambahkan gambar baru
+                    // Unggah dan simpan gambar baru
+                    $gambarPath = $uploadedFile->store('forumimage', 'public');
                     $forum->images()->create(['gambar' => $gambarPath]);
+                } else {
+                    return response()->json(['message' => 'Gagal mengunggah Gambar', 'status' => 'error', 'error' => 'Invalid file'], 400);
                 }
-            } else {
-                return response()->json(['message' => 'Gagal mengunggah Gambar', 'status' => 'error', 'error' => 'Invalid file'], 400);
             }
 
             // Save updated forum
@@ -132,6 +133,10 @@ class ForumController extends Controller
                 return response()->json(['message' => 'Forum not found', 'status' => 'error'], 404);
             }
 
+            $forum->images->each(function ($image) {
+                Storage::disk('public')->delete($image->gambar);
+            });
+
             // Delete associated images
             $forum->images()->delete();
 
@@ -144,10 +149,10 @@ class ForumController extends Controller
         }
     }
 
-    public function comment_forum(Request $request, $id)
+    public function comment_forum(Request $request, $forum_id)
     {
         try {
-            $forumId = Forum::find($id);
+            $forumId = Forum::find($forum_id);
 
             if (!$forumId) {
                 return response()->json(['message' => 'Forum not found', 'status' => 'error'], 404);
@@ -161,7 +166,7 @@ class ForumController extends Controller
 
             $forumKomen = KomentarForum::create([
                 'komentar' => $request->komentar,
-                'forum_id' => $forumId,
+                'forum_id' => $forum_id,
                 'user_id' => $request->user_id,
             ]);
 
@@ -178,7 +183,22 @@ class ForumController extends Controller
         }
     }
 
-    public function like_forum(Request $request, $id)
+    public function get_comment_forum($forum_id)
+    {
+        try {
+            $forumKomentar = KomentarForum::where('forum_id', $forum_id)->get();
+
+            if (!$forumKomentar) {
+                return response()->json(['message' => 'Komentar Forum not found', 'status' => 'error'], 404);
+            }
+
+            return response()->json(['data' => $forumKomentar, 'status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to fetch forum', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function like_forum(Request $request, $id, $user_id)
     {
         try {
             $forumId = Forum::find($id);
@@ -188,13 +208,14 @@ class ForumController extends Controller
             }
 
             $request->validate([
-                'like' => 'required',
                 'forum_id' => 'required',
+                'user_id' => 'required',
             ]);
 
             $forumKomen = LikeForum::create([
                 'like' => 1,
-                'forum_id' => $forumId,
+                'forum_id' => $id,
+                'user_id' => $user_id,
             ]);
 
             if ($forumKomen) {

@@ -20,7 +20,7 @@ class KomunitasController extends Controller
             ->select('pengajuans.*', 'users.username') // Change 'nama' with the actual column name in the users table that stores the name
             ->get();
         // dd($pengajuans);
-        return view('komunitas.komunitas', compact('data_petanis'), [
+        return view('admin.komunitas.komunitas', compact('data_petanis'), [
             'title' => 'Data Petani'
         ]);
     }

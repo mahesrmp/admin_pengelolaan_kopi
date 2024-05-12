@@ -18,13 +18,13 @@ class BudidayaController extends Controller
     public function index()
     {
         $budidayas = Budidaya::with('images')->get();
-        return view('budidaya.budidaya', compact('budidayas'), [
+        return view('admin.budidaya.budidaya', compact('budidayas'), [
             'title' => 'Budidaya'
         ]);
     }
     public function penjualan_index()
     {
-        return view('penjualan.penjualan', [
+        return view('admin.penjualan.penjualan', [
             'title' => 'Penjualan'
         ]);
     }
@@ -36,7 +36,7 @@ class BudidayaController extends Controller
             'title'     => 'Form Tambah Informasi Budidaya',
         ];
 
-        return view('budidaya.budidaya_form', $data);
+        return view('admin.budidaya.budidaya_form', $data);
     }
 
     /**
@@ -88,7 +88,7 @@ class BudidayaController extends Controller
     public function edit($id)
     {
         $budidaya = Budidaya::findOrFail($id);
-        return view('budidaya.budidaya_edit', [
+        return view('admin.budidaya.budidaya_edit', [
             'budidaya' => $budidaya,
             'title'     => 'Form Update data Informasi Budidaya',
         ]);
@@ -199,7 +199,7 @@ class BudidayaController extends Controller
     {
         $budidaya = Budidaya::findOrFail($id);
 
-        return view('budidaya.detail', compact('budidaya'), [
+        return view('admin.budidaya.detail', compact('budidaya'), [
             'title' => 'Detail Tahapan Budidaya'
         ]);
     }

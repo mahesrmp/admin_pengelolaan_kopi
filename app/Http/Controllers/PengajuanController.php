@@ -20,7 +20,7 @@ class PengajuanController extends Controller
             ->select('pengajuans.*', 'users.username') // Change 'nama' with the actual column name in the users table that stores the name
             ->get();
         // dd($pengajuans);
-        return view('komunitas.pengajuan', compact('pengajuans'), [
+        return view('admin.komunitas.pengajuan', compact('pengajuans'), [
             'title' => 'Data Pengajuan'
         ]);
     }
@@ -110,7 +110,7 @@ class PengajuanController extends Controller
     {
         $getDataUser = User::all();
         // dd($getDataUser);
-        return view('users.index', compact('getDataUser'), [
+        return view('admin.users.index', compact('getDataUser'), [
             'title' => 'Informasi Data Users'
         ]);
     }

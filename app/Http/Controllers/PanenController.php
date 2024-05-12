@@ -14,7 +14,7 @@ class PanenController extends Controller
     public function index()
     {
         $panens = Panen::all();
-        return view('panen.panen', compact('panens'), [
+        return view('admin.panen.panen', compact('panens'), [
             'title' => 'Panen'
         ]);
     }
@@ -26,7 +26,7 @@ class PanenController extends Controller
             'title'     => 'Form Tambah Informasi Panen',
         ];
 
-        return view('panen.panen_form', $data);
+        return view('admin.panen.panen_form', $data);
     }
 
     /**
@@ -79,7 +79,7 @@ class PanenController extends Controller
     public function edit($id)
     {
         $panen = Panen::findOrFail($id);
-        return view('panen.panen_edit', [
+        return view('admin.panen.panen_edit', [
             'panen' => $panen,
             'title'     => 'Form Update data Informasi Panen',
         ]);
@@ -165,7 +165,7 @@ class PanenController extends Controller
     {
         $panen = Panen::findOrFail($id);
 
-        return view('panen.detail', compact('panen'),  [
+        return view('admin.panen.detail', compact('panen'),  [
             'title' => 'Detail Tahapan Panen'
         ]);
     }

@@ -30,7 +30,7 @@ Route::post('/login', [AuthController::class, 'proseslogin']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AuthController::class, 'dashboard']);
+    Route::get('/admin/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     // Route::get('/dashboard', function () {
     //     return view('layouts.dashboard', [
     //         'title' => 'Dashboard'

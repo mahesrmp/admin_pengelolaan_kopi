@@ -2,11 +2,12 @@
 
 namespace App\Http\API;
 
+use App\Models\User;
 use App\Models\Artikel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArtikelController extends Controller
 {
@@ -183,6 +184,10 @@ class ArtikelController extends Controller
             if (!$artikel) {
                 return response()->json(['message' => 'Artikel not found', 'status' => 'error'], 404);
             }
+
+            $artikel->images->each(function($image) {
+                Storage::disk('public')->delete($image->gambar);
+            });
 
             // Delete associated images
             $artikel->images()->delete();
