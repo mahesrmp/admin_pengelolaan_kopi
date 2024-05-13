@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\KomentarForum;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ForumController extends Controller
 {
@@ -81,12 +82,15 @@ class ForumController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $request->validate([
+            $validator = Validator::make($request->all(), [
                 'title' => 'required|string',
                 'deskripsi' => 'required|string',
                 'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'user_id' => 'required',
             ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
 
             $forum = Forum::find($id);
 
@@ -94,21 +98,15 @@ class ForumController extends Controller
                 return response()->json(['message' => 'Forum not found', 'status' => 'error'], 404);
             }
 
-            $forum->title = $request->title;
-            $forum->deskripsi = $request->deskripsi;
-            $forum->user_id = $request->user_id;
-
             // Cek apakah ada file gambar yang diunggah
             if ($request->hasFile('gambar')) {
                 $uploadedFile = $request->file('gambar');
                 if ($uploadedFile->isValid()) {
-                    // Hapus gambar lama jika ada
+                    $gambarPath = $uploadedFile->store('forumimage', 'public');
+
                     if ($forum->images()->exists()) {
                         $forum->images()->first()->delete();
                     }
-
-                    // Unggah dan simpan gambar baru
-                    $gambarPath = $uploadedFile->store('forumimage', 'public');
                     $forum->images()->create(['gambar' => $gambarPath]);
                 } else {
                     return response()->json(['message' => 'Gagal mengunggah Gambar', 'status' => 'error', 'error' => 'Invalid file'], 400);
@@ -116,7 +114,10 @@ class ForumController extends Controller
             }
 
             // Save updated forum
-            $forum->save();
+            $forum->update([
+                'title' => $request->title,
+                'deskripsi' => $request->deskripsi,
+            ]);
 
             return response()->json(['message' => 'Forum berhasil diperbarui', 'status' => 'success'], 200);
         } catch (\Exception $e) {

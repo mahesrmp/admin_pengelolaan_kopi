@@ -72,7 +72,7 @@ Route::post('permintaan_pembelian', [PermintaanPembelianController::class, 'stor
 Route::get('artikel', [ArtikelController::class, 'index']);
 Route::get('artikel/{id}', [ArtikelController::class, 'show']);
 Route::post('artikel', [ArtikelController::class, 'store']);
-Route::put('artikel/{id}', [ArtikelController::class, 'update']);
+Route::post('artikel/{id}', [ArtikelController::class, 'update']);
 Route::delete('artikel/{id}', [ArtikelController::class, 'destroy']);
 Route::post('artikel_comment/{id}', [ArtikelController::class, 'comment_artikel']);
 Route::post('artikel_like/{id}', [ArtikelController::class, 'like_artikel']);
@@ -82,7 +82,7 @@ Route::get('artikelByUser/{user_id}', [ArtikelController::class, 'articlesByUser
 Route::get('forum', [ForumController::class, 'index']);
 Route::get('forum/{id}', [ForumController::class, 'show']);
 Route::post('forum', [ForumController::class, 'store']);
-Route::put('forum/{id}', [ForumController::class, 'update']);
+Route::post('forum/{id}', [ForumController::class, 'update']);
 Route::delete('forum/{id}', [ForumController::class, 'destroy']);
 Route::post('forum_comment/{forum_id}', [ForumController::class, 'comment_forum']);
 Route::post('forum_like/{id}', [ForumController::class, 'like_forum']);
