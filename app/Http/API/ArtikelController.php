@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ArtikelController extends Controller
 {
@@ -127,12 +128,16 @@ class ArtikelController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $request->validate([
+            $validator = Validator::make($request->all(), [
                 'judul_artikel' => 'required|string',
                 'isi_artikel' => 'required|string',
                 'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'user_id' => 'required',
             ]);
+
+            // Jika validasi gagal
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 422);
+            }
 
             $artikel = Artikel::find($id);
 
@@ -140,9 +145,8 @@ class ArtikelController extends Controller
                 return response()->json(['message' => 'Artikel not found', 'status' => 'error'], 404);
             }
 
-            $artikel->judul_artikel = $request->judul_artikel;
-            $artikel->isi_artikel = $request->isi_artikel;
-            $artikel->user_id = $request->user_id;
+            // $artikel->judul_artikel = $request->judul_artikel;
+            // $artikel->isi_artikel = $request->isi_artikel;
 
             if ($request->hasFile('gambar')) {
                 $uploadedFile = $request->file('gambar');
@@ -150,19 +154,19 @@ class ArtikelController extends Controller
                     $gambarPath = $uploadedFile->store('artikelimage', 'public');
 
                     if ($artikel->images()->exists()) {
-                        // Menghapus gambar sebelumnya jika ada
                         $artikel->images()->first()->delete();
                     }
-
-                    // Menambahkan gambar baru
-                    $artikel->images()->create(['gambar' => $gambarPath]);
-                } else {
-                    return response()->json(['message' => 'Gagal mengunggah Gambar', 'status' => 'error', 'error' => 'Invalid file'], 400);
                 }
+                $artikel->images()->create(['gambar' => $gambarPath]);
+            } else {
+                return response()->json(['message' => 'Gagal mengunggah Gambar', 'status' => 'error', 'error' => 'Invalid file'], 400);
             }
 
             // Save updated artikel
-            $artikel->save();
+            $artikel->update([
+                'judul_artikel' => $request->judul_artikel,
+                'isi_artikel' => $request->isi_artikel,
+            ]);
 
             return response()->json(['message' => 'Artikel berhasil diperbarui', 'status' => 'success'], 200);
         } catch (\Exception $e) {
@@ -185,7 +189,7 @@ class ArtikelController extends Controller
                 return response()->json(['message' => 'Artikel not found', 'status' => 'error'], 404);
             }
 
-            $artikel->images->each(function($image) {
+            $artikel->images->each(function ($image) {
                 Storage::disk('public')->delete($image->gambar);
             });
 
