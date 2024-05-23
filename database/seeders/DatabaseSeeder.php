@@ -17,18 +17,17 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
+            'nama_lengkap' => 'ahmad',
+            'username' => 'ahmad',
+            'role' => 'fasilitator',
+            'password' => Hash::make('ahmad1'),
+        ]);
+
+        DB::table('users')->insert([
             'nama_lengkap' => 'Admin',
             'username' => 'admin',
             'role' => 'admin',
-            'password' => Hash::make('admin'),
-            // 'confirm_password' => Hash::make('admin'),
-        ]);
-        DB::table('users')->insert([
-            'nama_lengkap' => 'fasilitator',
-            'username' => 'fasilitator',
-            'role' => 'fasilitator',
-            'password' => Hash::make('fasilitator'),
-            // 'confirm_password' => Hash::make('admin'),
+            'password' => Hash::make('admin01'),
         ]);
     }
 }

@@ -23,21 +23,25 @@ use App\Http\Middleware\RedirectIfAuthenticated;
 */
 
 
-Route::middleware([RedirectIfAuthenticated::class . ':admin,fasilitator'])->group(function () {
-});
+// Route::middleware([RedirectIfAuthenticated::class . ':admin,fasilitator'])->group(function () {
+// });
 Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'proseslogin']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-    // Route::get('/dashboard', function () {
-    //     return view('layouts.dashboard', [
-    //         'title' => 'Dashboard'
-    //     ]);
-    // })->name('dashboard');
+Route::middleware(['auth', 'role:fasilitator'])->group(function () {
+    Route::get('/fasilitator/dashboard', [FasilitatorController::class, 'dashboard'])->name('dashboard.fasilitator');
+});
 
-    // Route::get('/budidaya', [BudidayaController::class, 'index']);
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin/dashboard', [AuthController::class, 'dashboard'])->name('dashboard.admin');
+    Route::get('/dashboard', function () {
+        return view('layouts.dashboard', [
+            'title' => 'Dashboard'
+        ]);
+    })->name('dashboard');
+
+    Route::get('/budidaya', [BudidayaController::class, 'index']);
     Route::resource('budidaya', BudidayaController::class)->names([
         'index' => 'budidaya.index',
     ]);
@@ -69,7 +73,4 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/budidaya/{id}', [BudidayaController::class, 'show'])->name('budidaya.show');
     Route::get('/panen/{id}', [PanenController::class, 'show'])->name('panen.show');
     Route::get('/pascas/{id}', [PascaController::class, 'show'])->name('pasca.show');
-});
-Route::middleware(['auth', 'role:fasilitator'])->group(function () {
-    Route::get('/fasilitator/dashboard', [FasilitatorController::class, 'dashboard']);
 });
