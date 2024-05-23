@@ -23,10 +23,10 @@ class RedirectIfAuthenticated
             $user = Auth::user();
             if (in_array($user->role, $roles)) {
                 switch ($user->role) {
-                    case 'admin':
-                        return redirect('/admin/dashboard');
                     case 'fasilitator':
-                        return redirect('/fasilitator/dashboard');
+                        return redirect()->route('dashboard.fasilitator');
+                    case 'admin':
+                        return redirect()->route('dashboard.admin');
                 }
             }
             return redirect('/');
