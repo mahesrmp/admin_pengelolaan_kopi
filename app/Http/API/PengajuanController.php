@@ -13,19 +13,19 @@ class PengajuanController extends Controller
     public function tambahData(Request $request)
     {
         try {
-            // Validasi input
             $request->validate([
                 'deskripsi_pengalaman' => 'required|string',
                 'foto_ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'foto_selfie' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'foto_sertifikat' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'petani_id' => 'required',
+                'user_id' => 'required|exists:users,id',
             ]);
 
-            // Proses penyimpanan gambar jika ada
-            // $fotoKtpPath = $request->file('foto_ktp') ? $request->file('foto_ktp')->store('pengajuanimage', 'public') : null;
-            // $fotoSelfiePath = $request->file('foto_selfie') ? $request->file('foto_selfie')->store('pengajuanimage', 'public') : null;
-            // $fotoSertifikatPath = $request->file('foto_sertifikat') ? $request->file('foto_sertifikat')->store('pengajuanimage', 'public') : null;
+            $user = User::find($request->user_id);
+            if (!$user) {
+                return response()->json(['message' => 'User tidak ada', 'status' => 'error'], 404);
+            }
+
             $fotoKtpPath = null;
             if ($request->hasFile('foto_ktp')) {
                 $uploadedFile = $request->file('foto_ktp');
@@ -56,23 +56,19 @@ class PengajuanController extends Controller
                 }
             }
 
-
-            // Simpan data ke database
             $pengajuan = Pengajuan::create([
                 'foto_ktp' => $fotoKtpPath,
                 'foto_selfie' => $fotoSelfiePath,
                 'deskripsi_pengalaman' => $request->deskripsi_pengalaman,
                 'foto_sertifikat' => $fotoSertifikatPath,
-                'petani_id' => $request->petani_id,
+                'user_id' => $request->user_id,
             ]);
 
             if ($pengajuan) {
-                // Generate URLs for the images
                 $fotoKtpUrl = $fotoKtpPath ? asset('storage/' . $fotoKtpPath) : null;
                 $fotoSelfieUrl = $fotoSelfiePath ? asset('storage/' . $fotoSelfiePath) : null;
                 $fotoSertifikatUrl = $fotoSertifikatPath ? asset('storage/' . $fotoSertifikatPath) : null;
 
-                // Data added successfully, include image URLs in the response
                 return response()->json([
                     'message' => 'Data berhasil diajukan',
                     'status' => 'success',
@@ -81,11 +77,9 @@ class PengajuanController extends Controller
                     'foto_sertifikat_url' => $fotoSertifikatUrl,
                 ], 200);
             } else {
-                // Failed to add data
                 return response()->json(['message' => 'Gagal menambahkan data', 'status' => 'error', 'error' => 'Failed to save data to the database'], 500);
             }
         } catch (\Exception $e) {
-            // Handle other exceptions
             return response()->json(['message' => 'Gagal menambahkan data', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
     }

@@ -199,23 +199,23 @@ class ForumController extends Controller
         }
     }
 
-    public function like_forum(Request $request, $id, $user_id)
+    public function like_forum($forum_id, $user_id)
     {
         try {
-            $forumId = Forum::find($id);
+            $forumId = Forum::find($forum_id);
 
             if (!$forumId) {
                 return response()->json(['message' => 'Forum not found', 'status' => 'error'], 404);
             }
 
-            $request->validate([
-                'forum_id' => 'required',
-                'user_id' => 'required',
-            ]);
+            // $request->validate([
+            //     'forum_id' => 'required|exists:forums,id', // Validasi tambahan
+            //     'user_id' => 'required|exists:users,id', // Validasi tambahan
+            // ]);
 
             $forumKomen = LikeForum::create([
                 'like' => 1,
-                'forum_id' => $id,
+                'forum_id' => $forum_id,
                 'user_id' => $user_id,
             ]);
 
@@ -232,12 +232,12 @@ class ForumController extends Controller
         }
     }
 
-    public function dislike_forum(Request $request, $id)
+    public function dislike_forum(Request $request, $forum_id)
     {
         try {
-            $forumId = Forum::find($id);
+            // $forumId = Forum::find($forum_id);
 
-            if (!$forumId) {
+            if (!$forum_id) {
                 return response()->json(['message' => 'Forum not found', 'status' => 'error'], 404);
             }
 
@@ -248,7 +248,7 @@ class ForumController extends Controller
 
             $forumKomen = LikeForum::create([
                 'like' => 2,
-                'forum_id' => $forumId,
+                'forum_id' => $forum_id,
             ]);
 
             if ($forumKomen) {
