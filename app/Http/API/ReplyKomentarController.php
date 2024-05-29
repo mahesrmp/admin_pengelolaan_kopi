@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\KomentarForum;
 use App\Models\ReplyKomentar;
+use Illuminate\Support\Facades\Log;
 
 class ReplyKomentarController extends Controller
 {
@@ -37,16 +38,73 @@ class ReplyKomentarController extends Controller
         ], 201);
     }
 
-    public function getRepliesByUserId($userId)
+    public function getRepliesByUserId($komentarId, $userId)
     {
-        $replies = ReplyKomentar::whereHas('comment', function ($query) use ($userId) {
-            $query->where('user_id', $userId);
-        })->with(['user', 'comment', 'forum'])->get();
+        $replies = ReplyKomentar::where('komentar_id', $komentarId)
+            ->where('user_id', $userId)->get();
+
+        Log::info('Replies:', ['replies' => $replies]);
+
+        if ($replies->isEmpty()) {
+            return response()->json([
+                'message' => 'Komentar Reply tidak ditemukan',
+                'status' => 'error'
+            ], 404);
+        }
 
         return response()->json([
             'message' => 'Berhasil mengambil data reply komentar',
             'status' => 'success',
             'data' => $replies,
+        ], 200);
+    }
+
+    public function updateReplyByUserId(Request $request, $komentarId, $userId, $id)
+    {
+        $reply = ReplyKomentar::where('komentar_id', $komentarId)
+            ->where('user_id', $userId)
+            ->where('id', $id)
+            ->first();
+
+        if (!$reply) {
+            return response()->json([
+                'message' => 'Reply tidak ditemukan',
+                'status' => 'error'
+            ], 404);
+        }
+
+        $reply->update($request->all());
+
+        Log::info('Updated Reply:', ['reply' => $reply]);
+
+        return response()->json([
+            'message' => 'Reply berhasil diperbarui',
+            'status' => 'success',
+            'data' => $reply,
+        ], 200);
+    }
+
+    public function deleteReplyByUserId($komentarId, $userId, $id)
+    {
+        $reply = ReplyKomentar::where('komentar_id', $komentarId)
+            ->where('user_id', $userId)
+            ->where('id', $id)
+            ->first();
+
+        if (!$reply) {
+            return response()->json([
+                'message' => 'Reply tidak ditemukan',
+                'status' => 'error'
+            ], 404);
+        }
+
+        $reply->delete();
+
+        Log::info('Deleted Reply:', ['reply' => $reply]);
+
+        return response()->json([
+            'message' => 'Reply berhasil dihapus',
+            'status' => 'success',
         ], 200);
     }
 }

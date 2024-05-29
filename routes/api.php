@@ -85,12 +85,18 @@ Route::get('forum/{id}', [ForumController::class, 'show']);
 Route::post('forum', [ForumController::class, 'store']);
 Route::post('forum/{id}', [ForumController::class, 'update']);
 Route::delete('forum/{id}', [ForumController::class, 'destroy']);
+Route::get('forumKomen/{forum_id}', [ForumController::class, 'get_comment_forum']);
+Route::post('forum_comment/{forum_id}', [ForumController::class, 'comment_forum']);
+Route::put('forum_comment_update/{id}', [ForumController::class, 'update_comment_forum']);
+Route::delete('forum_comment_delete/{id}', [ForumController::class, 'delete_comment_forum']);
 Route::post('forum_comment/{forum_id}', [ForumController::class, 'comment_forum']);
 Route::post('forum_like/{forum_id}/{user_id}', [ForumController::class, 'like_forum']);
 Route::post('forum_dislike/{forum_id}/{user_id}', [ForumController::class, 'dislike_forum']);
-Route::get('forumKomen/{forum_id}', [ForumController::class, 'get_comment_forum']);
 
 Route::get('/provinsi', [BudidayaAPIController::class, 'getProvinsi']);
 Route::get('/provinces/{provinceId}/regencies', [BudidayaAPIController::class, 'getKabupaten']);
 
+Route::get('/komentar/{komentar_id}/user/{user_id}/replies', [ReplyKomentarController::class, 'getRepliesByUserId']);
 Route::post('/replies', [ReplyKomentarController::class, 'reply']);
+Route::put('komentar/{komentar_id}/user/{user_id}/replies/{id}', [ReplyKomentarController::class, 'updateReplyByUserId']);
+Route::delete('komentar/{komentar_id}/user/{user_id}/replies/{id}', [ReplyKomentarController::class, 'deleteReplyByUserId']);
