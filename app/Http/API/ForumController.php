@@ -183,6 +183,46 @@ class ForumController extends Controller
             return response()->json(['message' => 'Failed to comment forum', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
     }
+    
+    public function update_comment_forum(Request $request, $id)
+    {
+        try {
+            $request->validate([
+                'komentar' => 'required|string',
+            ]);
+
+            $forumKomen = KomentarForum::find($id);
+
+            if(!$forumKomen){
+                return response()->json(['message' => 'Komentar Forum not found', 'status' => 'error'], 404);
+            }
+
+            $forumKomen->update([
+                'komentar' => $request->komentar,
+            ]);
+
+            return response()->json(['message' => 'Komentar Forum berhasil diperbarui', 'status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal memperbaharui Komentar Forum', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function delete_comment_forum($id)
+    {
+        try {
+            $forumKomen = KomentarForum::find($id);
+
+            if(!$forumKomen){
+                return response()->json(['message' => 'Komentar Forum not found', 'status' => 'error'], 404);
+            }
+
+            $forumKomen->delete();
+
+            return response()->json(['message' => 'Komentar Forum berhasil dihapus', 'status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Gagal menghapus Komentar Forum', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
+    }
 
     public function get_comment_forum($forum_id)
     {

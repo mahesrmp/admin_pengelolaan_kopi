@@ -17,4 +17,21 @@ class ReplyKomentar extends Model
         'user_id',
         'komentar_id',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    // Relasi ke Forum
+    public function forum()
+    {
+        return $this->belongsTo(Forum::class);
+    }
+
+    // Relasi ke Comment (komentar yang direply)
+    public function comment()
+    {
+        return $this->belongsTo(KomentarForum::class);
+    }
 }
