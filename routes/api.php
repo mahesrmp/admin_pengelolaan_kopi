@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\API\BudidayaAPIController;
 use App\Http\API\ForumController;
 use App\Http\API\PermintaanPembelianController;
+use App\Http\API\ReplyKomentarController;
 use App\Http\Controllers\BudidayaController;
 
 /*
@@ -91,3 +92,5 @@ Route::get('forumKomen/{forum_id}', [ForumController::class, 'get_comment_forum'
 
 Route::get('/provinsi', [BudidayaAPIController::class, 'getProvinsi']);
 Route::get('/provinces/{provinceId}/regencies', [BudidayaAPIController::class, 'getKabupaten']);
+
+Route::post('/replies', [ReplyKomentarController::class, 'reply']);

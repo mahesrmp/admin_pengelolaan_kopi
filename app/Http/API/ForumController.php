@@ -35,7 +35,7 @@ class ForumController extends Controller
             ]);
 
             if ($forum) {
-                $gambar = null;
+                $gambarPath = null;
                 if ($request->hasFile('gambar')) {
                     $uploadedFile = $request->file('gambar');
                     if ($uploadedFile->isValid()) {

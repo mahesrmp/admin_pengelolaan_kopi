@@ -41,11 +41,8 @@ class AuthController extends Controller
             //     return redirect()->route('dashboard.admin');
             // }
         } else {
-            return back()->withErrors(['Invalid credentials']);
+            return back()->withErrors(['Periksa Kembali Username dan Password Anda']);
         }
-
-        Log::warning('Login failed', ['username' => $input['username']]);
-        return back()->with('warning', 'Login Failed!!')->onlyInput('username');
     }
 
     public function logout(Request $request)
