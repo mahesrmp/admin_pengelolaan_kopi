@@ -7,7 +7,6 @@ use App\Http\API\PengajuanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\API\BudidayaAPIController;
 use App\Http\API\ForumController;
-use App\Http\API\PermintaanPembelianController;
 use App\Http\API\ReplyKomentarController;
 use App\Http\Controllers\BudidayaController;
 
@@ -65,10 +64,6 @@ Route::get('/komunitas', [BudidayaAPIController::class, 'getKomunitasData']);
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-
-//Permintaan Pembelian
-Route::get('permintaan_pembelian', [PermintaanPembelianController::class, 'index']);
-Route::post('permintaan_pembelian', [PermintaanPembelianController::class, 'store']);
 
 Route::get('artikel', [ArtikelController::class, 'index']);
 Route::get('artikel/{id}', [ArtikelController::class, 'show']);

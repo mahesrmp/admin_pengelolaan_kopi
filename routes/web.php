@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArtikelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PanenController;
@@ -30,7 +31,14 @@ Route::post('/login', [AuthController::class, 'proseslogin']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth', 'role:fasilitator'])->group(function () {
-    Route::get('/fasilitator/dashboard', [FasilitatorController::class, 'dashboard'])->name('dashboard.fasilitator');
+    Route::get('/fasilitator/dashboard', [ArtikelController::class, 'dashboard'])->name('dashboard.fasilitator');
+    Route::get('/fasilitator/artikel', [ArtikelController::class, 'artikel'])->name('artikel.fasilitator');
+    Route::get('/fasilitator/artikel/detail/{id}', [ArtikelController::class, 'show'])->name('artikel.show');
+    Route::get('/fasilitator/artikel/create', [ArtikelController::class, 'create'])->name('artikel.form');
+    Route::post('/fasilitator/artikel/create', [ArtikelController::class, 'store'])->name('artikel.create');
+    Route::get('/fasilitator/artikel/{id}', [ArtikelController::class, 'edit'])->name('artikel.edit');
+    Route::put('/fasilitator/artikel/{id}', [ArtikelController::class, 'update'])->name('artikel.update');
+    Route::delete('/fasilitator/artikel/{id}', [ArtikelController::class, 'destroy'])->name('artikel.destroy');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -55,9 +63,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     ]);
     Route::resource('minuman', MinumanController::class)->names([
         'index' => 'minuman.index',
-    ]);
-    Route::resource('komunitas', KomunitasController::class)->names([
-        'index' => 'komunitas.index',
     ]);
     Route::get('penjualan', [BudidayaController::class, 'penjualan_index'])->name('penjualan.index');
     Route::get('/pengajuan', [PengajuanController::class, 'index'])->name('pengajuan.index');
