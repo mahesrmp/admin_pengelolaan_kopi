@@ -4,6 +4,8 @@ namespace App\Http\API;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -33,7 +35,7 @@ class AuthController extends Controller
             // 'email' => 'required|email|unique:users',
             'password' => 'required',
             'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan,Lainnya',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'provinsi' => 'required',
             'kabupaten' => 'required',
             'no_telp' => 'required',
@@ -82,6 +84,28 @@ class AuthController extends Controller
                 'message' => 'Cek username dan password lagi',
                 'data' => null
             ]);
+        }
+    }
+
+    public function getUserById($id)
+    {
+        try {
+            $user = DB::table('users')->where('id', $id)
+                ->select('nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin',  'provinsi', 'kabupaten', 'no_telp')
+                ->first();
+
+            Log::info(json_encode($user));
+            if (!$user) {
+                return response()->json(['message' => 'User not found', 'status' => 'error'], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Get data sukses',
+                'data' => $user
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to get User', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
     }
 }
