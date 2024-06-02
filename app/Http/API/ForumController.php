@@ -183,7 +183,7 @@ class ForumController extends Controller
             return response()->json(['message' => 'Failed to comment forum', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
     }
-    
+
     public function update_comment_forum(Request $request, $id)
     {
         try {
@@ -193,7 +193,7 @@ class ForumController extends Controller
 
             $forumKomen = KomentarForum::find($id);
 
-            if(!$forumKomen){
+            if (!$forumKomen) {
                 return response()->json(['message' => 'Komentar Forum not found', 'status' => 'error'], 404);
             }
 
@@ -212,7 +212,7 @@ class ForumController extends Controller
         try {
             $forumKomen = KomentarForum::find($id);
 
-            if(!$forumKomen){
+            if (!$forumKomen) {
                 return response()->json(['message' => 'Komentar Forum not found', 'status' => 'error'], 404);
             }
 
@@ -239,68 +239,69 @@ class ForumController extends Controller
         }
     }
 
-    public function like_forum($forum_id, $user_id)
+    public function likeForum($forum_id, $user_id)
     {
         try {
-            $forumId = Forum::find($forum_id);
+            $forum = Forum::find($forum_id);
 
-            if (!$forumId) {
+            if (!$forum) {
                 return response()->json(['message' => 'Forum not found', 'status' => 'error'], 404);
             }
 
-            // $request->validate([
-            //     'forum_id' => 'required|exists:forums,id', // Validasi tambahan
-            //     'user_id' => 'required|exists:users,id', // Validasi tambahan
-            // ]);
+            $existingLike = LikeForum::where('forum_id', $forum_id)
+                ->where('user_id', $user_id)
+                ->first();
 
-            $forumKomen = LikeForum::create([
-                'like' => 1,
-                'forum_id' => $forum_id,
-                'user_id' => $user_id,
-            ]);
-
-            if ($forumKomen) {
-                return response()->json([
-                    'message' => 'Like berhasil ditambahkan',
-                    'status' => 'success',
-                ], 200);
+            if ($existingLike) {
+                if ($existingLike->like == '1') {
+                    // Unlike
+                    $existingLike->delete();
+                    return response()->json(['message' => 'Like removed', 'status' => 'success'], 200);
+                } else {
+                    // Change dislike to like
+                    $existingLike->update(['like' => '1']);
+                    return response()->json(['message' => 'Changed unlike to like', 'status' => 'success'], 200);
+                }
             } else {
-                return response()->json(['message' => 'Gagal menambahkan data', 'status' => 'error', 'error' => 'Failed to save data to the database'], 500);
+                // Add new like
+                LikeForum::create(['forum_id' => $forum_id, 'user_id' => $user_id, 'like' => '1']);
+                return response()->json(['message' => 'Like added', 'status' => 'success'], 200);
             }
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Gagal memberikan like ke forum', 'status' => 'error', 'error' => $e->getMessage()], 500);
+            return response()->json(['message' => 'Failed to like forum', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
     }
 
-    public function dislike_forum(Request $request, $forum_id)
+    public function dislikeForum($forum_id, $user_id)
     {
         try {
-            // $forumId = Forum::find($forum_id);
+            $forum = Forum::find($forum_id);
 
-            if (!$forum_id) {
+            if (!$forum) {
                 return response()->json(['message' => 'Forum not found', 'status' => 'error'], 404);
             }
 
-            $request->validate([
-                'like' => 'required',
-                'forum_id' => 'required',
-            ]);
+            $existingLike = LikeForum::where('forum_id', $forum_id)
+                ->where('user_id', $user_id)
+                ->first();
 
-            $forumKomen = LikeForum::create([
-                'like' => 2,
-                'forum_id' => $forum_id,
-            ]);
-
-            if ($forumKomen) {
-                return response()->json([
-                    'message' => 'Like berhasil ditambahkan',
-                    'status' => 'success',
-                ], 200);
+            if ($existingLike) {
+                if ($existingLike->like == '2') {
+                    // Undislike
+                    $existingLike->delete();
+                    return response()->json(['message' => 'Dislike removed', 'status' => 'success'], 200);
+                } else {
+                    // Change like to dislike
+                    $existingLike->update(['like' => '2']);
+                    return response()->json(['message' => 'Changed like to dislike', 'status' => 'success'], 200);
+                }
             } else {
-                return response()->json(['message' => 'Gagal menambahkan data', 'status' => 'error', 'error' => 'Failed to save data to the database'], 500);
+                // Add new dislike
+                LikeForum::create(['forum_id' => $forum_id, 'user_id' => $user_id, 'like' => '2']);
+                return response()->json(['message' => 'Dislike added', 'status' => 'success'], 200);
             }
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Gagal memberikan like ke forum', 'status' => 'error', 'error' => $e->getMessage()], 500);
+            return response()->json(['message' => 'Failed to dislike forum', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
     }
 }
