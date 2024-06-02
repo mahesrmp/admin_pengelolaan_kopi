@@ -2,10 +2,12 @@
 
 namespace App\Http\API;
 
+use App\Models\User;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class PengajuanController extends Controller
@@ -13,6 +15,8 @@ class PengajuanController extends Controller
     public function tambahData(Request $request)
     {
         try {
+            Log::info('Memulai proses tambah data');
+
             $request->validate([
                 'deskripsi_pengalaman' => 'required|string',
                 'foto_ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -21,7 +25,12 @@ class PengajuanController extends Controller
                 'user_id' => 'required|exists:users,id',
             ]);
 
-            $user = User::find($request->user_id);
+            Log::info('Validasi berhasil');
+
+            $user = DB::table('users')->where('id', $request->user_id)->first();
+            Log::info('User ID dari request: ' . $request->user_id);
+            Log::info('User dari DB facade: ' . json_encode($user));
+
             if (!$user) {
                 return response()->json(['message' => 'User tidak ada', 'status' => 'error'], 404);
             }
@@ -83,6 +92,7 @@ class PengajuanController extends Controller
             return response()->json(['message' => 'Gagal menambahkan data', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
     }
+
 
     public function getPengajuanData()
     {
