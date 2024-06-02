@@ -32,12 +32,11 @@ class AuthController extends Controller
             'username' => 'required|unique:users',
             // 'email' => 'required|email|unique:users',
             'password' => 'required',
-            // 'confirm_password' => 'required|same:password',
-            // 'tanggal_lahir' => 'required|date',
-            // 'jenis_kelamin' => 'required|in:Laki-laki,Perempuan,Lainnya',
-            // 'provinsi' => 'required',
-            // 'kabupaten' => 'required',
-            // 'no_telp' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan,Lainnya',
+            'provinsi' => 'required',
+            'kabupaten' => 'required',
+            'no_telp' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -50,7 +49,6 @@ class AuthController extends Controller
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
-        $input['confirm_password'] = Hash::make($input['confirm_password']);
         $user = User::create($input);
 
         $token = $user->createToken('auth_token')->plainTextToken;
