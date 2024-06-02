@@ -304,4 +304,50 @@ class ForumController extends Controller
             return response()->json(['message' => 'Failed to dislike forum', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function getForumLikes($forum_id)
+    {
+        try {
+            $forum = Forum::find($forum_id);
+
+            if (!$forum) {
+                return response()->json(['message' => 'Forum not found', 'status' => 'error'], 404);
+            }
+
+            $likeCount = LikeForum::where('forum_id', $forum_id)->where('like', 1)->count();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Get like count successfully',
+                'data' => [
+                    'likes' => $likeCount,
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to get like count', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getForumDislikes($forum_id)
+    {
+        try {
+            $forum = Forum::find($forum_id);
+
+            if (!$forum) {
+                return response()->json(['message' => 'Forum not found', 'status' => 'error'], 404);
+            }
+
+            $dislikeCount = LikeForum::where('forum_id', $forum_id)->where('like', 2)->count();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Get dislike count successfully',
+                'data' => [
+                    'dislikes' => $dislikeCount,
+                ]
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to get dislike count', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
+    }
 }
