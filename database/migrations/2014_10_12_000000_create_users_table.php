@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             // $table->string('confirm_password');
             $table->date('tanggal_lahir')->nullable();
-            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan', 'Lainnya'])->nullable();
+            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
             $table->enum('role', ['fasilitator', 'admin', 'petani'])->default('petani');
             $table->string('provinsi')->nullable();
             $table->string('kabupaten')->nullable();

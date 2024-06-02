@@ -65,6 +65,7 @@ Route::get('/komunitas', [BudidayaAPIController::class, 'getKomunitasData']);
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
+Route::get('getUserById/{id}', [AuthController::class, 'getUserById']);
 Route::get('artikel', [ArtikelController::class, 'index']);
 Route::get('artikel/{id}', [ArtikelController::class, 'show']);
 Route::post('artikel', [ArtikelController::class, 'store']);
