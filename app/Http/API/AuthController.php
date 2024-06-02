@@ -109,4 +109,49 @@ class AuthController extends Controller
             return response()->json(['message' => 'Failed to get User', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function updateUserProfile(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama_lengkap' => 'required',
+            'username' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'provinsi' => 'required',
+            'kabupaten' => 'required',
+            'no_telp' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ada kesalahan',
+                'data' => $validator->errors()
+            ], 400);
+        }
+
+        try {
+            $user = DB::table('users')->where('id', $id)->first();
+
+            if (!$user) {
+                return response()->json(['message' => 'User not found', 'status' => 'error'], 404);
+            }
+
+            DB::table('users')
+                ->where('id', $id)
+                ->update($request->only(['nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin', 'provinsi', 'kabupaten', 'no_telp']));
+
+            $updatedUser = DB::table('users')->where('id', $id)
+                ->select('nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin',  'provinsi', 'kabupaten', 'no_telp')
+                ->first();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Update profile sukses',
+                'data' => $updatedUser
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to update profile', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
+    }
 }
