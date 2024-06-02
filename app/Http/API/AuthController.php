@@ -51,7 +51,6 @@ class AuthController extends Controller
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
-        $input['confirm_password'] = Hash::make($input['confirm_password']);
         $user = User::create($input);
 
         $token = $user->createToken('auth_token')->plainTextToken;
