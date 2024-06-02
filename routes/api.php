@@ -93,5 +93,6 @@ Route::get('/provinces/{provinceId}/regencies', [BudidayaAPIController::class, '
 
 Route::get('/komentar/{komentar_id}/user/{user_id}/replies', [ReplyKomentarController::class, 'getRepliesByUserId']);
 Route::post('/replies', [ReplyKomentarController::class, 'reply']);
+Route::get('replies/{komentar_id}', [ReplyKomentarController::class, 'get_replies']);
 Route::put('komentar/{komentar_id}/user/{user_id}/replies/{id}', [ReplyKomentarController::class, 'updateReplyByUserId']);
 Route::delete('komentar/{komentar_id}/user/{user_id}/replies/{id}', [ReplyKomentarController::class, 'deleteReplyByUserId']);

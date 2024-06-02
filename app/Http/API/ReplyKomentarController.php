@@ -14,7 +14,6 @@ class ReplyKomentarController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'forum_id' => 'required|exists:forums,id',
             'komentar_id' => 'required|exists:forum_komentars,id',
             'komentar' => 'required|string',
         ]);
@@ -26,7 +25,6 @@ class ReplyKomentarController extends Controller
 
         $replyComment = ReplyKomentar::create([
             'user_id' => $request->user_id,
-            'forum_id' => $request->forum_id,
             'komentar_id' => $request->komentar_id,
             'komentar' => $request->komentar,
         ]);
@@ -57,6 +55,21 @@ class ReplyKomentarController extends Controller
             'status' => 'success',
             'data' => $replies,
         ], 200);
+    }
+
+    public function get_replies($komentar_id)
+    {
+        try {
+            $replies = ReplyKomentar::where('komentar_id', $komentar_id)->get();
+
+            if (!$replies) {
+                return response()->json(['message' => 'Balasan Forum not found', 'status' => 'error'], 404);
+            }
+
+            return response()->json(['data' => $replies, 'status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to fetch balasan', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
     }
 
     public function updateReplyByUserId(Request $request, $komentarId, $userId, $id)
