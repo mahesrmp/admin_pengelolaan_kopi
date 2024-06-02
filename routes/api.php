@@ -88,8 +88,9 @@ Route::post('forum_comment/{forum_id}', [ForumController::class, 'comment_forum'
 Route::put('forum_comment_update/{id}', [ForumController::class, 'update_comment_forum']);
 Route::delete('forum_comment_delete/{id}', [ForumController::class, 'delete_comment_forum']);
 Route::post('forum_comment/{forum_id}', [ForumController::class, 'comment_forum']);
-Route::post('forum_like/{forum_id}/{user_id}', [ForumController::class, 'like_forum']);
-Route::post('forum_dislike/{forum_id}/{user_id}', [ForumController::class, 'dislike_forum']);
+
+Route::post('forum/{forum_id}/like/{user_id}', [ForumController::class, 'likeForum']);
+Route::post('forum/{forum_id}/dislike/{user_id}', [ForumController::class, 'dislikeForum']);
 
 Route::get('/provinsi', [BudidayaAPIController::class, 'getProvinsi']);
 Route::get('/provinces/{provinceId}/regencies', [BudidayaAPIController::class, 'getKabupaten']);
