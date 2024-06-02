@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pengajuan;
 use App\Models\User;
+use App\Models\Pengajuan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PengajuanController extends Controller
 {
@@ -93,12 +94,29 @@ class PengajuanController extends Controller
 
     public function accept($id)
     {
-        // Lakukan aksi menerima pengajuan berdasarkan $id
-        // Misalnya, set status pengajuan menjadi diterima
-        Pengajuan::where('id', $id)->update(['status' => '1']);
+        try {
+            $pengajuan = Pengajuan::find($id);
+            if (!$pengajuan) {
+                return redirect()->route('pengajuan.index')->with('error', 'Pengajuan tidak ditemukan');
+            }
 
-        return redirect()->route('pengajuan.index')->with('success', 'Pengajuan berhasil diterima');
+            $user = DB::table('users')->where('id', $pengajuan->user_id)->first();
+            if ($user) {
+                DB::table('users')
+                    ->where('id', $pengajuan->user_id)
+                    ->update(['role' => 'fasilitator']);
+
+                $pengajuan->update(['status' => '1']);
+
+                return redirect()->route('pengajuan.index')->with('success', 'Pengajuan berhasil diterima dan role user diperbarui');
+            } else {
+                return redirect()->route('pengajuan.index')->with('error', 'User tidak ditemukan');
+            }
+        } catch (\Exception $e) {
+            return redirect()->route('pengajuan.index')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
+
 
     public function reject($id)
     {

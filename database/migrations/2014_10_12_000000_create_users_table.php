@@ -21,7 +21,7 @@ return new class extends Migration
             // $table->string('confirm_password');
             $table->date('tanggal_lahir')->nullable();
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan', 'Lainnya'])->nullable();
-            $table->enum('role', ['fasilitator', 'admin'])->nullable();
+            $table->enum('role', ['fasilitator', 'admin', 'petani'])->default('petani');
             $table->string('provinsi')->nullable();
             $table->string('kabupaten')->nullable();
             $table->string('no_telp')->nullable();
