@@ -92,6 +92,9 @@ Route::post('forum_comment/{forum_id}', [ForumController::class, 'comment_forum'
 Route::post('forum/{forum_id}/like/{user_id}', [ForumController::class, 'likeForum']);
 Route::post('forum/{forum_id}/dislike/{user_id}', [ForumController::class, 'dislikeForum']);
 
+Route::get('forum/{forum_id}/likes', [ForumController::class, 'getForumLikes']);
+Route::get('forum/{forum_id}/dislikes', [ForumController::class, 'getForumDislikes']);
+
 Route::get('/provinsi', [BudidayaAPIController::class, 'getProvinsi']);
 Route::get('/provinces/{provinceId}/regencies', [BudidayaAPIController::class, 'getKabupaten']);
 
