@@ -26,6 +26,7 @@ class User extends Authenticatable
     protected $fillable = [
         'nama_lengkap',
         'username',
+        'id',
         // 'email',
         'password',
         'role',
@@ -67,18 +68,18 @@ class User extends Authenticatable
         return 'username';
     }
 
-    public function createCustomToken($username)
-    {
-        $token = $this->tokens()->create([
-            'tokenable_id' => $this->id,
-            'tokenable_type' => get_class($this),
-            'username' => $username,
-            'token' => hash('sha256', $plainTextToken = Str::random(40)),
-            'abilities' => ['*'],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+    // public function createCustomToken($username)
+    // {
+    //     $token = $this->tokens()->create([
+    //         'tokenable_id' => $this->id,
+    //         'tokenable_type' => get_class($this),
+    //         'username' => $username,
+    //         'token' => hash('sha256', $plainTextToken = Str::random(40)),
+    //         'abilities' => ['*'],
+    //         'created_at' => now(),
+    //         'updated_at' => now(),
+    //     ]);
 
-        return new NewAccessToken($token, $plainTextToken);
-    }
+    //     return new NewAccessToken($token, $plainTextToken);
+    // }
 }
