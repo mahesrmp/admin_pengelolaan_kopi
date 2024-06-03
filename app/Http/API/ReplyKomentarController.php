@@ -3,10 +3,11 @@
 namespace App\Http\API;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\KomentarForum;
 use App\Models\ReplyKomentar;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class ReplyKomentarController extends Controller
 {
@@ -69,6 +70,28 @@ class ReplyKomentarController extends Controller
             return response()->json(['data' => $replies, 'status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to fetch balasan', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getAllReplies()
+    {
+        try {
+            $replies = DB::table('reply_comments')
+                ->select('id', 'user_id', 'komentar_id', 'komentar')
+                ->get();
+
+            Log::info(json_encode($replies));
+            if (!$replies) {
+                return response()->json(['message' => 'Replies not found', 'status' => 'error'], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Get data sukses',
+                'data' => $replies
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to get Replies', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
     }
 
