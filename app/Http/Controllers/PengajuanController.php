@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Pengajuan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PengajuanController extends Controller
 {
@@ -126,7 +127,7 @@ class PengajuanController extends Controller
 
     public function get_data_user()
     {
-        $getDataUser = User::all();
+        $getDataUser = User::orderBy('role', 'asc')->get();
         // dd($getDataUser);
         return view('admin.users.index', compact('getDataUser'), [
             'title' => 'Informasi Data Users'
@@ -135,21 +136,41 @@ class PengajuanController extends Controller
 
     public function deactivate($id)
     {
-        $user = User::findOrFail($id);
+        try {
+            $updated = DB::table('users')
+                ->where('id', $id)
+                ->update(['status' => 1]);
 
-        $user->status = 1;
-        $user->save();
+            if ($updated) {
+                Log::info('User with ID ' . $id . ' has been deactivated.');
+            } else {
+                Log::warning('Failed to deactivate user with ID ' . $id . '. User may not exist.');
+            }
 
-        return redirect()->route('getDataUser')->with('success', 'Akun pengguna berhasil dinonaktifkan.');
+            return redirect()->route('getDataUser')->with('success', 'Akun pengguna berhasil dinonaktifkan.');
+        } catch (\Exception $e) {
+            Log::error('Error deactivating user: ' . $e->getMessage());
+            return redirect()->route('getDataUser')->with('error', 'Terjadi kesalahan saat menonaktifkan akun.');
+        }
     }
 
     public function activate($id)
     {
-        $user = User::findOrFail($id);
+        try {
+            $updated = DB::table('users')
+                ->where('id', $id)
+                ->update(['status' => null]);
 
-        $user->status = null;
-        $user->save();
+            if ($updated) {
+                Log::info('User with ID ' . $id . ' has been activated.');
+            } else {
+                Log::warning('Failed to activate user with ID ' . $id . '. User may not exist.');
+            }
 
-        return redirect()->route('getDataUser')->with('success', 'Akun pengguna berhasil diaktifkan kembali.');
+            return redirect()->route('getDataUser')->with('success', 'Akun pengguna berhasil diaktifkan kembali.');
+        } catch (\Exception $e) {
+            Log::error('Error activating user: ' . $e->getMessage());
+            return redirect()->route('getDataUser')->with('error', 'Terjadi kesalahan saat mengaktifkan kembali akun.');
+        }
     }
 }

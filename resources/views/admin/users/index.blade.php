@@ -71,23 +71,27 @@
                                                         {{ Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-danger btn-sm text-center btndelete', 'id' => 'delete']) }}
                                                         {!! Form::close() !!} --}}
 
-                                                        @if ($item->status == null)
-                                                            <form action="{{ route('user.deactivate', $item->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <button type="submit" class="btn btn-danger">Nonaktifkan
-                                                                    Akun</button>
-                                                            </form>
-                                                        @else
-                                                            <form action="{{ route('user.activate', $item->id) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <button type="submit" class="btn btn-success">Aktifkan
-                                                                    Akun</button>
-                                                            </form>
+                                                        @if ($item->role != 'admin')
+                                                            @if ($item->status == null)
+                                                                <form action="{{ route('user.deactivate', $item->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <button type="submit"
+                                                                        class="btn btn-danger">Nonaktifkan Akun</button>
+                                                                </form>
+                                                            @else
+                                                                <form action="{{ route('user.activate', $item->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <button type="submit" class="btn btn-success">Aktifkan
+                                                                        Akun</button>
+                                                                </form>
+                                                            @endif
                                                         @endif
+
+
                                                     </td>
 
                                                 </tr>
@@ -116,12 +120,12 @@
 
             Swal.fire({
                 title: 'Apakah Anda yakin?',
-                text: 'Data akan dihapus permanen!',
+                text: 'Menonaktifkan Akun ini?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',
                 cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Ya, hapus!',
+                confirmButtonText: 'Ya, Nonaktifkan!',
                 cancelButtonText: 'Batal'
             }).then((result) => {
                 if (result.isConfirmed) {
@@ -145,7 +149,7 @@
         @if (session('error'))
             Swal.fire({
                 title: 'Error!',
-                text: '{{ session('error') }}',
+                text: '{{ session('error') }}   ',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
