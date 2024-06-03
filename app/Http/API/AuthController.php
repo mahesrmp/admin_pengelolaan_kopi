@@ -78,21 +78,21 @@ class AuthController extends Controller
         }
     }
 
-    public function me()
-    {
-        return response()->json(auth()->user());
-    }
+    // public function me()
+    // {
+    //     return response()->json(auth()->user());
+    // }
 
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
-        return response()->json(
-            [
-                'status' => 'success',
-                'message' => 'User logged out successfully'
-            ]
-        );
-    }
+    // public function logout(Request $request)
+    // {
+    //     $request->user()->currentAccessToken()->delete();
+    //     return response()->json(
+    //         [
+    //             'status' => 'success',
+    //             'message' => 'User logged out successfully'
+    //         ]
+    //     );
+    // }
 
     public function getAllUser()
     {
@@ -116,10 +116,12 @@ class AuthController extends Controller
         }
     }
 
-    public function getUserById()
+    public function getUserById($id)
     {
         try {
-            $user = Auth::user()->id;
+            $user = DB::table('users')->where('id', $id)
+                ->select('nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin',  'provinsi', 'kabupaten', 'no_telp')
+                ->first();
 
             Log::info(json_encode($user));
             if (!$user) {
