@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\API\ArtikelController;
-use App\Http\API\AuthController;
 use Illuminate\Http\Request;
+use App\Http\API\AuthController;
+use App\Http\API\ForumController;
+use App\Http\API\PanenController;
+use App\Http\API\ArtikelController;
 use App\Http\API\PengajuanController;
 use Illuminate\Support\Facades\Route;
+use App\Http\API\PascaPanenController;
 use App\Http\API\BudidayaAPIController;
-use App\Http\API\ForumController;
 use App\Http\API\ReplyKomentarController;
-use App\Http\Controllers\BudidayaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,14 +42,14 @@ Route::get('/budidaya/pengendalian_hama', [BudidayaAPIController::class, 'getPen
 Route::get('/budidaya/tahapan', [BudidayaAPIController::class, 'select_tahapan']);
 
 //PANEN
-Route::get('/panen', [BudidayaAPIController::class, 'panen']);
-Route::get('/panen/ciri_buah_kopi', [BudidayaAPIController::class, 'getCiriBuahKopiData']);
-Route::get('/panen/pemetikan', [BudidayaAPIController::class, 'getPemetikanData']);
-Route::get('/panen/sortasi_buah', [BudidayaAPIController::class, 'getSortasiBuahData']);
+Route::get('/panen', [PanenController::class, 'panen']);
+Route::get('/panen/ciri_buah_kopi', [PanenController::class, 'getCiriBuahKopiData']);
+Route::get('/panen/pemetikan', [PanenController::class, 'getPemetikanData']);
+Route::get('/panen/sortasi_buah', [PanenController::class, 'getSortasiBuahData']);
 
 //PASCA PANEN
-Route::get('/pasca/fermentasi_kering', [BudidayaAPIController::class, 'getFermentasiKeringData']);
-Route::get('/pasca/fermentasi_mekanis', [BudidayaAPIController::class, 'getFermentasiMekanisData']);
+Route::get('/pasca/fermentasi_kering', [PascaPanenController::class, 'getFermentasiKeringData']);
+Route::get('/pasca/fermentasi_mekanis', [PascaPanenController::class, 'getFermentasiMekanisData']);
 
 //KEDAI
 Route::get('/minuman', [BudidayaAPIController::class, 'getMinumanData']);
@@ -65,6 +66,10 @@ Route::get('/komunitas', [BudidayaAPIController::class, 'getKomunitasData']);
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('user/forum', [ForumController::class, 'getForumByUserId']);
+});
 
 Route::get('getUserById/{id}', [AuthController::class, 'getUserById']);
 Route::get('getAllUser', [AuthController::class, 'getAllUser']);
@@ -96,9 +101,6 @@ Route::post('forum/{forum_id}/dislike/{user_id}', [ForumController::class, 'disl
 
 Route::get('forum/{forum_id}/likes', [ForumController::class, 'getForumLikes']);
 Route::get('forum/{forum_id}/dislikes', [ForumController::class, 'getForumDislikes']);
-
-Route::get('/provinsi', [BudidayaAPIController::class, 'getProvinsi']);
-Route::get('/provinces/{provinceId}/regencies', [BudidayaAPIController::class, 'getKabupaten']);
 
 Route::get('/komentar/{komentar_id}/user/{user_id}/replies', [ReplyKomentarController::class, 'getRepliesByUserId']);
 Route::post('/replies', [ReplyKomentarController::class, 'reply']);

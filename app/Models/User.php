@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\NewAccessToken;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -63,5 +65,20 @@ class User extends Authenticatable
     public function getKeyName()
     {
         return 'username';
+    }
+
+    public function createCustomToken($username)
+    {
+        $token = $this->tokens()->create([
+            'tokenable_id' => $this->id,
+            'tokenable_type' => get_class($this),
+            'username' => $username,
+            'token' => hash('sha256', $plainTextToken = Str::random(40)),
+            'abilities' => ['*'],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return new NewAccessToken($token, $plainTextToken);
     }
 }

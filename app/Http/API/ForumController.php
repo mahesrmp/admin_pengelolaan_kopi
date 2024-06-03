@@ -6,7 +6,9 @@ use App\Models\Forum;
 use App\Models\LikeForum;
 use Illuminate\Http\Request;
 use App\Models\KomentarForum;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -74,6 +76,23 @@ class ForumController extends Controller
             }
 
             return response()->json(['data' => $forum, 'status' => 'success'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to fetch forum', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function getForumByUserId()
+    {
+        try {
+            $userId = Auth::user()->id;
+
+            if (!$userId) {
+                Log::info($userId);
+                return response()->json(['message' => 'Unauthorized', 'status' => 'error'], 401);
+            }
+
+            $forums = Forum::where('user_id', $userId)->get();
+            return response()->json(['data' => $forums, 'status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to fetch forum', 'status' => 'error', 'error' => $e->getMessage()], 500);
         }
