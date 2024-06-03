@@ -13,20 +13,6 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    // public function login(Request $request)
-    // {
-    //     $credentials = $request->only('email', 'password');
-
-    //     if (auth()->attempt($credentials)) {
-    //         $user = auth()->user();
-    //         $token = $user->createToken('API Token')->accessToken;
-
-    //         return response()->json(['token' => $token], 200);
-    //     } else {
-    //         return response()->json(['error' => 'Unauthorized'], 401);
-    //     }
-    // }
-
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -69,6 +55,8 @@ class AuthController extends Controller
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             $auth = Auth::user();
             // $success['token'] = $auth->createToken('auth_token')->plainTextToken;
+            $tokenResult = $auth->createCustomToken($auth->username);
+            $success['token'] = $tokenResult->plainTextToken;
             $success['nama_lengkap'] = $auth->nama_lengkap;
             $success['id'] = $auth->id;
             $success['role'] = $auth->role;
@@ -85,6 +73,22 @@ class AuthController extends Controller
                 'data' => null
             ]);
         }
+    }
+
+    public function me()
+    {
+        return response()->json(auth()->user());
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json(
+            [
+                'status' => 'success',
+                'message' => 'User logged out successfully'
+            ]
+        );
     }
 
     public function getAllUser()

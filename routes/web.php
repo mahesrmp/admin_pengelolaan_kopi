@@ -1,16 +1,13 @@
 <?php
 
-use App\Http\Controllers\ArtikelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PanenController;
-use App\Http\Controllers\PascaController;
+use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\MinumanController;
 use App\Http\Controllers\BudidayaController;
-use App\Http\Controllers\KomunitasController;
 use App\Http\Controllers\PengajuanController;
-use App\Http\Controllers\FasilitatorController;
-use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Http\Controllers\PascaPanenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +55,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('panen', PanenController::class)->names([
         'index' => 'panen.index',
     ]);
-    Route::resource('pasca', PascaController::class)->names([
+    Route::resource('pasca', PascaPanenController::class)->names([
         'index' => 'pasca.index',
     ]);
     Route::resource('minuman', MinumanController::class)->names([

@@ -2,22 +2,12 @@
 
 namespace App\Http\API;
 
-use App\Models\User;
-use App\Models\Kedai;
-use App\Models\Panen;
-use App\Models\Pasca;
 use App\Models\Minuman;
 use App\Models\Budidaya;
-use App\Models\Komunitas;
 use App\Models\Pengajuan;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 
 class BudidayaAPIController extends Controller
 {
@@ -110,45 +100,6 @@ class BudidayaAPIController extends Controller
         return response()->json($tahapan);
     }
 
-    public function panen()
-    {
-        $panens = DB::table('panens')
-            ->join('image_panens', 'panens.id', '=', 'image_panens.panen_id')
-            ->select('panens.*', 'image_panens.gambar')
-            ->get();
-        return response()->json($panens);
-    }
-
-    public function getCiriBuahKopiData()
-    {
-        $panenData = Panen::with('images')->where('kategori', 'Ciri Buah Kopi')->get();
-        return response()->json($panenData);
-    }
-
-    public function getPemetikanData()
-    {
-        $panenData = Panen::with('images')->where('kategori', 'Pemetikan')->get();
-        return response()->json($panenData);
-    }
-
-    public function getSortasiBuahData()
-    {
-        $panenData = Panen::with('images')->where('kategori', 'LIKE', '%Sortasi%')->get();
-        return response()->json($panenData);
-    }
-
-    public function getFermentasiKeringData()
-    {
-        $pascaData = Pasca::with('images')->where('kategori', 'Fermentasi Kering')->get();
-        return response()->json($pascaData);
-    }
-
-    public function getFermentasiMekanisData()
-    {
-        $pascaData = Pasca::with('images')->where('kategori', 'Fermentasi Mekanis')->get();
-        return response()->json($pascaData);
-    }
-
     public function getMinumanData()
     {
         $minumanData = Minuman::with('images')->get();
@@ -168,28 +119,5 @@ class BudidayaAPIController extends Controller
         });
 
         return response()->json($komunitas);
-    }
-
-    public function getProvinsi(){
-        try {
-            $response = Http::get('https://kanglerian.github.io/api-wilayah-indonesia/api/provinces.json');
-            $provinces = $response->json();
-            
-            return response()->json($provinces);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch provinces data.'], 500);
-        }
-    }
-
-    public function getKabupaten($provinceId)
-    {
-        try {
-            $response = Http::get("https://kanglerian.github.io/api-wilayah-indonesia/api/regencies/{$provinceId}.json");
-            $regencies = $response->json();
-            
-            return response()->json($regencies);
-        } catch (\Exception $e) {
-            return response()->json(['error' => 'Failed to fetch regencies data.'], 500);
-        }
     }
 }

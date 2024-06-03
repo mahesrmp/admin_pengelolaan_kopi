@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class PascaController extends Controller
+class PascaPanenController extends Controller
 {
     /**
      * Display a listing of the resource.
