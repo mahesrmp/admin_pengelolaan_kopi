@@ -66,6 +66,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::get('getUserById/{id}', [AuthController::class, 'getUserById']);
+Route::get('getAllUser', [AuthController::class, 'getAllUser']);
 Route::put('userUpdate/{id}', [AuthController::class, 'updateUserProfile']);
 
 Route::get('artikel', [ArtikelController::class, 'index']);

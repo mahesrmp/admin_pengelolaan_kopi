@@ -87,6 +87,28 @@ class AuthController extends Controller
         }
     }
 
+    public function getAllUser()
+    {
+        try {
+            $user = DB::table('users')
+                ->select('nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin',  'provinsi', 'kabupaten', 'no_telp')
+                ->get();
+
+            Log::info(json_encode($user));
+            if (!$user) {
+                return response()->json(['message' => 'User not found', 'status' => 'error'], 404);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Get data sukses',
+                'data' => $user
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to get User', 'status' => 'error', 'error' => $e->getMessage()], 500);
+        }
+    }
+
     public function getUserById($id)
     {
         try {

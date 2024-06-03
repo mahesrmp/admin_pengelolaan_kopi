@@ -314,7 +314,7 @@ class ForumController extends Controller
                 return response()->json(['message' => 'Forum not found', 'status' => 'error'], 404);
             }
 
-            $likeCount = LikeForum::where('forum_id', $forum_id)->where('like', 1)->count();
+            $likeCount = LikeForum::where('forum_id', $forum_id)->where('like', '1')->count();
 
             return response()->json([
                 'success' => true,
@@ -337,7 +337,7 @@ class ForumController extends Controller
                 return response()->json(['message' => 'Forum not found', 'status' => 'error'], 404);
             }
 
-            $dislikeCount = LikeForum::where('forum_id', $forum_id)->where('like', 2)->count();
+            $dislikeCount = LikeForum::where('forum_id', $forum_id)->where('like', '2')->count();
 
             return response()->json([
                 'success' => true,
