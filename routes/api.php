@@ -63,12 +63,10 @@ Route::post('/pengajuantambah', [PengajuanController::class, 'tambahData']);
 //KOMUNITAS
 Route::get('/komunitas', [BudidayaAPIController::class, 'getKomunitasData']);
 
-
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    // Tambahkan rute lain yang memerlukan autentikasi di sini
 });
 
 Route::get('getUserById/{id}', [AuthController::class, 'getUserById']);
@@ -106,5 +104,6 @@ Route::get('forum/{forum_id}/dislikes', [ForumController::class, 'getForumDislik
 Route::get('/komentar/{komentar_id}/user/{user_id}/replies', [ReplyKomentarController::class, 'getRepliesByUserId']);
 Route::post('/replies', [ReplyKomentarController::class, 'reply']);
 Route::get('replies/{komentar_id}', [ReplyKomentarController::class, 'get_replies']);
+Route::get('getAllReplies', [ReplyKomentarController::class, 'getAllReplies']);
 Route::put('komentar/{komentar_id}/user/{user_id}/replies/{id}', [ReplyKomentarController::class, 'updateReplyByUserId']);
 Route::delete('komentar/{komentar_id}/user/{user_id}/replies/{id}', [ReplyKomentarController::class, 'deleteReplyByUserId']);

@@ -45,7 +45,7 @@ class AuthController extends Controller
 
         $userData = $user->toArray();
         unset($userData['username'], $userData['id']);
-        
+
         return response()->json([
             'success' => true,
             'message' => 'Sukses register',
@@ -143,8 +143,6 @@ class AuthController extends Controller
             'username' => 'required',
             'tanggal_lahir' => 'required|date',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'provinsi' => 'required',
-            'kabupaten' => 'required',
             'no_telp' => 'required',
         ]);
 
@@ -165,7 +163,7 @@ class AuthController extends Controller
 
             DB::table('users')
                 ->where('id', $id)
-                ->update($request->only(['nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin', 'provinsi', 'kabupaten', 'no_telp']));
+                ->update($request->only(['nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin', 'no_telp']));
 
             $updatedUser = DB::table('users')->where('id', $id)
                 ->select('nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin',  'provinsi', 'kabupaten', 'no_telp')
