@@ -114,6 +114,26 @@ class PengajuanController extends Controller
         return response()->json($transformedData);
     }
 
+    public function getPengajuanDataByUserId($id)
+    {
+        $pengajuanData = Pengajuan::where('user_id', $id)->first();
+
+        // Transform data to include image URLs
+        $transformedData = $pengajuanData->map(function ($item) {
+            return [
+                'id' => $item->id,
+                'foto_ktp_url' => $item->foto_ktp ? asset('storage/' . $item->foto_ktp) : null,
+                'foto_selfie_url' => $item->foto_selfie ? asset('storage/' . $item->foto_selfie) : null,
+                'foto_sertifikat_url' => $item->foto_sertifikat ? asset('storage/' . $item->foto_sertifikat) : null,
+                'deskripsi_pengalaman' => $item->deskripsi_pengalaman,
+                'status' => $item->status,
+                'petani_id' => $item->petani_id,
+            ];
+        });
+
+        return response()->json($transformedData);
+    }
+
     public function getPengajuanStatusData($id)
     {
         $pengajuanStatusData = Pengajuan::select('status', 'id', 'petani_id')->where('petani_id', $id)->get();

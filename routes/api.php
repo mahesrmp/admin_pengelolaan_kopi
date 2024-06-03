@@ -55,6 +55,7 @@ Route::get('/minuman', [BudidayaAPIController::class, 'getMinumanData']);
 
 //PENGAJUAN
 Route::get('/pengajuan', [PengajuanController::class, 'getPengajuanData']);
+Route::get('/pengajuanById/{id}', [PengajuanController::class, 'getPengajuanDataByUserId']);
 Route::get('/pengajuan_status/{id}', [PengajuanController::class, 'getPengajuanStatusData']);
 Route::post('/pengajuantambah', [PengajuanController::class, 'tambahData']);
 
