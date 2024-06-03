@@ -34,6 +34,7 @@
                                                 <th class="text-center">Nomor Telepon</th>
                                                 <th class="text-center">Kabupaten</th>
                                                 <th class="text-center">Provinsi</th>
+                                                <th class="text-center">Role</th>
                                                 <th class="text-center">Aksi</th>
                                             </tr>
                                         </thead>
@@ -47,6 +48,7 @@
                                                     <td>{{ $item->no_telp }}</td>
                                                     <td>{{ $item->kabupaten }}</td>
                                                     <td>{{ $item->provinsi }}</td>
+                                                    <td>{{ $item->role }}</td>
 
 
                                                     <td class="text-center">
