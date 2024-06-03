@@ -6,9 +6,7 @@ use App\Models\Forum;
 use App\Models\LikeForum;
 use Illuminate\Http\Request;
 use App\Models\KomentarForum;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -81,17 +79,15 @@ class ForumController extends Controller
         }
     }
 
-    public function getForumByUserId()
+    public function getForumByUserId($user_id)
     {
         try {
-            $userId = Auth::user()->id;
+            $forums = Forum::with('images')->where('user_id', $user_id)->get();
 
-            if (!$userId) {
-                Log::info($userId);
-                return response()->json(['message' => 'Unauthorized', 'status' => 'error'], 401);
+            if ($forums->isEmpty()) {
+                return response()->json(['message' => 'No forums found for the user', 'status' => 'error'], 404);
             }
 
-            $forums = Forum::where('user_id', $userId)->get();
             return response()->json(['data' => $forums, 'status' => 'success'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Failed to fetch forum', 'status' => 'error', 'error' => $e->getMessage()], 500);

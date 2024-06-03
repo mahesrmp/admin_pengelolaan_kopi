@@ -39,14 +39,17 @@ class AuthController extends Controller
         $input['password'] = Hash::make($input['password']);
         $user = User::create($input);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
-        $success['token'] = $token;
-        $success['username'] = $user->username;
+        // $token = $user->createToken('auth_token')->plainTextToken;
+        // $success['token'] = $token;
+        // $success['username'] = $user->username;
 
+        $userData = $user->toArray();
+        unset($userData['username'], $userData['id']);
+        
         return response()->json([
             'success' => true,
             'message' => 'Sukses register',
-            'data' => $success
+            'data' => $userData
         ], 200);
     }
 
@@ -55,8 +58,8 @@ class AuthController extends Controller
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
             $auth = Auth::user();
             // $success['token'] = $auth->createToken('auth_token')->plainTextToken;
-            $tokenResult = $auth->createCustomToken($auth->username);
-            $success['token'] = $tokenResult->plainTextToken;
+            // $tokenResult = $auth->createCustomToken($auth->username);
+            // $success['token'] = $tokenResult->plainTextToken;
             $success['nama_lengkap'] = $auth->nama_lengkap;
             $success['id'] = $auth->id;
             $success['role'] = $auth->role;
@@ -113,12 +116,10 @@ class AuthController extends Controller
         }
     }
 
-    public function getUserById($id)
+    public function getUserById()
     {
         try {
-            $user = DB::table('users')->where('id', $id)
-                ->select('nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin',  'provinsi', 'kabupaten', 'no_telp')
-                ->first();
+            $user = Auth::user()->id;
 
             Log::info(json_encode($user));
             if (!$user) {

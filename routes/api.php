@@ -68,7 +68,7 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::get('user/forum', [ForumController::class, 'getForumByUserId']);
+    // Tambahkan rute lain yang memerlukan autentikasi di sini
 });
 
 Route::get('getUserById/{id}', [AuthController::class, 'getUserById']);
@@ -87,6 +87,7 @@ Route::get('artikelByUser/{user_id}', [ArtikelController::class, 'articlesByUser
 
 Route::get('forum', [ForumController::class, 'index']);
 Route::get('forum/{id}', [ForumController::class, 'show']);
+Route::get('user/forum/{user_id}', [ForumController::class, 'getForumByUserId']);
 Route::post('forum', [ForumController::class, 'store']);
 Route::post('forum/{id}', [ForumController::class, 'update']);
 Route::delete('forum/{id}', [ForumController::class, 'destroy']);
