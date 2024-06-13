@@ -20,7 +20,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Form data edit Minuman</h3>
                     </div>
-                    <form action="{{ route('minuman.update', $minuman['id']) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('minuman.update', $minuman['id_minumans']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">

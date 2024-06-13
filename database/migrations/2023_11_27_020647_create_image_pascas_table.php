@@ -14,10 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('image_pascas', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('pasca_id')->constrained('pascas');
+            $table->increments('id_image_pascas');
             $table->string('gambar');
+            $table->unsignedInteger('pasca_id');
             $table->timestamps();
+
+            $table->foreign('pasca_id')->references('id_pascas')->on('pascas')->onDelete('cascade');
         });
     }
 

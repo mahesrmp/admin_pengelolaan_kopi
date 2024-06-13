@@ -26,19 +26,19 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title minuman-tahapan">
-                                            <a href="{{ route('minuman.show', $minuman['id']) }}">
+                                            <a href="{{ route('minuman.show', $minuman['id_minumans']) }}">
                                                 {{ $minuman['nama_minuman'] }}
                                             </a>
                                         </h5>
                                         <div class="float-right">
-                                            <a href="{{ route('minuman.edit', $minuman['id']) }}"
+                                            <a href="{{ route('minuman.edit', $minuman['id_minumans']) }}"
                                                 class="btn btn-success btn-sm text-center"><i class="fas fa-edit"></i></a>
-                                            <form id="delete-form-{{ $minuman['id'] }}"
-                                                action="{{ route('minuman.destroy', $minuman['id']) }}" method="POST"
+                                            <form id="delete-form-{{ $minuman['id_minumans'] }}"
+                                                action="{{ route('minuman.destroy', $minuman['id_minumans']) }}" method="POST"
                                                 class="d-inline delete-about-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" onclick="confirmDelete({{ $minuman['id'] }}, event)"
+                                                <button type="button" onclick="confirmDelete({{ $minuman['id_minumans'] }}, event)"
                                                     class="btn btn-danger btn-sm delete-about">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
@@ -62,15 +62,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Hapus</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     Apakah Anda yakin? Data akan dihapus permanen!
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Ya, Hapus</button>
                 </div>
             </div>

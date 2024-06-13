@@ -29,21 +29,21 @@
                                     <div class="card">
                                         <div class="card-body">
                                             <h5 class="card-title">
-                                                <a href="{{ route('pasca.show', $pasca['id']) }}">
+                                                <a href="{{ route('pasca.show', $pasca['id_pascas']) }}">
                                                     {{ $pasca['tahapan'] }}
                                                 </a>
                                             </h5>
                                             <div class="float-right">
-                                                <a href="{{ route('pasca.edit', $pasca['id']) }}"
+                                                <a href="{{ route('pasca.edit', $pasca['id_pascas']) }}"
                                                     class="btn btn-success btn-sm text-center"><i
                                                         class="fas fa-edit"></i></a>
-                                                <form id="delete-form-{{ $pasca['id'] }}"
-                                                    action="{{ route('pasca.destroy', $pasca['id']) }}" method="POST"
+                                                <form id="delete-form-{{ $pasca['id_pascas'] }}"
+                                                    action="{{ route('pasca.destroy', $pasca['id_pascas']) }}" method="POST"
                                                     class="d-inline delete-about-form">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button"
-                                                        onclick="confirmDelete({{ $pasca['id'] }}, event)"
+                                                        onclick="confirmDelete({{ $pasca['id_pascas'] }}, event)"
                                                         class="btn btn-danger btn-sm delete-about">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
@@ -68,15 +68,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Hapus</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     Apakah Anda yakin? Data akan dihapus permanen!
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Ya, Hapus</button>
                 </div>
             </div>

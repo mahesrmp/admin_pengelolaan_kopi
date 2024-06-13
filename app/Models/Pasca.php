@@ -11,7 +11,7 @@ class Pasca extends Model
 {
     use HasFactory;
     protected $table = 'pascas';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_pascas';
 
     protected $fillable = [
         'tahapan',
@@ -24,8 +24,8 @@ class Pasca extends Model
 
     public function images()
     {
-        return $this->hasMany(ImagePasca::class)->select([
-            'id', 
+        return $this->hasMany(ImagePasca::class,  'pasca_id')->select([
+            'id_image_pascas', 
             'pasca_id', 
             'gambar',
             DB::raw("CONCAT('" . asset('storage/') . "','/', gambar) as url")]);

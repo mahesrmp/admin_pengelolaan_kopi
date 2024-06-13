@@ -26,7 +26,20 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <input type="text" id="kategori" name="kategori" class="form-control" autofocus>
+                                <select id="kategori" name="kategori" class="form-control" autofocus>
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="Pemilihan Lahan">Pemilihan Lahan</option>
+                                    <option value="Kesesuaian Lahan">Kesesuaian Lahan</option>
+                                    <option value="Persiapan Lahan">Persiapan Lahan</option>
+                                    <option value="Penanaman Penaung">Penanaman Penaung</option>
+                                    <option value="Bahan Tanam Unggul">Bahan Tanam Unggul</option>
+                                    <option value="Pembibitan">Pembibitan</option>
+                                    <option value="Penanaman">Penanaman</option>
+                                    <option value="Pemupukan">Pemupukan</option>
+                                    <option value="Pemangkasan">Pemangkasan</option>
+                                    <option value="Pengelolaan Penaung">Pengelolaan Penaung</option>
+                                    <option value="Pengendalian Hama">Pengendalian Hama</option>
+                                </select>
                                 <span class="text-danger">{{ $errors->first('kategori') }}</span>
                             </div>
                             <div class="form-group">
@@ -128,10 +141,9 @@
     </script>
     <script>
         ClassicEditor
-            .create( document.querySelector( '#deskripsi' ) )
-            .catch( error => {
-                console.error( error );
-            } );
+            .create(document.querySelector('#deskripsi'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
-    
 @endsection

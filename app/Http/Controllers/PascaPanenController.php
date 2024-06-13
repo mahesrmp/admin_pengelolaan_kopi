@@ -48,11 +48,11 @@ class PascaPanenController extends Controller
     {
         try {
             $request->validate([
-                'tahapan' => 'required',
-                'deskripsi' => 'required',
-                'link' => 'required',
+                'tahapan' => 'required|min:5',
+                'deskripsi' => 'required|min:20',
+                'link' => 'required|url',
                 'credit_gambar' => 'required',
-                'kategori' => 'required|in:Fermentasi Kering,Fermentasi Mekanis',
+                'kategori' => 'required',
                 'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
             ]);
 
@@ -119,11 +119,11 @@ class PascaPanenController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'tahapan' => 'required',
-            'deskripsi' => 'required',
-            'link' => 'required',
+            'tahapan' => 'required|min:5',
+            'deskripsi' => 'required|min:20',
+            'link' => 'required|url',
             'credit_gambar' => 'required',
-            'kategori' => 'required|in:Fermentasi Kering,Fermentasi Mekanis'
+            'kategori' => 'required'
         ]);
 
         $kategori = $request->input('kategori');

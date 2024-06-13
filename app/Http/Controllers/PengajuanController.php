@@ -17,7 +17,7 @@ class PengajuanController extends Controller
      */
     public function index()
     {
-        $pengajuans = Pengajuan::join('users', 'pengajuans.user_id', '=', 'users.id')
+        $pengajuans = Pengajuan::join('users', 'pengajuans.user_id', '=', 'users.id_users')
             ->where('pengajuans.status', '0')
             ->select('pengajuans.*', 'users.username') // Change 'nama' with the actual column name in the users table that stores the name
             ->get();
@@ -101,10 +101,10 @@ class PengajuanController extends Controller
                 return redirect()->route('pengajuan.index')->with('error', 'Pengajuan tidak ditemukan');
             }
 
-            $user = DB::table('users')->where('id', $pengajuan->user_id)->first();
+            $user = DB::table('users')->where('id_users', $pengajuan->user_id)->first();
             if ($user) {
                 DB::table('users')
-                    ->where('id', $pengajuan->user_id)
+                    ->where('id_users', $pengajuan->user_id)
                     ->update(['role' => 'fasilitator']);
 
                 $pengajuan->update(['status' => '1']);
@@ -121,7 +121,7 @@ class PengajuanController extends Controller
 
     public function reject($id)
     {
-        Pengajuan::where('id', $id)->update(['status' => '2']);
+        Pengajuan::where('id_pengajuans', $id)->update(['status' => '2']);
         return redirect()->route('pengajuan.index')->with('success', 'Pengajuan berhasil ditolak');
     }
 
@@ -138,7 +138,7 @@ class PengajuanController extends Controller
     {
         try {
             $updated = DB::table('users')
-                ->where('id', $id)
+                ->where('id_users', $id)
                 ->update(['status' => 1]);
 
             if ($updated) {
@@ -158,7 +158,7 @@ class PengajuanController extends Controller
     {
         try {
             $updated = DB::table('users')
-                ->where('id', $id)
+                ->where('id_users', $id)
                 ->update(['status' => null]);
 
             if ($updated) {

@@ -28,20 +28,16 @@ class AuthController extends Controller
 
         Log::info('Attempting to login', ['username' => $input['username'], 'user_found' => $user ? true : false]);
 
-        // Cek apakah pengguna ditemukan dan kata sandi cocok
-        if ($user && auth()->attempt(['username' => $input['username'], 'password' => $input['password']])) {
-            Log::info('User authenticated', ['user_id' => auth()->user()->id, 'role' => auth()->user()->role]);
-            session(['user_id' => $user->id, 'user_role' => $user->role]);
-            return redirect()->route($user->role == 'admin' ? 'dashboard.admin' : 'dashboard.fasilitator');
-            // if (auth()->user()->role == "fasilitator") {
-            //     Log::info('Redirecting to fasilitator dashboard');
-            //     return redirect()->route('dashboard.fasilitator');
-            // } else if (auth()->user()->role == "adm") {
-            //     Log::info('Redirecting to admin dashboard');
-            //     return redirect()->route('dashboard.admin');
-            // }
+        if ($user->status === null) {
+            if ($user && auth()->attempt(['username' => $input['username'], 'password' => $input['password']])) {
+                Log::info('User authenticated', ['user_id' => auth()->user()->id_users, 'role' => auth()->user()->role]);
+                session(['user_id' => $user->id_users, 'user_role' => $user->role]);
+                return redirect()->route($user->role == 'admin' ? 'dashboard.admin' : 'dashboard.fasilitator');
+            } else {
+                return back()->withErrors(['Periksa Kembali Username dan Password Anda']);
+            }
         } else {
-            return back()->withErrors(['Periksa Kembali Username dan Password Anda']);
+            return back()->withErrors(['Akun Anda tidak aktif!!!']);
         }
     }
 

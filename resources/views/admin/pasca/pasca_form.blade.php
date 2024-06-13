@@ -25,7 +25,11 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <input type="text" id="kategori" name="kategori" class="form-control" autofocus>
+                                <select id="kategori" name="kategori" class="form-control" autofocus>
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="Fermentasi Kering">Fermentasi Kering</option>
+                                    <option value="Fermentasi Mekanis">Fermentasi Mekanis</option>
+                                </select>
                                 <span class="text-danger">{{ $errors->first('kategori') }}</span>
                             </div>
                             <div class="form-group">

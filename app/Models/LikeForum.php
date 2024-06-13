@@ -9,7 +9,7 @@ class LikeForum extends Model
 {
     use HasFactory;
     protected $table = 'forum_likes';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_forum_likes';
 
     protected $fillable = [
         'like',

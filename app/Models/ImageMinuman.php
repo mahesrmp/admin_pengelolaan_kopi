@@ -10,14 +10,15 @@ class ImageMinuman extends Model
 {
     use HasFactory;
     protected $table = 'image_minumans';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_image_minumans';
 
     protected $fillable = [
-        'gambar'
+        'gambar',
+        'minuman_id',
     ];
 
     public function minuman()
     {
-        return $this->belongsTo(Minuman::class);
+        return $this->belongsTo(Minuman::class, 'minuman_id');
     }
 }

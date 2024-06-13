@@ -10,7 +10,7 @@ class Pengajuan extends Model
 {
     use HasFactory;
     protected $table = 'pengajuans';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_pengajuans';
 
     protected $fillable = [
         'foto_ktp',

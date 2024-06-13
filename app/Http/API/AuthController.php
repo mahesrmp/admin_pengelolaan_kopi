@@ -44,7 +44,7 @@ class AuthController extends Controller
         // $success['username'] = $user->username;
 
         $userData = $user->toArray();
-        unset($userData['username'], $userData['id']);
+        unset($userData['username'], $userData['id_users']);
 
         return response()->json([
             'success' => true,
@@ -55,24 +55,34 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-            $auth = Auth::user();
-            // $success['token'] = $auth->createToken('auth_token')->plainTextToken;
-            // $tokenResult = $auth->createCustomToken($auth->username);
-            // $success['token'] = $tokenResult->plainTextToken;
-            $success['nama_lengkap'] = $auth->nama_lengkap;
-            $success['id'] = $auth->id;
-            $success['role'] = $auth->role;
+        $user = User::where('username', $request->username)->first();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Login sukses',
-                'data' => $success
-            ]);
+        if ($user->status === null) {
+            if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+                $auth = Auth::user();
+                // $success['token'] = $auth->createToken('auth_token')->plainTextToken;
+                // $tokenResult = $auth->createCustomToken($auth->username);
+                // $success['token'] = $tokenResult->plainTextToken;
+                $success['nama_lengkap'] = $auth->nama_lengkap;
+                $success['id_users'] = $auth->id_users;
+                $success['role'] = $auth->role;
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Login sukses',
+                    'data' => $success
+                ]);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Cek username dan password lagi',
+                    'data' => null
+                ]);
+            }
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Cek username dan password lagi',
+                'message' => 'Akun Anda tidak aktif',
                 'data' => null
             ]);
         }
@@ -98,7 +108,7 @@ class AuthController extends Controller
     {
         try {
             $user = DB::table('users')
-                ->select('nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin',  'provinsi', 'kabupaten', 'no_telp')
+                ->select('id_users','nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin',  'provinsi', 'kabupaten', 'no_telp')
                 ->get();
 
             Log::info(json_encode($user));
@@ -119,7 +129,7 @@ class AuthController extends Controller
     public function getUserById($id)
     {
         try {
-            $user = DB::table('users')->where('id', $id)
+            $user = DB::table('users')->where('id_users', $id)
                 ->select('nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin',  'provinsi', 'kabupaten', 'no_telp')
                 ->first();
 
@@ -157,17 +167,17 @@ class AuthController extends Controller
         }
 
         try {
-            $user = DB::table('users')->where('id', $id)->first();
+            $user = DB::table('users')->where('id_users', $id)->first();
 
             if (!$user) {
                 return response()->json(['message' => 'User not found', 'status' => 'error'], 404);
             }
 
             DB::table('users')
-                ->where('id', $id)
+                ->where('id_users', $id)
                 ->update($request->only(['nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin', 'no_telp']));
 
-            $updatedUser = DB::table('users')->where('id', $id)
+            $updatedUser = DB::table('users')->where('id_users', $id)
                 ->select('nama_lengkap', 'username', 'tanggal_lahir', 'jenis_kelamin',  'provinsi', 'kabupaten', 'no_telp')
                 ->first();
 

@@ -168,6 +168,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Ichtrojan\Otp\OtpServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -194,6 +195,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Otp' => Ichtrojan\Otp\Otp::class,
     ])->toArray(),
 
 ];

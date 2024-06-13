@@ -21,15 +21,45 @@
                         <h3 class="card-title">Form tambah data Produk</h3>
                     </div>
                     {{-- {!! Form::model($model, ['route' => $route, 'method' => $method, 'files' => true, 'enctype' => 'multipart/form-data']) !!} --}}
-                    <form action="{{ route('budidaya.update', $budidaya['id']) }}" method="POST"
+                    <form action="{{ route('budidaya.update', $budidaya['id_budidayas']) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <input type="text" id="kategori" name="kategori" class="form-control"
-                                    value="{{ $budidaya->kategori }}">
+                                <select id="kategori" name="kategori" class="form-control">
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="Pemilihan Lahan"
+                                        {{ $budidaya->kategori == 'Pemilihan Lahan' ? 'selected' : '' }}>Pemilihan Lahan
+                                    </option>
+                                    <option value="Kesesuaian Lahan"
+                                        {{ $budidaya->kategori == 'Kesesuaian Lahan' ? 'selected' : '' }}>Kesesuaian Lahan
+                                    </option>
+                                    <option value="Persiapan Lahan"
+                                        {{ $budidaya->kategori == 'Persiapan Lahan' ? 'selected' : '' }}>Persiapan Lahan
+                                    </option>
+                                    <option value="Penanaman Penaung"
+                                        {{ $budidaya->kategori == 'Penanaman Penaung' ? 'selected' : '' }}>Penanaman Penaung
+                                    </option>
+                                    <option value="Bahan Tanam Unggul"
+                                        {{ $budidaya->kategori == 'Bahan Tanam Unggul' ? 'selected' : '' }}>Bahan Tanam
+                                        Unggul</option>
+                                    <option value="Pembibitan" {{ $budidaya->kategori == 'Pembibitan' ? 'selected' : '' }}>
+                                        Pembibitan</option>
+                                    <option value="Penanaman" {{ $budidaya->kategori == 'Penanaman' ? 'selected' : '' }}>
+                                        Penanaman</option>
+                                    <option value="Pemupukan" {{ $budidaya->kategori == 'Pemupukan' ? 'selected' : '' }}>
+                                        Pemupukan</option>
+                                    <option value="Pemangkasan"
+                                        {{ $budidaya->kategori == 'Pemangkasan' ? 'selected' : '' }}>Pemangkasan</option>
+                                    <option value="Pengelolaan Penaung"
+                                        {{ $budidaya->kategori == 'Pengelolaan Penaung' ? 'selected' : '' }}>Pengelolaan
+                                        Penaung</option>
+                                    <option value="Pengendalian Hama"
+                                        {{ $budidaya->kategori == 'Pengendalian Hama' ? 'selected' : '' }}>Pengendalian
+                                        Hama</option>
+                                </select>
                                 <span class="text-danger">{{ $errors->first('kategori') }}</span>
                             </div>
                             <div class="form-group">

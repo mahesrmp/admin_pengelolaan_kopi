@@ -75,7 +75,7 @@
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="/dashboard">Beranda</a></li>
+                                <li class="breadcrumb-item"><a href="/fasilitator/dashboard">Beranda</a></li>
                                 <li class="breadcrumb-item active">{{ $title }}</li>
                             </ol>
                         </div><!-- /.col -->
@@ -138,7 +138,7 @@
     <!-- AdminLTE App -->
     <script src="{{ asset('template/dist/js/adminlte.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="{{ asset('template/dist/js/demo.js') }}"></script>
+    {{-- <script src="{{ asset('template/dist/js/demo.js') }}"></script> --}}
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('template/dist/js/pages/dashboard.js') }}"></script>
     <!-- Bootstrap 5 -->

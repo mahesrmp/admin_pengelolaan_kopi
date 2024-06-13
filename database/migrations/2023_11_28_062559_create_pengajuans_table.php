@@ -14,16 +14,16 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pengajuans', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->increments('id_pengajuans');
+            $table->unsignedInteger('user_id');
             $table->string('foto_ktp');
             $table->string('foto_selfie');
             $table->text('deskripsi_pengalaman');
-            $table->string('foto_sertifikat')->nullable();
+            $table->string('foto_sertifikat');
             $table->enum('status', [0, 1, 2])->default(0);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id_users')->on('users')->onDelete('cascade');
         });
     }
 

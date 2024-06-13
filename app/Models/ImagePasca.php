@@ -10,14 +10,15 @@ class ImagePasca extends Model
 {
     use HasFactory;
     protected $table = 'image_pascas';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_image_pascas';
 
     protected $fillable = [
-        'gambar'
+        'gambar',
+        'pasca_id'
     ];
 
     public function pasca()
     {
-        return $this->belongsTo(Pasca::class);
+        return $this->belongsTo(Pasca::class,  'pasca_id');
     }
 }

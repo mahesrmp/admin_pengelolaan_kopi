@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('image_minumans', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('minuman_id');
+            $table->increments('id_image_minumans');
+            $table->unsignedInteger('minuman_id');
             $table->string('gambar');
             $table->timestamps();
 
-            $table->foreign('minuman_id')->references('id')->on('minumans')->onDelete('cascade');
+            $table->foreign('minuman_id')->references('id_minumans')->on('minumans')->onDelete('cascade');
         });
     }
 

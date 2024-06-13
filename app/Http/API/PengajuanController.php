@@ -22,12 +22,12 @@ class PengajuanController extends Controller
                 'foto_ktp' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'foto_selfie' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'foto_sertifikat' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'user_id' => 'required|exists:users,id',
+                'user_id' => 'required|exists:users,id_users',
             ]);
 
             Log::info('Validasi berhasil');
 
-            $user = DB::table('users')->where('id', $request->user_id)->first();
+            $user = DB::table('users')->where('id_users', $request->user_id)->first();
             Log::info('User ID dari request: ' . $request->user_id);
             Log::info('User dari DB facade: ' . json_encode($user));
 
@@ -101,13 +101,13 @@ class PengajuanController extends Controller
         // Transform data to include image URLs
         $transformedData = $pengajuanData->map(function ($item) {
             return [
-                'id' => $item->id,
+                'id_pengajuans' => $item->id_pengajuans,
                 'foto_ktp_url' => $item->foto_ktp ? asset('storage/' . $item->foto_ktp) : null,
                 'foto_selfie_url' => $item->foto_selfie ? asset('storage/' . $item->foto_selfie) : null,
                 'foto_sertifikat_url' => $item->foto_sertifikat ? asset('storage/' . $item->foto_sertifikat) : null,
                 'deskripsi_pengalaman' => $item->deskripsi_pengalaman,
                 'status' => $item->status,
-                'petani_id' => $item->petani_id,
+                'user_id' => $item->getPengajuanDataByUserId_id,
             ];
         });
 
@@ -116,18 +116,20 @@ class PengajuanController extends Controller
 
     public function getPengajuanDataByUserId($id)
     {
-        $pengajuanData = Pengajuan::where('user_id', $id)->first();
+        $pengajuanData = DB::table('pengajuans')->where('user_id', $id)->get();
 
-        // Transform data to include image URLs
+        if ($pengajuanData->isEmpty()) {
+            return response()->json(['message' => 'User ini belum melakukan pengajuan Fasilitator'], 404);
+        }
+
         $transformedData = $pengajuanData->map(function ($item) {
             return [
-                'id' => $item->id,
+                'id_pengajuans' => $item->id_pengajuans,
                 'foto_ktp_url' => $item->foto_ktp ? asset('storage/' . $item->foto_ktp) : null,
                 'foto_selfie_url' => $item->foto_selfie ? asset('storage/' . $item->foto_selfie) : null,
                 'foto_sertifikat_url' => $item->foto_sertifikat ? asset('storage/' . $item->foto_sertifikat) : null,
                 'deskripsi_pengalaman' => $item->deskripsi_pengalaman,
                 'status' => $item->status,
-                'petani_id' => $item->petani_id,
             ];
         });
 
@@ -136,7 +138,7 @@ class PengajuanController extends Controller
 
     public function getPengajuanStatusData($id)
     {
-        $pengajuanStatusData = Pengajuan::select('status', 'id', 'petani_id')->where('petani_id', $id)->get();
+        $pengajuanStatusData = Pengajuan::select('status', 'id_pengajuans', 'petani_id')->where('petani_id', $id)->get();
         return response()->json($pengajuanStatusData);
     }
 }

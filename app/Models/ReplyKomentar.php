@@ -9,11 +9,10 @@ class ReplyKomentar extends Model
 {
     use HasFactory;
     protected $table = 'reply_comments';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_reply_comments';
 
     protected $fillable = [
         'komentar',
-        'forum_id',
         'user_id',
         'komentar_id',
     ];

@@ -9,14 +9,15 @@ class ImageArtikel extends Model
 {
     use HasFactory;
     protected $table = 'image_artikels';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_image_artikels';
 
     protected $fillable = [
-        'gambar'
+        'gambar',
+        'artikel_id',
     ];
 
     public function artikel()
     {
-        return $this->belongsTo(Artikel::class);
+        return $this->belongsTo(Artikel::class, 'artikel_id');
     }
 }

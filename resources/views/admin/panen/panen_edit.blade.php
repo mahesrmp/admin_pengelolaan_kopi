@@ -21,16 +21,29 @@
                         <h3 class="card-title">Form tambah data Panen</h3>
                     </div>
                     {{-- {!! Form::model($model, ['route' => $route, 'method' => $method, 'files' => true, 'enctype' => 'multipart/form-data']) !!} --}}
-                    <form action="{{ route('panen.update', $panen['id']) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('panen.update', $panen['id_panens']) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <input type="text" id="kategori" name="kategori" class="form-control"
-                                    value="{{ $panen->kategori }}">
+                                <select id="kategori" name="kategori" class="form-control">
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="Ciri Buah Kopi"
+                                        {{ $panen->kategori == 'Ciri Buah Kopi' ? 'selected' : '' }}>Ciri Buah Kopi
+                                    </option>
+                                    <option value="Pemetikan" {{ $panen->kategori == 'Pemetikan' ? 'selected' : '' }}>
+                                        Pemetikan
+                                    </option>
+                                    <option value="Sortasi Buah" {{ $panen->kategori == 'Sortasi Buah' ? 'selected' : '' }}>
+                                        Sortasi Buah
+                                    </option>
+                                </select>
                                 <span class="text-danger">{{ $errors->first('kategori') }}</span>
                             </div>
+
+
                             <div class="form-group">
                                 <label for="deskripsi">Deskripsi</label>
                                 {{-- {!! Form::textarea('deskripsi', null, ['class' => 'form-control']) !!} --}}

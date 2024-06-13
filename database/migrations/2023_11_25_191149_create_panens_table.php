@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('panens', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id_panens');
             // $table->string('tahapan');
             $table->text('deskripsi');
             $table->string('link');
             // $table->string('sumber_artikel');
-            $table->string('credit_gambar')->nullable();
+            $table->string('credit_gambar');
             $table->string('kategori');
             $table->timestamps();
         });

@@ -15,14 +15,14 @@
                     <p class="card-text">Link Video: <a href="{{ $pasca['link'] }}">{{ $pasca['link'] }}</a></p>
                     <div class="card-body">
                         <h5 class="card-title">Gambar</h5>
-                        <div id="carouselExampleIndicators{{ $pasca->id }}" class="carousel slide"
+                        <div id="carouselExampleIndicators{{ $pasca->id_pascas }}" class="carousel slide"
                             data-bs-ride="carousel">
                             <div class="carousel-indicators">
                                 @php
                                     $gambarCount = count($pasca->images); // Menghitung jumlah gambar dari data yang diterima
                                 @endphp
                                 @for ($i = 0; $i < $gambarCount; $i++)
-                                    <button type="button" data-bs-target="#carouselExampleIndicators{{ $pasca->id }}"
+                                    <button type="button" data-bs-target="#carouselExampleIndicators{{ $pasca->id_pascas }}"
                                         data-bs-slide-to="{{ $i }}" class="{{ $i === 0 ? 'active' : '' }}"
                                         aria-label="Slide {{ $i + 1 }}"></button>
                                 @endfor
@@ -36,12 +36,12 @@
                                 @endforeach
                             </div>
                             <button class="carousel-control-prev" type="button"
-                                data-bs-target="#carouselExampleIndicators{{ $pasca->id }}" data-bs-slide="prev">
+                                data-bs-target="#carouselExampleIndicators{{ $pasca->id_pascas }}" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
                             <button class="carousel-control-next" type="button"
-                                data-bs-target="#carouselExampleIndicators{{ $pasca->id }}" data-bs-slide="next">
+                                data-bs-target="#carouselExampleIndicators{{ $pasca->id_pascas }}" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </button>
