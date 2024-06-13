@@ -28,14 +28,14 @@
 
                     <div class="card-body">
                         <h5 class="card-title">Gambar</h5>
-                        <div id="carouselExampleIndicators{{ $panen->id }}" class="carousel slide"
+                        <div id="carouselExampleIndicators{{ $panen->id_panens }}" class="carousel slide"
                             data-bs-ride="carousel">
                             <div class="carousel-indicators">
                                 @php
                                     $gambarCount = count($panen->images); // Menghitung jumlah gambar dari data yang diterima
                                 @endphp
                                 @for ($i = 0; $i < $gambarCount; $i++)
-                                    <button type="button" data-bs-target="#carouselExampleIndicators{{ $panen->id }}"
+                                    <button type="button" data-bs-target="#carouselExampleIndicators{{ $panen->id_panens }}"
                                         data-bs-slide-to="{{ $i }}" class="{{ $i === 0 ? 'active' : '' }}"
                                         aria-label="Slide {{ $i + 1 }}"></button>
                                 @endfor
@@ -49,12 +49,12 @@
                                 @endforeach
                             </div>
                             <button class="carousel-control-prev" type="button"
-                                data-bs-target="#carouselExampleIndicators{{ $panen->id }}" data-bs-slide="prev">
+                                data-bs-target="#carouselExampleIndicators{{ $panen->id_panens }}" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Previous</span>
                             </button>
                             <button class="carousel-control-next" type="button"
-                                data-bs-target="#carouselExampleIndicators{{ $panen->id }}" data-bs-slide="next">
+                                data-bs-target="#carouselExampleIndicators{{ $panen->id_panens }}" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Next</span>
                             </button>

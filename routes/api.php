@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\API\PascaPanenController;
 use App\Http\API\BudidayaAPIController;
 use App\Http\API\ReplyKomentarController;
+use App\Http\API\ResetPasswordController;
+use App\Http\API\ForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +67,8 @@ Route::get('/komunitas', [BudidayaAPIController::class, 'getKomunitasData']);
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::post('password/forgot',[ForgotPasswordController::class,'forgotPassword']);
+Route::post('password/reset',[ResetPasswordController::class,'resetPassword']);
 // Route::middleware('auth:sanctum')->group(function () {
 //     Route::post('/logout', [AuthController::class, 'logout']);
 // });

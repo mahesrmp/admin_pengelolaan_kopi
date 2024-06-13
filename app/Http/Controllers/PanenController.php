@@ -39,10 +39,10 @@ class PanenController extends Controller
     {
         try {
             $request->validate([
-                'deskripsi' => 'required',
-                'link' => 'required',
+                'deskripsi' => 'required|min:20',
+                'link' => 'required|url',
                 'credit_gambar' => 'required',
-                'kategori' => 'required|in:Ciri Buah Kopi,Pemetikan',
+                'kategori' => 'required',
                 'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
             ]);
 
@@ -95,10 +95,10 @@ class PanenController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'deskripsi' => 'required',
-            'link' => 'required',
+            'deskripsi' => 'required|min:20',
+            'link' => 'required|url',
             'credit_gambar' => 'required',
-            'kategori' => 'required|in:Ciri Buah Kopi,Pemetikan'
+            'kategori' => 'required'
         ]);
 
         $kategori = $request->input('kategori');

@@ -14,8 +14,8 @@ class ReplyKomentarController extends Controller
     public function reply(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'komentar_id' => 'required|exists:forum_komentars,id',
+            'user_id' => 'required|exists:users,id_users',
+            'komentar_id' => 'required|exists:forum_komentars,id_forum_komentars',
             'komentar' => 'required|string',
         ]);
 
@@ -77,7 +77,7 @@ class ReplyKomentarController extends Controller
     {
         try {
             $replies = DB::table('reply_comments')
-                ->select('id', 'user_id', 'komentar_id', 'komentar')
+                ->select('id_reply_comments', 'user_id', 'komentar_id', 'komentar')
                 ->get();
 
             Log::info(json_encode($replies));
@@ -99,7 +99,7 @@ class ReplyKomentarController extends Controller
     {
         $reply = ReplyKomentar::where('komentar_id', $komentarId)
             ->where('user_id', $userId)
-            ->where('id', $id)
+            ->where('id_reply_comments', $id)
             ->first();
 
         if (!$reply) {
@@ -124,7 +124,7 @@ class ReplyKomentarController extends Controller
     {
         $reply = ReplyKomentar::where('komentar_id', $komentarId)
             ->where('user_id', $userId)
-            ->where('id', $id)
+            ->where('id_reply_comments', $id)
             ->first();
 
         if (!$reply) {

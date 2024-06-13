@@ -109,7 +109,7 @@ class BudidayaAPIController extends Controller
     public function getKomunitasData()
     {
         $komunitas = Pengajuan::select('pengajuans.foto_selfie', 'pengajuans.deskripsi_pengalaman', 'pengajuans.no_telp', 'pengajuans.kabupaten', 'users.username')
-            ->join('users', 'pengajuans.petani_id', '=', 'users.id')
+            ->join('users', 'pengajuans.petani_id', '=', 'users.id_users')
             ->where('pengajuans.status', '1')
             ->get();
         // Transformasi URL foto_selfie

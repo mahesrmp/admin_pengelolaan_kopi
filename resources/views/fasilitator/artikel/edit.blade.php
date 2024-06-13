@@ -21,7 +21,7 @@
                         <h3 class="card-title">Form tambah data Artikel</h3>
                     </div>
                     {{-- {!! Form::model($model, ['route' => $route, 'method' => $method, 'files' => true, 'enctype' => 'multipart/form-data']) !!} --}}
-                    <form action="{{ route('artikel.update', $artikel['id']) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('artikel.update', $artikel['id_artikels']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">

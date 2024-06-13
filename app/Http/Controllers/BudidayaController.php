@@ -49,9 +49,9 @@ class BudidayaController extends Controller
     {
         try {
             $request->validate([
-                'tahapan' => 'required',
-                'deskripsi' => 'required',
-                'link' => 'required',
+                'tahapan' => 'required|min:5',
+                'deskripsi' => 'required|min:20',
+                'link' => 'required|url',
                 'credit_gambar' => 'required',
                 'kategori' => 'required',
                 'gambar.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
@@ -72,6 +72,7 @@ class BudidayaController extends Controller
                     $gambarPath = $gambar->store('budidayaimage', 'public');
                     $budidaya->images()->create([
                         'gambar' => $gambarPath,
+                        'budidaya_id' => $budidaya->id_budidayas
                     ]);
                 }
                 return redirect()->route('budidaya.index')->with('success', 'Informasi Budidaya berhasil ditambahkan');
@@ -83,7 +84,6 @@ class BudidayaController extends Controller
             return redirect()->back()->with('error', $e->getMessage())->withInput();
         }
     }
-
 
     public function edit($id)
     {
@@ -104,9 +104,9 @@ class BudidayaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'tahapan' => 'required',
-            'deskripsi' => 'required',
-            'link' => 'required',
+            'tahapan' => 'required|min:5',
+            'deskripsi' => 'required|min:20',
+            'link' => 'required|url',
             'credit_gambar' => 'required',
             'kategori' => 'required'
         ]);
@@ -172,29 +172,30 @@ class BudidayaController extends Controller
         }
     }
 
-    public function removeImage(Request $request)
-    {
-        try {
-            $request->validate([
-                'id' => 'required|exists:image_budidayas,id',
-            ]);
+    // public function removeImage(Request $request)
+    // {
+    //     try {
+    //         $request->validate([
+    //             'id' => 'required|exists:image_budidayas,id',
+    //         ]);
 
-            $imageId = $request->input('image_id');
+    //         $imageId = $request->input('image_id');
 
-            $image = ImageBudidaya::find($imageId);
-            if (!$image) {
-                throw new \Exception('Gambar tidak ditemukan.');
-            }
+    //         $image = ImageBudidaya::find($imageId);
+    //         if (!$image) {
+    //             throw new \Exception('Gambar tidak ditemukan.');
+    //         }
 
-            Storage::disk('public')->delete($image->path);
+    //         Storage::disk('public')->delete($image->path);
 
-            $image->delete();
+    //         $image->delete();
 
-            return response()->json(['success' => true]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
+    //         return response()->json(['success' => true]);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['error' => $e->getMessage()], 500);
+    //     }
+    // }
+
     public function show($id)
     {
         $budidaya = Budidaya::findOrFail($id);

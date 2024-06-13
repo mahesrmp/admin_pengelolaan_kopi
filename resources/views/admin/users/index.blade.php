@@ -73,7 +73,7 @@
 
                                                         @if ($item->role != 'admin')
                                                             @if ($item->status == null)
-                                                                <form action="{{ route('user.deactivate', $item->id) }}"
+                                                                <form action="{{ route('user.deactivate', $item->id_users) }}"
                                                                     method="POST">
                                                                     @csrf
                                                                     @method('PUT')
@@ -81,7 +81,7 @@
                                                                         class="btn btn-danger">Nonaktifkan Akun</button>
                                                                 </form>
                                                             @else
-                                                                <form action="{{ route('user.activate', $item->id) }}"
+                                                                <form action="{{ route('user.activate', $item->id_users) }}"
                                                                     method="POST">
                                                                     @csrf
                                                                     @method('PUT')

@@ -77,7 +77,7 @@
 
 
                                                     <td class="text-center" style="margin-bottom: 10px;">
-                                                        <form action="{{ route('pengajuan.accept', ['id' => $item->id]) }}"
+                                                        <form action="{{ route('pengajuan.accept', ['id' => $item->id_pengajuans]) }}"
                                                             method="POST">
                                                             @csrf
                                                             <button type="submit" class="accept-button">
@@ -87,7 +87,7 @@
                                                     </td>
 
                                                     <td class="text-center">
-                                                        <form action="{{ route('pengajuan.reject', ['id' => $item->id]) }}"
+                                                        <form action="{{ route('pengajuan.reject', ['id' => $item->id_pengajuans]) }}"
                                                             method="POST">
                                                             @csrf
                                                             <button type="submit" class="reject-button">

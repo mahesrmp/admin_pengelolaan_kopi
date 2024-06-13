@@ -14,13 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('budidayas', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id_budidayas');
             $table->string('tahapan');
             // $table->enum('jenis', ['-','arabika', 'robusta'])->default('-');
             $table->text('deskripsi');
             $table->string('link');
             // $table->string('sumber_artikel');
-            $table->string('credit_gambar')->nullable();
+            $table->string('credit_gambar');
             $table->string('kategori');
             $table->timestamps();
         });

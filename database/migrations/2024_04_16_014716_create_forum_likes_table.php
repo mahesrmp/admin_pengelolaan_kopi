@@ -14,14 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('forum_likes', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('forum_id');
-            $table->unsignedBigInteger('user_id');
+            $table->increments('id_forum_likes');
+            $table->unsignedInteger('forum_id');
+            $table->unsignedInteger('user_id');
             $table->enum('like',[0, 1, 2]);
             $table->timestamps();
 
-            $table->foreign('forum_id')->references('id')->on('forums')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('forum_id')->references('id_forums')->on('forums')->onDelete('cascade');
+            $table->foreign('user_id')->references('id_users')->on('users')->onDelete('cascade');
         });
     }
 

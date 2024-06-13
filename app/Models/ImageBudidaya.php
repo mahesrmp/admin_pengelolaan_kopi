@@ -10,14 +10,15 @@ class ImageBudidaya extends Model
 {
     use HasFactory;
     protected $table = 'image_budidayas';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_image_budidayas';
 
     protected $fillable = [
-        'gambar'
+        'gambar',
+        'budidaya_id',
     ];
 
     public function budidaya()
     {
-        return $this->belongsTo(Budidaya::class);
+        return $this->belongsTo(Budidaya::class, 'budidaya_id');
     }
 }

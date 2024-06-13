@@ -12,7 +12,7 @@ class Budidaya extends Model
     use HasFactory;
 
     protected $table = 'budidayas';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_budidayas';
 
     protected $fillable = [
         'tahapan',
@@ -25,10 +25,11 @@ class Budidaya extends Model
 
     public function images()
     {
-        return $this->hasMany(ImageBudidaya::class)->select([
-            'id', 
-            'budidaya_id', 
+        return $this->hasMany(ImageBudidaya::class, 'budidaya_id')->select([
+            'id_image_budidayas',
+            'budidaya_id',
             'gambar',
-            DB::raw("CONCAT('" . asset('storage/') . "','/', gambar) as url")]);
+            DB::raw("CONCAT('" . asset('storage/') . "','/', gambar) as url")
+        ]);
     }
 }

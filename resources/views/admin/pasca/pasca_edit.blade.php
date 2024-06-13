@@ -21,14 +21,21 @@
                         <h3 class="card-title">Form tambah data Pasca Panen</h3>
                     </div>
                     {{-- {!! Form::model($model, ['route' => $route, 'method' => $method, 'files' => true, 'enctype' => 'multipart/form-data']) !!} --}}
-                    <form action="{{ route('pasca.update', $pasca['id']) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('pasca.update', $pasca['id_pascas']) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="kategori">Kategori</label>
-                                <input type="text" id="kategori" name="kategori" class="form-control"
-                                    value="{{ $pasca->kategori }}">
+                                <select id="kategori" name="kategori" class="form-control">
+                                    <option value="">Pilih Kategori</option>
+                                    <option value="Fermentasi Kering"
+                                        {{ $pasca->kategori == 'Fermentasi Kering' ? 'selected' : '' }}>Fermentasi Kering
+                                    </option>
+                                    <option value="Fermentasi Mekanis"
+                                        {{ $pasca->kategori == 'Fermentasi Mekanis' ? 'selected' : '' }}>Fermentasi Mekanis
+                                    </option>
+                                </select>
                                 <span class="text-danger">{{ $errors->first('kategori') }}</span>
                             </div>
                             <div class="form-group">

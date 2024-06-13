@@ -10,7 +10,7 @@ class Artikel extends Model
 {
     use HasFactory;
     protected $table = 'artikels';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_artikels';
 
     protected $fillable = [
         'judul_artikel',
@@ -25,8 +25,8 @@ class Artikel extends Model
 
     public function images()
     {
-        return $this->hasMany(ImageArtikel::class)->select([
-            'id',
+        return $this->hasMany(ImageArtikel::class, 'artikel_id')->select([
+            'id_image_artikels',
             'artikel_id',
             'gambar',
             DB::raw("CONCAT('" . asset('storage/') . "','/', gambar) as url")

@@ -43,7 +43,7 @@ class ArtikelController extends Controller
     public function store(Request $request)
     {
         try {
-            $id = Auth::user()->id;
+            $id = Auth::user()->id_users;
             $request->validate([
                 'judul_artikel' => 'required',
                 'isi_artikel' => 'required',

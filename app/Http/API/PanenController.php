@@ -12,7 +12,7 @@ class PanenController extends Controller
     public function panen()
     {
         $panens = DB::table('panens')
-            ->join('image_panens', 'panens.id', '=', 'image_panens.panen_id')
+            ->join('image_panens', 'panens.id_panens', '=', 'image_panens.panen_id')
             ->select('panens.*', 'image_panens.gambar')
             ->get();
         return response()->json($panens);

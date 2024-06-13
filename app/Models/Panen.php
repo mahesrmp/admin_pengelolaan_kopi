@@ -11,7 +11,7 @@ class Panen extends Model
 {
     use HasFactory;
     protected $table = 'panens';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_panens';
 
     protected $fillable = [
         // 'tahapan',
@@ -24,8 +24,8 @@ class Panen extends Model
 
     public function images()
     {
-        return $this->hasMany(ImagePanen::class)->select([
-            'id', 
+        return $this->hasMany(ImagePanen::class, 'panen_id')->select([
+            'id_image_panens', 
             'panen_id', 
             'gambar',
             DB::raw("CONCAT('" . asset('storage/') . "','/', gambar) as url")]);

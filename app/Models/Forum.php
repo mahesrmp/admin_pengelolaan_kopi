@@ -10,7 +10,7 @@ class Forum extends Model
 {
     use HasFactory;
     protected $table = 'forums';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_forums';
 
     protected $fillable = [
         'title',
@@ -21,8 +21,8 @@ class Forum extends Model
 
     public function images()
     {
-        return $this->hasMany(ImageForum::class)->select([
-            'id',
+        return $this->hasMany(ImageForum::class, 'forum_id')->select([
+            'id_image_forums',
             'forum_id',
             'gambar',
             DB::raw("CONCAT('" . asset('storage/') . "','/', gambar) as url")

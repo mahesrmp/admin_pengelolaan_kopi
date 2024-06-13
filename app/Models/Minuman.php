@@ -11,7 +11,7 @@ class Minuman extends Model
 {
     use HasFactory;
     protected $table = 'minumans';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_minumans';
 
     protected $fillable = [
         'nama_minuman',
@@ -22,8 +22,8 @@ class Minuman extends Model
 
     public function images()
     {
-        return $this->hasMany(ImageMinuman::class)->select([
-            'id', 
+        return $this->hasMany(ImageMinuman::class, 'minuman_id')->select([
+            'id_image_minumans', 
             'minuman_id', 
             'gambar',
             DB::raw("CONCAT('" . asset('storage/') . "','/', gambar) as url")]);

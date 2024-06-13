@@ -26,20 +26,20 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <h5 class="card-title artikel-tahapan">
-                                            <a href="{{ route('artikel.show', $item['id']) }}">
+                                            <a href="{{ route('artikel.show', $item['id_artikels']) }}">
                                                 {{ $item['judul_artikel'] }}
                                             </a>
                                         </h5>
                                         <!-- Pindahkan tombol edit dan delete ke ujung kanan atas -->
                                         <div class="float-right">
-                                            <a href="{{ route('artikel.edit', $item['id']) }}"
+                                            <a href="{{ route('artikel.edit', $item['id_artikels']) }}"
                                                 class="btn btn-success btn-sm text-center"><i class="fas fa-edit"></i></a>
-                                            <form id="delete-form-{{ $item['id'] }}"
-                                                action="{{ route('artikel.destroy', $item['id']) }}" method="POST"
+                                            <form id="delete-form-{{ $item['id_artikels'] }}"
+                                                action="{{ route('artikel.destroy', $item['id_artikels']) }}" method="POST"
                                                 class="d-inline delete-about-form">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="button" onclick="confirmDelete({{ $item['id'] }}, event)"
+                                                <button type="button" onclick="confirmDelete({{ $item['id_artikels'] }}, event)"
                                                     class="btn btn-danger btn-sm delete-about">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
